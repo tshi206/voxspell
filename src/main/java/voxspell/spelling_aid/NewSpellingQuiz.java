@@ -25,6 +25,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
@@ -35,6 +36,7 @@ class NewSpellingQuiz extends JFrame implements ActionListener {
 
 	private JTextField txt = new JTextField();
 	private JTextArea txtOutput = new JTextArea(10, 20);
+	private	JTextArea hint = new JTextArea(10, 20);
 	private JLabel prompt = new JLabel("Click \"start!\" to begin!");
 	private JLabel accuracy = new JLabel();
 	private JLabel currentAccuracy=new JLabel();
@@ -114,6 +116,15 @@ class NewSpellingQuiz extends JFrame implements ActionListener {
 		jp.add(txt);
 		jp.add(accuracy);
 		jp.add(currentAccuracy);
+		
+		//TODO - definition
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setPreferredSize(new Dimension(360, 35));
+		scrollPane_1.setViewportView(hint);
+		hint.setEditable(false);
+		hint.setText("Hint: ");
+		jp.add(scrollPane_1);
+		
 		jp.add(submit);
 		jp.add(rehear);
 		jp.add(re);
@@ -133,15 +144,15 @@ class NewSpellingQuiz extends JFrame implements ActionListener {
 		txtOutput.setForeground(Color.BLUE);
 		txtOutput.setPreferredSize(new Dimension(360, 150));
 		
-		setSize(400, 470);
-		setMinimumSize(new Dimension(400, 470));
+		setSize(400, 505);
+		setMinimumSize(new Dimension(400, 505));
 		submit.setPreferredSize(new Dimension(240,35));
 		submit.setMinimumSize(new Dimension(240,35));
 		submit.setMaximumSize(new Dimension(240,35));
 		re.setPreferredSize(new Dimension(150,25));
 		rehear.setPreferredSize(new Dimension(150,25));
-		jp.setPreferredSize(new Dimension(380, 440));
-		jp.setMaximumSize(new Dimension(380, 440));
+		jp.setPreferredSize(new Dimension(380, 475));
+		jp.setMaximumSize(new Dimension(380, 475));
 		txt.setPreferredSize(new Dimension(200,20));
 		accuracy.setPreferredSize(new Dimension(290, 15));
 		currentAccuracy.setPreferredSize(new Dimension(290, 15));
@@ -204,6 +215,11 @@ class NewSpellingQuiz extends JFrame implements ActionListener {
 				festivalGenerator(lastAttemptFailed);
 				prompt.setText("Spell word "+wc+" of 10");
 				submit.setText("Submit!");
+				if (SpellingAid.dictionary.get(word)!=null){
+					hint.setText("Hint: "+SpellingAid.dictionary.get(word));
+				}else{
+					hint.setText("Sorry. Currently no definition for this word.");
+				}
 			}else if (submit.getText().equals("Submit!")){
 				if(exit == 0 ){
 					checkWordCorrect();

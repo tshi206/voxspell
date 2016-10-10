@@ -2,22 +2,23 @@ package voxspell.spelling_aid;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
@@ -35,7 +36,7 @@ class ViewStatistics extends JFrame implements ActionListener {
 	private JLabel selectPreferredLevel = new JLabel("select your preferred level:");
 
 	protected ArrayList<ArrayList<String>> levelContents;
-	private ArrayList<JRadioButton> buttonList = new ArrayList<JRadioButton>();
+	private JComboBox<String> buttonList = new JComboBox<String>(SpellingAid.categories.toArray(new String[SpellingAid.categories.size()]));
 	
 	public ViewStatistics(JFrame jf, WindowListener wl, ArrayList<File> sysfiles, ArrayList<ArrayList<String>> contents,
 			ArrayList<String> filenames, String[] levels, ArrayList<ArrayList<String>> levelContents) {
@@ -67,30 +68,25 @@ class ViewStatistics extends JFrame implements ActionListener {
 		
 		txtOutput.setText("");
 		txtOutput.setEditable(false);
-		txtOutput.setSize(570, 365);
-		txtOutput.setMinimumSize(new Dimension(570, 365));
+		txtOutput.setSize(570, 360);
+		txtOutput.setMinimumSize(new Dimension(570, 360));
 		
 		jp.setVisible(true);
 		JScrollPane scroll = new JScrollPane(txtOutput);
-		scroll.setPreferredSize(new Dimension(570, 365));
+		scroll.setPreferredSize(new Dimension(570, 360));
 		jp.add(scroll);
 		
 		JPanel jp1 = new JPanel();
-		jp1.setLayout(new BoxLayout(jp1, BoxLayout.Y_AXIS));
-		jp1.setSize(200, 365);
-		jp1.setMaximumSize(new Dimension(200,365));
+		jp1.setLayout(new GridLayout(2,1));
+		jp1.setSize(140, 50);
+		jp1.setMaximumSize(new Dimension(140,50));
 		jp1.add(selectPreferredLevel);
-		ButtonGroup group = new ButtonGroup();
-		for (String str : levels){
-			JRadioButton button = new JRadioButton(str);
-			button.addActionListener(this);
-			jp1.add(button);
-			group.add(button);
-			buttonList.add(button);
-			if (str.equals("Level One")){
-				button.doClick();
-			}
-		}
+		
+		jp1.add(buttonList);
+		buttonList.addActionListener(this);
+		buttonList.setSelectedIndex(0);
+		buttonList.setPreferredSize(new Dimension(140,50));
+		buttonList.setMaximumSize(new Dimension(140,50));
 		
 		JPanel jp2 = new JPanel();
 		jp2.setSize(775, 365);
@@ -113,14 +109,9 @@ class ViewStatistics extends JFrame implements ActionListener {
 			frame.setVisible(true);
 			this.dispose();
 		}else{
-			for (JRadioButton jb : buttonList){
-				if (e.getSource() == jb){
-					ArrayList<String> wordlistOfTheLevel = levelContents.get(buttonList.indexOf(jb));
-					LogWorker lw = new LogWorker(txtOutput, contents, wordlistOfTheLevel);
-					lw.execute();
-					break;
-				}
-			}
+			ArrayList<String> wordlistOfTheLevel = levelContents.get(buttonList.getSelectedIndex());
+			LogWorker lw = new LogWorker(txtOutput, contents, wordlistOfTheLevel);
+			lw.execute();
 		}
 	}
 }

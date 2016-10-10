@@ -73,7 +73,7 @@ public class FinishWindows extends JFrame {
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-		if(mainMenu.giveCurrentLevel(correspondingLevel)==10){
+		if(mainMenu.giveCurrentLevel(correspondingLevel)==(SpellingAid.categories.size()-1)){
 			next.setEnabled(false);
 		}
 		
@@ -240,9 +240,9 @@ public class FinishWindows extends JFrame {
 				NewSpellingQuiz n = new NewSpellingQuiz(mainMenu, sysfiles, contents, filenames,
 						correspondingLevel, vc, counter,wl);	
 				
-				for (String s : correspondingLevel){
-					System.out.println(s);
-				}
+//				for (String s : correspondingLevel){
+//					System.out.println(s);
+//				}
 			}
 
 		});

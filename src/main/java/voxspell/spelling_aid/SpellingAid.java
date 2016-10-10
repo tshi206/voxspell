@@ -13,9 +13,12 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -38,6 +41,7 @@ public class SpellingAid extends JFrame implements ActionListener, WindowListene
 	ViewStatistics v;
 	ClearStatistics c;
 	VideoPlayer vp;
+	CreateCategory cc;
 	
 	private JButton New_Spelling_Quiz = new JButton("New Spelling Quiz");
 	private JButton Review_Mistakes = new JButton("Review Mistakes");
@@ -46,13 +50,16 @@ public class SpellingAid extends JFrame implements ActionListener, WindowListene
 	private JLabel selectVoice = new JLabel("select your favorite voice:");
 	private JRadioButton voiceOne = new JRadioButton("Voice One");
 	private JRadioButton voiceTwo = new JRadioButton("Voice Two");
+	protected static JButton Create_Category = new JButton("Create my own category");
 	protected VoiceChoice vc = VoiceChoice.getInstance();
 	
 	private JLabel selectPreferredLevel = new JLabel("select your preferred category:");
 	
-	private String[] levels = {"Level One","Level Two","Level Three","Level Four","Level Five","Level Six","Level Seven","Level Eight","Level Nine","Level Ten","Level Eleven"};
+	private static String[] levels = {"Level One","Level Two","Level Three","Level Four","Level Five","Level Six","Level Seven","Level Eight","Level Nine","Level Ten","Level Eleven"};
+	protected static ArrayList<String> categories = new ArrayList<String>();
+	protected static HashMap<String, String> dictionary = new HashMap<String, String>();
 	
-	private JComboBox<String> level = new JComboBox<String>(levels);
+	protected static JComboBox<String> level;
 	private JTextArea txtOutput = new JTextArea(10, 20);
 	
 	//non-history file
@@ -66,6 +73,7 @@ public class SpellingAid extends JFrame implements ActionListener, WindowListene
 	protected File masteredhistory = new File(currentWorkingDirectory+"/target/classes/voxspell/spelling_aid/.masteredhistory");
 	protected File faultedhistory = new File(currentWorkingDirectory+"/target/classes/voxspell/spelling_aid/.faultedhistory");
 	protected File failedhistory = new File(currentWorkingDirectory+"/target/classes/voxspell/spelling_aid/.failedhistory");
+	protected File customizedLists = new File(currentWorkingDirectory+"/target/classes/voxspell/spelling_aid/.userCategories");
 	
 	protected static ArrayList<ArrayList<String>> levelContents = new ArrayList<ArrayList<String>>();
 	
@@ -73,13 +81,13 @@ public class SpellingAid extends JFrame implements ActionListener, WindowListene
 	protected static ArrayList<ArrayList<String>> contents = new ArrayList<ArrayList<String>>();
 	protected static ArrayList<String> filenames = new ArrayList<String>();
 	
-	String[] fn = {"mastered", "failed", "faulted", "masteredhistory", "faultedhistory", "failedhistory"};
-	File[] files = {mastered, failed, faulted, masteredhistory, faultedhistory, failedhistory};
+	String[] fn = {"mastered", "failed", "faulted", "masteredhistory", "faultedhistory", "failedhistory", "customizedLists"};
+	File[] files = {mastered, failed, faulted, masteredhistory, faultedhistory, failedhistory, customizedLists};
 	
 	protected Counter counter=new Counter();
 	
 	public SpellingAid() {
-		super("Spelling Aid");
+		super("Voxspell");
 		
 		System.out.println("System boots up............");
 		System.out.println("Current working dir: "+currentWorkingDirectory);
@@ -133,32 +141,36 @@ public class SpellingAid extends JFrame implements ActionListener, WindowListene
 		vlcSearcher.execute();
 		//all File IO done
 		
-		setSize(450, 480);
-		setMinimumSize(new Dimension(450, 480));
+		setSize(450, 460);
+		setMinimumSize(new Dimension(450, 460));
 
 		ImageIcon welcomeMsg = new ImageIcon("./target/classes/voxspell/spelling_aid/WelcomingMessage.JPG");
 		welcomeMsg.setImage(welcomeMsg.getImage().getScaledInstance(welcomeMsg.getIconWidth(),
 				welcomeMsg.getIconHeight(), Image.SCALE_DEFAULT));
 		JLabel jl = new JLabel(welcomeMsg);
 		jl.setIcon(welcomeMsg);
+		
 		New_Spelling_Quiz.setPreferredSize(new Dimension(200,25));
 		Review_Mistakes.setPreferredSize(new Dimension(200,25));
 		View_Statistics.setPreferredSize(new Dimension(200,25));
 		Clear_Statistics.setPreferredSize(new Dimension(200,25));
+		Create_Category.setPreferredSize(new Dimension(300,25));
 		New_Spelling_Quiz.addActionListener(this);
 		Review_Mistakes.addActionListener(this);
 		View_Statistics.addActionListener(this);
 		Clear_Statistics.addActionListener(this);
+		Create_Category.addActionListener(this);
 		New_Spelling_Quiz.addMouseListener(new Mouse(New_Spelling_Quiz));
 		Review_Mistakes.addMouseListener(new Mouse(Review_Mistakes));
 		View_Statistics.addMouseListener(new Mouse(View_Statistics));
-
+		Create_Category.addMouseListener(new Mouse(Create_Category));
 		Clear_Statistics.addMouseListener(new Mouse(Clear_Statistics));
+		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		jl.setVisible(true);
 		JPanel jp = new JPanel();
-		jp.setSize(445, 470);
-		jp.setMaximumSize(new Dimension(445,475));
+		jp.setSize(445, 455);
+		jp.setMaximumSize(new Dimension(445,455));
 
 		jp.add(jl);
 		jp.add(New_Spelling_Quiz);
@@ -177,12 +189,13 @@ public class SpellingAid extends JFrame implements ActionListener, WindowListene
 
 		jp.add(selectPreferredLevel);
 		jp.add(level);
-		String s = "\n New Spelling Quiz: to start a new spelling session\n"
-				+ "\n Review Mistakes: to re-attempt the failed words\n"
-				+ "\n View Statistics: to see the records of the past spellings\n"
-				+ "\n Clear Statistics: to clear all history (cannot be reversed)\n"
+		jp.add(Create_Category);
+		
+		String s = "\n You can create your own categories as lists of words.\n"
+				+ "\n Default categories already in the application are levels.\n"
 				+ "\n Suggested starting level is Level One, the higher the level,"
-				+ "\n the harder it would be. Finally, please enjoy spelling aid!\n";
+				+ "\n the harder it would be. \n"
+				+ "\n Please enjoy Voxspell!\n";
 		txtOutput.setText(s);
 		txtOutput.setBackground(new Color(100, 255, 150));
 		Font font = new Font("Verdana", Font.BOLD, 12);
@@ -195,22 +208,22 @@ public class SpellingAid extends JFrame implements ActionListener, WindowListene
 		add(jp);
 	}
 	
-	public static int whatLevelYouWant(String levelname, String[] levels){
-		for (int i=0; i<levels.length; i++){
-			if (levelname.equals(levels[i])){
-				return i;
-			}
-		}
-		throw new RuntimeException("No Such Level!!");
-	}
+//	public static int whatLevelYouWant(String levelname, String[] levels){
+//		for (int i=0; i<levels.length; i++){
+//			if (levelname.equals(levels[i])){
+//				return i;
+//			}
+//		}
+//		throw new RuntimeException("No Such Level!!");
+//	}
 	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(New_Spelling_Quiz)){
 			n = new NewSpellingQuiz(this, sysfiles, contents, filenames,
-					levelContents.get(whatLevelYouWant(level.getItemAt(level.getSelectedIndex()), levels)), vc, counter,this);
+					levelContents.get(categories.indexOf(level.getItemAt(level.getSelectedIndex()))), vc, counter,this);
 		}else if (e.getSource().equals(Review_Mistakes)){
 			r = new ReviewMistakes(this, sysfiles, contents, filenames, vc, counter, 
-					levelContents.get(whatLevelYouWant(level.getItemAt(level.getSelectedIndex()), levels)));
+					levelContents.get(categories.indexOf(level.getItemAt(level.getSelectedIndex()))));
 		}else if (e.getSource().equals(View_Statistics)){
 			v = new ViewStatistics(this, this, sysfiles, contents, filenames, levels, levelContents);
 		}else if (e.getSource().equals(Clear_Statistics)){
@@ -219,6 +232,8 @@ public class SpellingAid extends JFrame implements ActionListener, WindowListene
 			vc.setChoice("one");
 		}else if (e.getSource()==voiceTwo){
 			vc.setChoice("two");
+		}else if (e.getSource()==Create_Category){
+			cc = new CreateCategory(this, this, files, fn, sysfiles, contents, filenames, levelContents, levels);
 		}
 	}
 	

@@ -10,7 +10,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,6 +20,7 @@ import javax.swing.SwingWorker;
 
 public class FileLoadingWorker extends SwingWorker<Void, Void> {
 	protected static FileReader wordlist;
+	protected static FileReader userCategories;
 	protected String[] fn;
 	protected File[] files;
 	protected ArrayList<File> sysfiles;
@@ -35,11 +38,13 @@ public class FileLoadingWorker extends SwingWorker<Void, Void> {
 		this.filenames = filenames;
 		this.levelContents = levelContents;
 		this.levels = levels;
+		SpellingAid.level = new JComboBox<String>(levels);
 	}
 	
 	@Override
 	protected Void doInBackground(){
 		
+		SpellingAid.Create_Category.setEnabled(false);
 		System.out.println("Project files loading starts......");
 		if (levelContents.isEmpty()){
 			try {
@@ -88,6 +93,52 @@ public class FileLoadingWorker extends SwingWorker<Void, Void> {
 			}
 		}
 		loadFiles(files, fn, sysfiles, contents, filenames, levelContents);
+		for (String s : levels){
+			SpellingAid.categories.add(s);
+		}
+		try {
+			Scanner s = new Scanner(new FileReader(sysfiles.get(sysfiles.size()-1)));
+			while (s.hasNext()){
+				String line = s.nextLine();
+				if (line.equals("")){
+					continue;
+				}
+				ArrayList<String> temp = new ArrayList<String>();
+				line = line.substring(1, line.length());
+				SpellingAid.categories.add(line);
+				Scanner s1 = new Scanner(new FileReader(SpellingAid.currentWorkingDirectory+"/target/classes/voxspell/spelling_aid/."+line));
+				while (s1.hasNext()){
+					String line1 = s1.nextLine();
+					if (line1.equals("")){
+						continue;
+					}
+					temp.add(line1);
+				}
+				levelContents.add(temp);
+				s1.close();
+				SpellingAid.level.addItem(line);
+				File tempfile = new File(SpellingAid.currentWorkingDirectory+"/target/classes/voxspell/spelling_aid/."+line+"_def");
+				if (tempfile.exists()){
+					Scanner s2 = new Scanner(new FileReader(tempfile));
+					int count = 0;
+					while (s2.hasNext()){
+						String line2 = s2.nextLine();
+						if (line2.equals("")){
+							continue;
+						}
+						SpellingAid.dictionary.put(temp.get(count), line2);
+						count++;
+						if (count==temp.size()){
+							break;
+						}
+					}
+					s2.close();
+				}
+			}
+			s.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 		videoSetup();
 		return null;
 	}
@@ -144,6 +195,7 @@ public class FileLoadingWorker extends SwingWorker<Void, Void> {
 			sysfiles.add(files[i]);
 			filenames.add(fn[i]);
 		}
+		//TODO - load user category
 	}
 	
 	private void videoSetup(){
@@ -225,6 +277,11 @@ public class FileLoadingWorker extends SwingWorker<Void, Void> {
 
 	@Override
 	protected void done(){
+		//initialize categories
+//		String[] temp = SpellingAid.categories.toArray(new String[SpellingAid.categories.size()]);
+//		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>(temp);
+//		SpellingAid.level = new JComboBox<String>(model);
 		System.out.println("Project files loading done.");
+		SpellingAid.Create_Category.setEnabled(true);
 	}
 }
