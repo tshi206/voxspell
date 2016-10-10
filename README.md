@@ -11,3 +11,7 @@ Steps to execute the spelling_aid.jar:
 4) Copy the following command into the terminal: "java -jar voxspell.jar" (Please do not include the quotes while copying.)
 
 5) Hit ENTER.
+
+#dev log
+2016.10.11
+ - added customized lists function and definition function
