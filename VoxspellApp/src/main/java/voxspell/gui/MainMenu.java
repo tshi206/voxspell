@@ -4,6 +4,9 @@ import javax.swing.JFrame;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
+import voxspell.app.VoxModel;
+
 import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JMenuBar;
@@ -12,18 +15,24 @@ import javax.swing.JMenuItem;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class MainMenu extends WindowPattern {
+public class MainMenu extends WindowPattern{
 
+	private static MainMenu mainMenuGUI = null;
+	
 	/**
 	 * Create the frame.
 	 */
-	public MainMenu() {
+	private MainMenu() {
 		super();
 	}
 	
-	/**
-	 * Customized window self-painting behavior
-	 */
+	public static MainMenu getmainMenuWindow(){
+		if (mainMenuGUI == null){
+			mainMenuGUI = new MainMenu();
+		}
+		return mainMenuGUI;
+	}
+	
 	@Override
 	void paintWindow(){
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -37,6 +46,7 @@ public class MainMenu extends WindowPattern {
 		panel.add(lblVoxspell);
 		
 		JButton newGame = new JButton("New Game");
+		newGame.addActionListener(voxModel);
 		newGame.setBackground(new Color(0, 102, 255));
 		newGame.setForeground(new Color(204, 255, 255));
 		newGame.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -45,6 +55,7 @@ public class MainMenu extends WindowPattern {
 		panel.add(newGame);
 		
 		JButton stats = new JButton("Stats");
+		stats.addActionListener(voxModel);
 		stats.setForeground(new Color(204, 255, 255));
 		stats.setBackground(new Color(0, 102, 255));
 		stats.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -53,6 +64,7 @@ public class MainMenu extends WindowPattern {
 		panel.add(stats);
 		
 		JButton scoreboard = new JButton("Scoreboard");
+		scoreboard.addActionListener(voxModel);
 		scoreboard.setBackground(new Color(0, 102, 255));
 		scoreboard.setForeground(new Color(204, 255, 255));
 		scoreboard.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
@@ -61,6 +73,7 @@ public class MainMenu extends WindowPattern {
 		panel.add(scoreboard);
 		
 		JButton review = new JButton("Review Mistakes");
+		review.addActionListener(voxModel);
 		review.setBackground(new Color(0, 102, 255));
 		review.setForeground(new Color(204, 255, 255));
 		review.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
@@ -68,6 +81,7 @@ public class MainMenu extends WindowPattern {
 		panel.add(review);
 		
 		JButton settings = new JButton("Settings");
+		settings.addActionListener(voxModel);
 		settings.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
 		settings.setHorizontalTextPosition(SwingConstants.CENTER);
 		settings.setForeground(new Color(204, 255, 255));
@@ -96,4 +110,5 @@ public class MainMenu extends WindowPattern {
 		lblNewLabel_1.setBounds(208, 138, 303, 26);
 		panel.add(lblNewLabel_1);
 	}
+
 }

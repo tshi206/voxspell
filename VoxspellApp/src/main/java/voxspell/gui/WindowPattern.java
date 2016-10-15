@@ -10,6 +10,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import voxspell.app.VoxModel;
+
 public abstract class WindowPattern extends JFrame {
 	
 	protected JPanel contentPane;
@@ -24,6 +26,10 @@ public abstract class WindowPattern extends JFrame {
 	protected JMenuItem intro;
 	protected JMenuItem functionalities;
 	protected JMenuItem author;
+	
+	protected String username = "anonymous";
+	
+	protected static VoxModel voxModel = VoxModel.getVoxModel();
 	
 	public WindowPattern() {
 		setBounds(100, 100, 721, 520);
@@ -42,15 +48,21 @@ public abstract class WindowPattern extends JFrame {
 		paintWindow();
 		
 		paintMenuBar();
+		
+		setResizable(false);
+		addWindowListener(VoxModel.getVoxModel());
 	}
 	
+	/**
+	 * Customizable window self-painting behavior
+	 */
 	abstract void paintWindow();
 	
 	/**
 	 * print menu bar as well as user info for every sub-windows.
 	 */
 	void paintMenuBar(){
-		JLabel lblNewLabel = new JLabel("Hello! Anonymous user.");
+		JLabel lblNewLabel = new JLabel("Hello! "+username);
 		lblNewLabel.setBounds(12, 33, 706, 15);
 		panel.add(lblNewLabel);
 		userInfo = lblNewLabel;
@@ -87,5 +99,14 @@ public abstract class WindowPattern extends JFrame {
 		JMenuItem mntmAuthor = new JMenuItem("Author");
 		mnHelp.add(mntmAuthor);
 		author = mntmAuthor;
+	}
+	
+	/**
+	 * update the userInfo label content.
+	 * @param usrname - String, the username to be updated
+	 */
+	public void updateUsr(String usrname){
+		username = usrname;
+		userInfo.setText("Hello! "+username);
 	}
 }

@@ -3,10 +3,6 @@ package voxspell.app;
 import voxspell.gui.*;
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-
-import voxspell.gui.MainMenu;
-
 /**
  * Entry of the entire program.
  *
@@ -21,12 +17,31 @@ public class VoxMain
     	EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainMenu mainmenu = new MainMenu();
+					initialiator();
+					MainMenu mainmenu = MainMenu.getmainMenuWindow();
 					mainmenu.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
+    }
+    
+    /**
+     * populating the guis list in VoxModel.
+     * MainMenu must always be the first element.
+     */
+    private static void initialiator(){
+    	MainMenu mainMenu = MainMenu.getmainMenuWindow();
+    	NewGame newGame = NewGame.getNewGameWindow();
+    	Stats stats = Stats.getStatsWindow();
+    	Scoreboard scoreboard = Scoreboard.getScoreboardWindow();
+    	Review review = Review.getReviewWindow();
+    	
+    	VoxModel.getVoxModel().addWindowImplementor(mainMenu);
+    	VoxModel.getVoxModel().addWindowImplementor(newGame);
+    	VoxModel.getVoxModel().addWindowImplementor(stats);
+    	VoxModel.getVoxModel().addWindowImplementor(scoreboard);
+    	VoxModel.getVoxModel().addWindowImplementor(review);
     }
 }
