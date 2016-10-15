@@ -4,6 +4,7 @@ package voxspell.gui;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import voxspell.app.NewGameModel;
 import voxspell.app.VoxModel;
 
 import java.awt.Color;
@@ -21,6 +22,17 @@ public class NewGame extends WindowPattern{
 
 	private JTextField textField;
 	private static NewGame newGameGUI = null;
+	
+	protected JButton submit = null;
+	protected JButton rehear = null;
+	protected JButton re = null;
+	protected JTextArea hint;
+	protected JProgressBar progressBar;
+	protected JLabel accuracy;
+	protected JPanel endOfLevelPanel;
+	protected JButton retryCategory;
+	protected JButton nextCategory;
+	protected JButton videoReward;
 	
 	/**
 	 * Create the frame.
@@ -40,6 +52,8 @@ public class NewGame extends WindowPattern{
 	void paintWindow() {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		
+		addActionListener(new NewGameModel());
+		
 		JLabel lblQuizMode = new JLabel("Quiz Mode");
 		lblQuizMode.setForeground(new Color(102, 0, 255));
 		lblQuizMode.setFont(new Font("Comic Sans MS", Font.BOLD, 58));
@@ -54,11 +68,12 @@ public class NewGame extends WindowPattern{
 		lblCurrentCategory.setBounds(163, 137, 403, 28);
 		panel.add(lblCurrentCategory);
 		
-		JLabel lblRateOfCorrectness = new JLabel("Rate of correctness so far:");
+		JLabel lblRateOfCorrectness = new JLabel("Rate of correctness so far: 0.00%");
 		lblRateOfCorrectness.setForeground(new Color(102, 0, 255));
 		lblRateOfCorrectness.setFont(new Font("Comic Sans MS", Font.PLAIN, 16));
 		lblRateOfCorrectness.setBounds(163, 183, 403, 28);
 		panel.add(lblRateOfCorrectness);
+		accuracy = lblRateOfCorrectness;
 		
 		JPanel inputPanel = new JPanel();
 		inputPanel.setBackground(new Color(204, 255, 255));
@@ -78,6 +93,7 @@ public class NewGame extends WindowPattern{
 		startandsubmit.setBackground(new Color(51, 102, 255));
 		startandsubmit.setForeground(new Color(204, 255, 255));
 		startandsubmit.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
+		submit = startandsubmit;
 		
 		JButton rehear = new JButton("Rehear");
 		rehear.setBounds(0, 0, 128, 70);
@@ -85,6 +101,7 @@ public class NewGame extends WindowPattern{
 		rehear.setBackground(new Color(51, 102, 255));
 		rehear.setForeground(new Color(204, 255, 255));
 		rehear.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
+		this.rehear = rehear;
 		
 		JButton btnBackToMain = new JButton("Back to main menu");
 		btnBackToMain.addActionListener(voxModel);
@@ -93,6 +110,7 @@ public class NewGame extends WindowPattern{
 		btnBackToMain.setBackground(new Color(51, 102, 255));
 		btnBackToMain.setBounds(252, 445, 214, 25);
 		panel.add(btnBackToMain);
+		re = btnBackToMain;
 		
 		JProgressBar progressBar = new JProgressBar();
 		progressBar.setBorderPainted(false);
@@ -104,6 +122,7 @@ public class NewGame extends WindowPattern{
 		progressBar.setForeground(new Color(51, 255, 0));
 		progressBar.setBounds(163, 376, 403, 28);
 		panel.add(progressBar);
+		this.progressBar = progressBar;
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
@@ -115,12 +134,15 @@ public class NewGame extends WindowPattern{
 		txtrHint.setFont(new Font("Comic Sans MS", Font.PLAIN, 18));
 		txtrHint.setText("Hint: ");
 		scrollPane.setViewportView(txtrHint);
+		hint = txtrHint;
 		
 		JPanel endOfLevelPanel = new JPanel();
+		endOfLevelPanel.setVisible(false);
 		endOfLevelPanel.setBackground(new Color(204, 255, 255));
 		endOfLevelPanel.setBounds(130, 402, 464, 41);
 		panel.add(endOfLevelPanel);
 		endOfLevelPanel.setLayout(null);
+		this.endOfLevelPanel = endOfLevelPanel;
 		
 		JButton btnRetryCategory = new JButton("Retry category");
 		btnRetryCategory.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
@@ -128,6 +150,7 @@ public class NewGame extends WindowPattern{
 		btnRetryCategory.setBackground(new Color(51, 102, 255));
 		btnRetryCategory.setBounds(12, 12, 139, 25);
 		endOfLevelPanel.add(btnRetryCategory);
+		retryCategory = btnRetryCategory;
 		
 		JButton btnNextCategory = new JButton("Next Category");
 		btnNextCategory.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
@@ -135,6 +158,7 @@ public class NewGame extends WindowPattern{
 		btnNextCategory.setForeground(new Color(204, 255, 255));
 		btnNextCategory.setBounds(163, 12, 139, 25);
 		endOfLevelPanel.add(btnNextCategory);
+		nextCategory = btnNextCategory; 
 		
 		JButton btnVideoReward = new JButton("Video Reward");
 		btnVideoReward.addActionListener(voxModel);
@@ -143,6 +167,36 @@ public class NewGame extends WindowPattern{
 		btnVideoReward.setBackground(new Color(51, 102, 255));
 		btnVideoReward.setBounds(314, 12, 138, 25);
 		endOfLevelPanel.add(btnVideoReward);
+		videoReward = btnVideoReward;
 	}
 
+	
+	public JLabel getAccuracy() {
+		return accuracy;
+	}
+
+	public JProgressBar getProgressBar() {
+		return progressBar;
+	}
+
+	public JTextField getTextField() {
+		return textField;
+	}
+
+	public JTextArea getHint() {
+		return hint;
+	}
+
+	public JButton getSubmit() {
+		return submit;
+	}
+
+	public JButton getRehear() {
+		return rehear;
+	}
+
+	public JButton getRe() {
+		return re;
+	}
+	
 }

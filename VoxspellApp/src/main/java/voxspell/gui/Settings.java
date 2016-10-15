@@ -94,7 +94,7 @@ public class Settings extends JFrame {
 		btnCreateCategory.setBounds(116, 179, 194, 31);
 		panel.add(btnCreateCategory);
 		
-		JButton btnBackToMain = new JButton("Back to main menu");
+		JButton btnBackToMain = new JButton("Save and close");
 		btnBackToMain.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				settings.setVisible(false);;

@@ -1,6 +1,8 @@
 package voxspell.app;
 
 import voxspell.gui.*;
+import voxspell.toolbox.VoxDatabase;
+
 import java.awt.EventQueue;
 
 /**
@@ -17,7 +19,9 @@ public class VoxMain
     	EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					initialiator();
+					VoxDatabase database = VoxDatabase.getVoxDatabase();
+					database.projectSetup();
+					GUIinitialiator();
 					MainMenu mainmenu = MainMenu.getmainMenuWindow();
 					mainmenu.setVisible(true);
 				} catch (Exception e) {
@@ -31,7 +35,7 @@ public class VoxMain
      * populating the guis list in VoxModel.
      * MainMenu must always be the first element.
      */
-    private static void initialiator(){
+    private static void GUIinitialiator(){
     	MainMenu mainMenu = MainMenu.getmainMenuWindow();
     	NewGame newGame = NewGame.getNewGameWindow();
     	Stats stats = Stats.getStatsWindow();

@@ -38,8 +38,8 @@ public class VideoPlayer extends JFrame implements ActionListener, WindowListene
 
 	private static String additionalPath = VoxModel.currentWorkingDirectory;
 	private EmbeddedMediaPlayerComponent mediaPlayerComponent;
-	private File bunny = new File(VoxModel.currentWorkingDirectory+"/target/classes/voxspell/resources/big_buck_bunny_1_minute.avi");
-	private File bunny_negative = new File(VoxModel.currentWorkingDirectory+"/target/classes/voxspell/resources/big_buck_bunny_1_minute_converted.avi");
+	private File bunny = new File(VoxModel.currentWorkingDirectory+"/target/classes/voxspell/resources/videos/big_buck_bunny_1_minute.avi");
+	private File bunny_negative = new File(VoxModel.currentWorkingDirectory+"/target/classes/voxspell/resources/videos/big_buck_bunny_1_minute_converted.avi");
 	private File video;
 	private EmbeddedMediaPlayer player;
 	private JProgressBar jpb = new JProgressBar(JProgressBar.HORIZONTAL, 0, 60);

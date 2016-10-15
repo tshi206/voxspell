@@ -16,6 +16,10 @@ import javax.swing.SwingConstants;
 public class Review extends WindowPattern {
 
 	private JTextField textField;
+	
+	protected JButton submit = null;
+	protected JButton rehear = null;
+	protected JButton re = null;
 
 	private static Review reviewGUI = null;
 
@@ -69,6 +73,7 @@ public class Review extends WindowPattern {
 		startandsubmit.setBackground(new Color(51, 102, 255));
 		startandsubmit.setForeground(new Color(204, 255, 255));
 		startandsubmit.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
+		submit = startandsubmit;
 		
 		JButton rehear = new JButton("Rehear");
 		rehear.setBounds(0, 0, 128, 70);
@@ -76,6 +81,7 @@ public class Review extends WindowPattern {
 		rehear.setBackground(new Color(51, 102, 255));
 		rehear.setForeground(new Color(204, 255, 255));
 		rehear.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
+		this.rehear = rehear;
 		
 		JButton btnBackToMain = new JButton("Back to main menu");
 		btnBackToMain.addActionListener(voxModel);
@@ -84,6 +90,7 @@ public class Review extends WindowPattern {
 		btnBackToMain.setBackground(new Color(51, 102, 255));
 		btnBackToMain.setBounds(252, 445, 214, 25);
 		panel.add(btnBackToMain);
+		re = btnBackToMain;
 		
 		JProgressBar progressBar = new JProgressBar();
 		progressBar.setBorderPainted(false);
@@ -121,4 +128,15 @@ public class Review extends WindowPattern {
 		endOfLevelPanel.add(btnContinue);
 	}
 
+	public JButton getSubmit() {
+		return submit;
+	}
+
+	public JButton getRehear() {
+		return rehear;
+	}
+
+	public JButton getRe() {
+		return re;
+	}
 }
