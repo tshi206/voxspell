@@ -37,7 +37,7 @@ public class VoxDatabase {
 	protected static File customizedLists = new File(VoxModel.currentWorkingDirectory+"/target/classes/voxspell/resources/sysfiles/.userCategories");
 	
 	
-	protected static ArrayList<ArrayList<String>> levelContents = new ArrayList<ArrayList<String>>();
+	protected static ArrayList<ArrayList<String>> levelContents = new ArrayList<ArrayList<String>>(); //contents of individual categories
 	
 	
 	protected static ArrayList<File> sysfiles = new ArrayList<File>();
@@ -65,11 +65,20 @@ public class VoxDatabase {
 		return db;
 	}
 
+	/**
+	 * CALL THIS METHOD WHENEVER LOGING EVENT FIRES, ALSO EVERY TIME WHEN APPLICATION STARTS UP.
+	 */
 	public static void projectSetup(){
 		
 		System.out.println("System boots up............");
 		System.out.println("Current working dir: "+VoxModel.currentWorkingDirectory);
 
+		
+		
+		//Load user information TODO -- unimplemented, will change the file list in VoxDatabase depending on user 
+//		UsrInfoLoadingWorker uw = new UsrInfoLoadingWorker();
+//		uw.execute();
+		
 		//start files setup
 		FileLoadingWorker fw = new FileLoadingWorker(files, fn, sysfiles, contents, filenames, levelContents, levels, categories);
 		fw.execute();
@@ -92,10 +101,6 @@ public class VoxDatabase {
 		//Searching external vlc library
 		VLCPathSearcher vlcSearcher = new VLCPathSearcher();
 		vlcSearcher.execute();
-		
-		//Load user information TODO -- unimplemented 
-//		UsrInfoLoadingWorker uw = new UsrInfoLoadingWorker();
-//		uw.execute();
 		
 		//all File IO done
 	}

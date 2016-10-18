@@ -27,8 +27,11 @@ public abstract class WindowPattern extends JFrame {
 	protected JMenuItem intro;
 	protected JMenuItem functionalities;
 	protected JMenuItem delete;
+	protected JMenuItem clear;
+	
 	
 	protected String username = "anonymous";
+	
 	
 	protected static VoxModel voxModel = VoxModel.getVoxModel();
 	
@@ -101,6 +104,10 @@ public abstract class WindowPattern extends JFrame {
 		JMenuItem mntmDelete = new JMenuItem("Delete imported category");
 		mnHelp.add(mntmDelete);
 		delete = mntmDelete;
+		
+		JMenuItem mntmClear = new JMenuItem("Clear your statistics");
+		mnHelp.add(mntmClear);
+		clear = mntmClear;
 		
 	}
 	

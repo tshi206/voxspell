@@ -8,13 +8,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 import javax.swing.SwingWorker;
 
 import voxspell.app.VoxModel;
 import voxspell.gui.Settings;
+import voxspell.gui.Stats;
 
 public class FileLoadingWorker extends SwingWorker<Void, Void> {
 	protected static FileReader wordlist;
@@ -182,7 +183,12 @@ public class FileLoadingWorker extends SwingWorker<Void, Void> {
 	@Override
 	protected void done(){
 		System.out.println("Project files loading done.");
+		
 		Settings.getSettingsWindow();
+		
+		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>(VoxDatabase.getCategories().toArray(new String[VoxDatabase.getCategories().size()]));
+		Stats.getStatsWindow().getComboBox().setModel(model);
+		Stats.getStatsWindow().getComboBox().setSelectedIndex(0);
 	}
 }
 

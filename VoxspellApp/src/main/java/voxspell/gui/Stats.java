@@ -6,17 +6,33 @@ import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Vector;
+
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
+import voxspell.toolbox.StatsWorker;
+import voxspell.toolbox.VoxDatabase;
+
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 
-public class Stats extends WindowPattern {
+public class Stats extends WindowPattern implements ActionListener {
 
 	private JTable table;
 
-	private JComboBox comboBox;
+	private JComboBox<String> comboBox;
+
+	private JScrollPane scrollPane;
+
+	private JCheckBox showAll;
 
 	private static Stats statsGUI = null;
 
@@ -49,6 +65,7 @@ public class Stats extends WindowPattern {
 		scrollPane.setBackground(new Color(204, 255, 255));
 		scrollPane.setBounds(112, 115, 573, 303);
 		panel.add(scrollPane);
+		this.scrollPane = scrollPane;
 		
 		table = new JTable();
 		table.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
@@ -56,10 +73,11 @@ public class Stats extends WindowPattern {
 		table.setShowGrid(false);
 		table.setShowHorizontalLines(false);
 		table.setShowVerticalLines(false);
-		table.setBackground(new Color(255, 255, 0));
+		table.setBackground(new Color(204, 255, 255));
 		table.setForeground(new Color(51, 0, 255));
 		table.setGridColor(new Color(255, 255, 255));
 		scrollPane.setViewportView(table);
+		scrollPane.getViewport().setBackground(new Color(204, 255, 255));
 		
 		JLabel lblCategory = new JLabel("Category:");
 		lblCategory.setForeground(new Color(102, 0, 255));
@@ -67,7 +85,8 @@ public class Stats extends WindowPattern {
 		lblCategory.setBounds(10, 113, 92, 34);
 		panel.add(lblCategory);
 		
-		JComboBox comboBox = new JComboBox();
+		JComboBox<String> comboBox = new JComboBox<String>(VoxDatabase.getCategories().toArray(new String[VoxDatabase.getCategories().size()]));
+		comboBox.addActionListener(this);
 		comboBox.setFont(new Font("Comic Sans MS", Font.PLAIN, 11));
 		comboBox.setBounds(10, 158, 92, 34);
 		panel.add(comboBox);
@@ -80,5 +99,64 @@ public class Stats extends WindowPattern {
 		btnBackToMain.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
 		btnBackToMain.setBounds(201, 429, 283, 34);
 		panel.add(btnBackToMain);
+		
+		JCheckBox showAll = new JCheckBox("Show all tested words");
+		showAll.addActionListener(this);
+		showAll.setBackground(new Color(204, 255, 255));
+		showAll.setForeground(new Color(51, 102, 255));
+		showAll.setFont(new Font("Comic Sans MS", Font.BOLD, 11));
+		showAll.setBounds(10, 429, 180, 34);
+		panel.add(showAll);
+		this.showAll = showAll;
+		
+	}
+
+	public JTable getTable() {
+		return table;
+	}
+
+	public JComboBox<String> getComboBox() {
+		return comboBox;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource().equals(showAll)){
+			JCheckBox checkbox = (JCheckBox)e.getSource();
+			if (checkbox.isSelected()){
+				StatsWorker sw = new StatsWorker(VoxDatabase.getContents());
+				sw.execute();
+			}else{
+				ArrayList<String> wordlistOfTheLevel = VoxDatabase.getLevelContents().get(comboBox.getSelectedIndex());
+				StatsWorker sw = new StatsWorker(VoxDatabase.getContents(), wordlistOfTheLevel);
+				sw.execute();
+			}
+		}else{
+			if (!(showAll.isSelected())){
+				ArrayList<String> wordlistOfTheLevel = VoxDatabase.getLevelContents().get(comboBox.getSelectedIndex());
+				StatsWorker sw = new StatsWorker(VoxDatabase.getContents(), wordlistOfTheLevel);
+				sw.execute();
+			}
+		}
+	}
+
+	@SuppressWarnings("serial")
+	public void updateTable(Vector<Vector<String>> rowData, Vector<String> columnNames){
+		table = new JTable(new DefaultTableModel(rowData, columnNames){
+			@Override
+		    public boolean isCellEditable(int row, int column) {
+		       return false;
+		    }
+		});
+		table.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
+		table.setRowSelectionAllowed(false);
+		table.setShowGrid(false);
+		table.setShowHorizontalLines(false);
+		table.setShowVerticalLines(false);
+		table.setBackground(new Color(204, 255, 255));
+		table.setForeground(new Color(51, 0, 255));
+		table.setGridColor(new Color(255, 255, 255));
+		scrollPane.setViewportView(table);
+		scrollPane.getViewport().setBackground(new Color(204, 255, 255));
 	}
 }
