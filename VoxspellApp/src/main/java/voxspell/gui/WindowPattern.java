@@ -1,6 +1,7 @@
 package voxspell.gui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -25,7 +26,7 @@ public abstract class WindowPattern extends JFrame {
 	protected JMenu help;
 	protected JMenuItem intro;
 	protected JMenuItem functionalities;
-	protected JMenuItem author;
+	protected JMenuItem delete;
 	
 	protected String username = "anonymous";
 	
@@ -97,9 +98,10 @@ public abstract class WindowPattern extends JFrame {
 		mnHelp.add(mntmFunctonalities);
 		functionalities = mntmFunctonalities;
 		
-		JMenuItem mntmAuthor = new JMenuItem("Author");
-		mnHelp.add(mntmAuthor);
-		author = mntmAuthor;
+		JMenuItem mntmDelete = new JMenuItem("Delete imported category");
+		mnHelp.add(mntmDelete);
+		delete = mntmDelete;
+		
 	}
 	
 	/**

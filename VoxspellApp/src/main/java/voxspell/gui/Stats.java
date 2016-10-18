@@ -16,6 +16,8 @@ public class Stats extends WindowPattern {
 
 	private JTable table;
 
+	private JComboBox comboBox;
+
 	private static Stats statsGUI = null;
 
 	/**
@@ -69,6 +71,7 @@ public class Stats extends WindowPattern {
 		comboBox.setFont(new Font("Comic Sans MS", Font.PLAIN, 11));
 		comboBox.setBounds(10, 158, 92, 34);
 		panel.add(comboBox);
+		this.comboBox = comboBox;
 		
 		JButton btnBackToMain = new JButton("Back to main menu");
 		btnBackToMain.addActionListener(voxModel);
