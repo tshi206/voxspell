@@ -58,6 +58,7 @@ public class VideoPlayer extends JFrame implements ActionListener, WindowListene
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
+		setAlwaysOnTop (true);
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(204, 255, 255));

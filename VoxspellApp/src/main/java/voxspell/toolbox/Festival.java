@@ -17,9 +17,11 @@ public class Festival {
 	private int exit;
 
 
-	private NewGame newGame = null;
+	private NewGame newGame;
 
-	private Review review = null;
+	private Review review;
+	
+	private boolean reviewMode;
 	
 	private VoiceChoice vc = VoiceChoice.getVoiceChoice();
 
@@ -31,10 +33,12 @@ public class Festival {
 	
 	public Festival(NewGame newGame, boolean lastAttemptFailed){
 		this.newGame = newGame;
+		reviewMode = false;
 	}
 
 	public Festival(Review newGame, boolean lastAttemptFailed){
 		this.review = newGame;
+		reviewMode = true;
 	}
 
 	public void festivalGenerator(boolean lastAttemptFailed, NewGameModel ngm){
@@ -54,7 +58,19 @@ public class Festival {
 	}
 
 	public void festivalGenerator(boolean lastAttemptFailed, ReviewModel Rmodel){
-		//TODO
+		if (lastAttemptFailed){
+			String s = "Incorrect, try once more. "+Rmodel.getWord()+", "+Rmodel.getWord()+".";
+			vc.setWord(s);
+			vc.updateSCM();
+		}else{
+			String s = "Please spell the word "+Rmodel.getWord();
+			vc.setWord(s);
+			vc.updateSCM();
+		}
+		String bashcmd = "festival -b "+ VoxModel.currentWorkingDirectory+"/target/classes/voxspell/resources/sysfiles/.sound.scm";
+		p = new ProcessBuilder("/bin/bash","-c", bashcmd);
+		Speaker speaker=new Speaker(review);
+		speaker.execute();
 	}
 	
 	/**
@@ -119,15 +135,15 @@ public class Festival {
 
 		@Override
 		protected Void doInBackground() throws Exception {
-			if (review==null){
+			if (!(reviewMode)){
 				newSpellingQuiz.getSubmit().setEnabled(false);
 				newSpellingQuiz.getBackToMain().setEnabled(false);
 				newSpellingQuiz.getRehear().setEnabled(false);
 				process=p.start();
 				exit=process.waitFor();
-			}else if (newSpellingQuiz==null){
+			}else{
 				review.getSubmit().setEnabled(false);
-				review.getRe().setEnabled(false);
+				review.getBackToMain().setEnabled(false);
 				review.getRehear().setEnabled(false);
 				process=p.start();
 				exit=process.waitFor();
@@ -138,7 +154,7 @@ public class Festival {
 
 		@Override
 		protected void done(){
-			if (review==null){
+			if (!(reviewMode)){
 				newSpellingQuiz.getSubmit().setEnabled(true);
 				newSpellingQuiz.getBackToMain().setEnabled(true);
 				newSpellingQuiz.getRehear().setEnabled(true);
@@ -148,10 +164,16 @@ public class Festival {
 						newSpellingQuiz.getSubmit().doClick();
 					}
 				}
-			}else if (newSpellingQuiz==null){
+			}else{
 				review.getSubmit().setEnabled(true);
-				review.getRe().setEnabled(true);
+				review.getBackToMain().setEnabled(true);
 				review.getRehear().setEnabled(true);
+				if (review.getModel().isTurnend()){
+					if (review.getModel().getWc()<review.getModel().getTotalWords()){
+						review.getSubmit().setText("Start!");
+						review.getSubmit().doClick();
+					}
+				}
 			}
 		}
 	}

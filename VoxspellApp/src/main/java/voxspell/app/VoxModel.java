@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 
 import voxspell.gui.*;
+import voxspell.toolbox.VoxDatabase;
 
 public class VoxModel implements WindowListener, ActionListener{
 	public static String currentWorkingDirectory = System.getProperty("user.dir");
@@ -70,6 +71,7 @@ public class VoxModel implements WindowListener, ActionListener{
 			window.setVisible(false);
 			Review.getReviewWindow().setVisible(true);
 			Review.getReviewWindow().setLocationRelativeTo(null);
+			Review.getReviewWindow().updateModel(VoxDatabase.getContents().get(4));
 		}
 	}
 	

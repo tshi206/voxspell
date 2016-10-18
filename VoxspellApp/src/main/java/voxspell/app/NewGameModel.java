@@ -84,9 +84,9 @@ public class NewGameModel implements ActionListener{
 				}
 				exit = festival.getExitState();
 			}else if (source.getText().equals("Submit!")){
-				NewGame.getNewGameWindow().getTextField().setText("");
 				if(exit == 0 ){
 					checkWordCorrect();
+					NewGame.getNewGameWindow().getTextField().setText("");
 					if (turnend){
 						if (wc == 11){
 							VoxModel.createEndOfCategoryWindow(wordsCorrect, wordsFailed);

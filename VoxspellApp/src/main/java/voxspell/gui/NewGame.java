@@ -5,8 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import voxspell.app.NewGameModel;
-import voxspell.app.VoxModel;
-import voxspell.toolbox.VoxDatabase;
+import voxspell.toolbox.WordsCounter;
 
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -76,7 +75,7 @@ public class NewGame extends WindowPattern implements KeyListener{
 		panel.add(lblCurrentCategory);
 		CurrentCategory = lblCurrentCategory;
 		
-		JLabel lblRateOfCorrectness = new JLabel("Rate of correctness so far: 0.00%");
+		JLabel lblRateOfCorrectness = new JLabel("Rate of correctness so far: "+WordsCounter.getWordsCounter().getAccuracy()+"%");
 		lblRateOfCorrectness.setForeground(new Color(102, 0, 255));
 		lblRateOfCorrectness.setFont(new Font("Comic Sans MS", Font.PLAIN, 16));
 		lblRateOfCorrectness.setBounds(163, 183, 403, 28);
@@ -267,7 +266,6 @@ public class NewGame extends WindowPattern implements KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode()==KeyEvent.VK_ENTER){
-			System.out.println("pressed");
 	        submit.doClick();
 	    }
 	}
