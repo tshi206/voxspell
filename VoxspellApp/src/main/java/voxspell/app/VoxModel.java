@@ -12,7 +12,6 @@ import voxspell.gui.*;
 import voxspell.toolbox.VoxDatabase;
 
 public class VoxModel implements WindowListener, ActionListener{
-	public static String currentWorkingDirectory = System.getProperty("user.dir");
 	
 	private ArrayList<WindowPattern> guis = new ArrayList<WindowPattern>();
 	

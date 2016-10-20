@@ -23,6 +23,7 @@ import java.awt.event.WindowListener;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 
+@SuppressWarnings("serial")
 public class Settings extends JFrame implements WindowListener{
 	
 	private static Settings settings = null;
@@ -130,6 +131,7 @@ public class Settings extends JFrame implements WindowListener{
 			public void actionPerformed(ActionEvent e) {
 				String choice = comboBox_2.getItemAt(comboBox_2.getSelectedIndex());
 				voiceSpeed = choice;
+				//TODO - speed implementation
 			}
 		});
 		comboBox_2.setBounds(215, 95, 203, 31);
@@ -143,6 +145,13 @@ public class Settings extends JFrame implements WindowListener{
 		panel.add(btnImport);
 		
 		JButton btnCreateCategory = new JButton("Create Category");
+		btnCreateCategory.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				CreateCategory cc = new CreateCategory();
+				cc.setVisible(true);
+			}
+		});
 		btnCreateCategory.setForeground(new Color(102, 0, 255));
 		btnCreateCategory.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
 		btnCreateCategory.setBounds(116, 179, 194, 31);

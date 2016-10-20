@@ -8,11 +8,18 @@ import java.util.HashMap;
 
 import javax.swing.JOptionPane;
 
-import voxspell.app.VoxModel;
 import voxspell.gui.NewGame;
 import voxspell.gui.Settings;
+import voxspell.gui.Stats;
+
 
 public class VoxDatabase {
+	
+	public static String currentWorkingDirectory = System.getProperty("user.dir");
+	public static String wordlistsDirectory = System.getProperty("user.dir")+"/target/classes/voxspell/resources/wordlists/";
+	public static String sysfilesDirectory = System.getProperty("user.dir")+"/target/classes/voxspell/resources/sysfiles/";
+	public static String videosDirectory = System.getProperty("user.dir")+"/target/classes/voxspell/resources/videos/";
+	
 
 	private static String[] levels = {"Level One","Level Two","Level Three","Level Four","Level Five","Level Six","Level Seven","Level Eight","Level Nine","Level Ten","Level Eleven"};
 	protected static ArrayList<String> categories = new ArrayList<String>();
@@ -20,21 +27,21 @@ public class VoxDatabase {
 	
 
 
-	protected static File scm = new File(VoxModel.currentWorkingDirectory+"/target/classes/voxspell/resources/sysfiles/.sound.scm");
+	protected static File scm = new File(VoxDatabase.sysfilesDirectory+".sound.scm");
 	
-	protected static File importedLists = new File(VoxModel.currentWorkingDirectory+"/target/classes/voxspell/resources/sysfiles/importedLists");
-	protected static File registeredUsr = new File(VoxModel.currentWorkingDirectory+"/target/classes/voxspell/resources/sysfiles/registeredUsr");
-	protected static File defaultSettings = new File(VoxModel.currentWorkingDirectory+"/target/classes/voxspell/resources/sysfiles/.defaultSettings");
+	protected static File importedLists = new File(VoxDatabase.sysfilesDirectory+"importedLists");
+	protected static File registeredUsr = new File(VoxDatabase.sysfilesDirectory+"registeredUsr");
+	protected static File defaultSettings = new File(VoxDatabase.sysfilesDirectory+".defaultSettings");
 	
-	protected static File mastered = new File(VoxModel.currentWorkingDirectory+"/target/classes/voxspell/resources/sysfiles/.mastered");
-	protected static File failed = new File(VoxModel.currentWorkingDirectory+"/target/classes/voxspell/resources/sysfiles/.failed");
-	protected static File faulted = new File(VoxModel.currentWorkingDirectory+"/target/classes/voxspell/resources/sysfiles/.faulted");
-	protected static File masteredhistory = new File(VoxModel.currentWorkingDirectory+"/target/classes/voxspell/resources/sysfiles/.masteredhistory");
-	protected static File faultedhistory = new File(VoxModel.currentWorkingDirectory+"/target/classes/voxspell/resources/sysfiles/.faultedhistory");
-	protected static File failedhistory = new File(VoxModel.currentWorkingDirectory+"/target/classes/voxspell/resources/sysfiles/.failedhistory");
+	protected static File mastered = new File(VoxDatabase.sysfilesDirectory+".mastered");
+	protected static File failed = new File(VoxDatabase.sysfilesDirectory+".failed");
+	protected static File faulted = new File(VoxDatabase.sysfilesDirectory+".faulted");
+	protected static File masteredhistory = new File(VoxDatabase.sysfilesDirectory+".masteredhistory");
+	protected static File faultedhistory = new File(VoxDatabase.sysfilesDirectory+".faultedhistory");
+	protected static File failedhistory = new File(VoxDatabase.sysfilesDirectory+".failedhistory");
 	
 	
-	protected static File customizedLists = new File(VoxModel.currentWorkingDirectory+"/target/classes/voxspell/resources/sysfiles/.userCategories");
+	protected static File customizedLists = new File(VoxDatabase.sysfilesDirectory+".userCategories");
 	
 	
 	protected static ArrayList<ArrayList<String>> levelContents = new ArrayList<ArrayList<String>>(); //contents of individual categories
@@ -71,7 +78,7 @@ public class VoxDatabase {
 	public static void projectSetup(){
 		
 		System.out.println("System boots up............");
-		System.out.println("Current working dir: "+VoxModel.currentWorkingDirectory);
+		System.out.println("Current working dir: "+VoxDatabase.currentWorkingDirectory);
 
 		
 		
@@ -143,6 +150,55 @@ public class VoxDatabase {
 		}
 	}
 	
+	public static File createWordsFile(String name){		
+		File temp = new File(VoxDatabase.wordlistsDirectory+"."+name);
+		if (!(temp.exists())){
+			try {
+				temp.createNewFile();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		}
+		return temp;
+	}
+	
+	public static void writeToWordsFile(String name, String content, boolean appendable){
+		try {
+			FileWriter fw = new FileWriter(VoxDatabase.wordlistsDirectory+"."+name, appendable);
+			fw.write(content);
+			fw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void writeToSysFile(String name, String content, boolean appendable){
+		try {
+			FileWriter fw = new FileWriter(VoxDatabase.getSysfiles().get(VoxDatabase.getFilenames().indexOf(name)), appendable);
+			fw.write(content);
+			fw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void deleteSysFile(){
+		for (int i = 3; i<9; i++){
+			VoxDatabase.getSysfiles().get(i).delete();
+			try {
+				VoxDatabase.getSysfiles().get(i).createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public static void addCategory(ArrayList<String> categoryContents, String categoryName){
+		VoxDatabase.getLevelContents().add(categoryContents);
+		VoxDatabase.getCategories().add(categoryName);
+		Settings.getSettingsWindow().getCategory().addItem(categoryName);
+		Stats.getStatsWindow().getComboBox().addItem(categoryName);
+	}
 	
 	public static ArrayList<String> getFilenames() {
 		return filenames;

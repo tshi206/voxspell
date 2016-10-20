@@ -17,11 +17,10 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import voxspell.app.NewGameModel;
 import voxspell.app.ReviewModel;
-import voxspell.toolbox.VoxDatabase;
 import voxspell.toolbox.WordsCounter;
 
+@SuppressWarnings("serial")
 public class Review extends WindowPattern implements KeyListener{
 
 	private JTextField textField;

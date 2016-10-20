@@ -22,6 +22,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 
+@SuppressWarnings("serial")
 public class NewGame extends WindowPattern implements KeyListener{
 
 	private JTextField textField;

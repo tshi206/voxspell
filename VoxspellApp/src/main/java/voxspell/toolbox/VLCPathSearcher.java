@@ -16,14 +16,13 @@ import javax.swing.JOptionPane;
 
 import javax.swing.SwingWorker;
 
-import voxspell.app.VoxModel;
 import voxspell.gui.VideoPlayer;
 
 public class VLCPathSearcher extends SwingWorker<Void, Void> {
 
 	private Boolean findInDefault = false;
 	private String pathFound = "";
-	private File searchinglog = new File(VoxModel.currentWorkingDirectory+"/.searchinglog");
+	private File searchinglog = new File(VoxDatabase.currentWorkingDirectory+"/.searchinglog");
 	private ArrayList<String> log = new ArrayList<String>();
 	
 	public VLCPathSearcher(){
@@ -62,7 +61,7 @@ public class VLCPathSearcher extends SwingWorker<Void, Void> {
 			
 			ProcessBuilder p = null;
 			p = new ProcessBuilder("/bin/bash","-c", "find / -name \"libvlc.so*\" | grep libvlc > "
-					+ VoxModel.currentWorkingDirectory+"/.searchinglog");
+					+ VoxDatabase.currentWorkingDirectory+"/.searchinglog");
 			Process process = null;
 			int exit = 0;
 			try {

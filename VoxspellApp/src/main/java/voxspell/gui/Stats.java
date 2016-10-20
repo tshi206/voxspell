@@ -13,7 +13,6 @@ import java.util.Vector;
 
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 import voxspell.toolbox.StatsWorker;
 import voxspell.toolbox.VoxDatabase;
@@ -24,6 +23,7 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 
+@SuppressWarnings("serial")
 public class Stats extends WindowPattern implements ActionListener {
 
 	private JTable table;
@@ -140,7 +140,6 @@ public class Stats extends WindowPattern implements ActionListener {
 		}
 	}
 
-	@SuppressWarnings("serial")
 	public void updateTable(Vector<Vector<String>> rowData, Vector<String> columnNames){
 		table = new JTable(new DefaultTableModel(rowData, columnNames){
 			@Override

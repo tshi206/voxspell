@@ -1,7 +1,6 @@
 package voxspell.gui;
 
 import java.awt.Color;
-import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -13,6 +12,7 @@ import javax.swing.border.EmptyBorder;
 
 import voxspell.app.VoxModel;
 
+@SuppressWarnings("serial")
 public abstract class WindowPattern extends JFrame {
 	
 	protected JPanel contentPane;

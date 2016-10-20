@@ -108,7 +108,7 @@ public class NewGameModel implements ActionListener{
 				
 			}else if (source.equals(NewGame.getNewGameWindow().getNextCategory())){
 				
-				if ((VoxDatabase.getContents().indexOf(correspondingLevel)+1)==VoxDatabase.getLevelContents().size()){
+				if ((VoxDatabase.getLevelContents().indexOf(correspondingLevel)+1)==VoxDatabase.getLevelContents().size()){
 					NewGame.getNewGameWindow().getNextCategory().setText("Last Category");
 					NewGame.getNewGameWindow().getNextCategory().setEnabled(false);
 				}else{

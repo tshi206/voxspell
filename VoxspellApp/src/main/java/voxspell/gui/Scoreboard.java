@@ -11,6 +11,7 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 
+@SuppressWarnings("serial")
 public class Scoreboard extends WindowPattern {
 
 	private JTable table;

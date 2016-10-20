@@ -13,7 +13,6 @@ import javax.swing.JOptionPane;
 
 import javax.swing.SwingWorker;
 
-import voxspell.app.VoxModel;
 import voxspell.gui.Settings;
 import voxspell.gui.Stats;
 
@@ -47,7 +46,7 @@ public class FileLoadingWorker extends SwingWorker<Void, Void> {
 		System.out.println("Project files loading starts......");
 		if (levelContents.isEmpty()){
 			try {
-				wordlist = new FileReader(VoxModel.currentWorkingDirectory+"/target/classes/voxspell/resources/wordlists/NZCER-spelling-lists.txt");
+				wordlist = new FileReader(VoxDatabase.wordlistsDirectory+"NZCER-spelling-lists.txt");
 				for (@SuppressWarnings("unused") String s : levels){
 					levelContents.add(new ArrayList<String>());
 				}
@@ -85,7 +84,7 @@ public class FileLoadingWorker extends SwingWorker<Void, Void> {
 				ArrayList<String> temp = new ArrayList<String>();
 				line = line.substring(1, line.length());
 				VoxDatabase.categories.add(line);
-				Scanner s1 = new Scanner(new FileReader(VoxModel.currentWorkingDirectory+"/target/classes/voxspell/resources/sysfiles/."+line));
+				Scanner s1 = new Scanner(new FileReader(VoxDatabase.wordlistsDirectory+"."+line));
 				while (s1.hasNext()){
 					String line1 = s1.nextLine();
 					if (line1.equals("")){
@@ -96,7 +95,7 @@ public class FileLoadingWorker extends SwingWorker<Void, Void> {
 				levelContents.add(temp);
 				s1.close();
 				
-				File tempfile = new File(VoxModel.currentWorkingDirectory+"/target/classes/voxspell/resources/sysfiles/."+line+"_def");
+				File tempfile = new File(VoxDatabase.wordlistsDirectory+"."+line+"_def");
 				if (tempfile.exists()){
 					Scanner s2 = new Scanner(new FileReader(tempfile));
 					int count = 0;
@@ -156,10 +155,10 @@ public class FileLoadingWorker extends SwingWorker<Void, Void> {
 	private void videoSetup(){
 		ProcessBuilder p = null;
 		try {
-			File bunny = new File(VoxModel.currentWorkingDirectory+"/target/classes/voxspell/resources/videos/big_buck_bunny_1_minute.avi");
+			File bunny = new File(VoxDatabase.videosDirectory+"big_buck_bunny_1_minute.avi");
 			String path = bunny.getCanonicalPath();
 			path = path.substring(0, path.length()-bunny.getName().length());
-			File bunny_negative = new File(VoxModel.currentWorkingDirectory+"/target/classes/voxspell/resources/videos/big_buck_bunny_1_minute_converted.avi");
+			File bunny_negative = new File(VoxDatabase.videosDirectory+"big_buck_bunny_1_minute_converted.avi");
 			if (!(bunny_negative.exists())){ //dead code LOL
 				p = new ProcessBuilder("/bin/bash","-c", "ffmpeg -i "+bunny.getCanonicalPath()+" -vf negate "+
 						path+"big_buck_bunny_1_minute_converted.avi");

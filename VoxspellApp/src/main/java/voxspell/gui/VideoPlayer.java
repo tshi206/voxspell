@@ -13,7 +13,7 @@ import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
-import voxspell.app.VoxModel;
+import voxspell.toolbox.VoxDatabase;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -31,15 +31,16 @@ import javax.swing.Timer;
 import com.sun.jna.Native;
 import com.sun.jna.NativeLibrary;
 
+@SuppressWarnings("serial")
 public class VideoPlayer extends JFrame implements ActionListener, WindowListener {
 
 	private JPanel contentPane;
 	private JPanel selectionPane;
 
-	private static String additionalPath = VoxModel.currentWorkingDirectory;
+	private static String additionalPath = VoxDatabase.currentWorkingDirectory;
 	private EmbeddedMediaPlayerComponent mediaPlayerComponent;
-	private File bunny = new File(VoxModel.currentWorkingDirectory+"/target/classes/voxspell/resources/videos/big_buck_bunny_1_minute.avi");
-	private File bunny_negative = new File(VoxModel.currentWorkingDirectory+"/target/classes/voxspell/resources/videos/big_buck_bunny_1_minute_converted.avi");
+	private File bunny = new File(VoxDatabase.videosDirectory+"big_buck_bunny_1_minute.avi");
+	private File bunny_negative = new File(VoxDatabase.videosDirectory+"big_buck_bunny_1_minute_converted.avi");
 	private File video;
 	private EmbeddedMediaPlayer player;
 	private JProgressBar jpb = new JProgressBar(JProgressBar.HORIZONTAL, 0, 60);
@@ -152,7 +153,7 @@ public class VideoPlayer extends JFrame implements ActionListener, WindowListene
 			video = bunny_negative;
 		}
 
-		String path = VoxModel.currentWorkingDirectory+"/src";
+		String path = VoxDatabase.currentWorkingDirectory+"/src";
 		System.out.println(path);
 
 		NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), "/usr/lib"+":"+path+":"+path+"/target/classes/voxspell/"

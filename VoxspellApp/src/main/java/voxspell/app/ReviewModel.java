@@ -24,7 +24,6 @@ public class ReviewModel implements ActionListener{
 	private int wc = 0;
 	private int attempt;
 	private int wordsCorrect=0;
-	private int wordsFailed=0;
 	private String word = "You have not start the game, please start the game first";
 	private int totalWords;
 
@@ -204,7 +203,6 @@ public class ReviewModel implements ActionListener{
 				attempt++;
 				return;
 			}
-			wordsFailed++;
 			counter.count(false);
 			Review.getReviewWindow().getAccuracy().setText("Rate of correctness so far: "+counter.getAccuracy()+"%");
 		}

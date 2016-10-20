@@ -6,7 +6,6 @@ import javax.swing.SwingWorker;
 
 import voxspell.app.NewGameModel;
 import voxspell.app.ReviewModel;
-import voxspell.app.VoxModel;
 import voxspell.gui.NewGame;
 import voxspell.gui.Review;
 
@@ -51,7 +50,7 @@ public class Festival {
 			vc.setWord(s);
 			vc.updateSCM();
 		}
-		String bashcmd = "festival -b "+ VoxModel.currentWorkingDirectory+"/target/classes/voxspell/resources/sysfiles/.sound.scm";
+		String bashcmd = "festival -b "+ VoxDatabase.sysfilesDirectory+".sound.scm";
 		p = new ProcessBuilder("/bin/bash","-c", bashcmd);
 		Speaker speaker=new Speaker(newGame);
 		speaker.execute();
@@ -67,7 +66,7 @@ public class Festival {
 			vc.setWord(s);
 			vc.updateSCM();
 		}
-		String bashcmd = "festival -b "+ VoxModel.currentWorkingDirectory+"/target/classes/voxspell/resources/sysfiles/.sound.scm";
+		String bashcmd = "festival -b "+ VoxDatabase.sysfilesDirectory+".sound.scm";
 		p = new ProcessBuilder("/bin/bash","-c", bashcmd);
 		Speaker speaker=new Speaker(review);
 		speaker.execute();
@@ -81,7 +80,7 @@ public class Festival {
 	public void festivalGenerator(String s, NewGameModel ngm){
 		vc.setWord(s);
 		vc.updateSCM();
-		String bashcmd= "festival -b "+ VoxModel.currentWorkingDirectory+"/target/classes/voxspell/resources/sysfiles/.sound.scm";
+		String bashcmd= "festival -b "+ VoxDatabase.sysfilesDirectory+".sound.scm";
 		p = new ProcessBuilder("/bin/bash","-c", bashcmd);
 		Speaker speaker=new Speaker(newGame);
 		speaker.execute();
@@ -95,7 +94,7 @@ public class Festival {
 	public void festivalGenerator(String s, ReviewModel Rmodel){
 		vc.setWord(s);
 		vc.updateSCM();
-		String bashcmd= "festival -b "+ VoxModel.currentWorkingDirectory+"/target/classes/voxspell/resources/sysfiles/.sound.scm";
+		String bashcmd= "festival -b "+ VoxDatabase.sysfilesDirectory+".sound.scm";
 		p = new ProcessBuilder("/bin/bash","-c", bashcmd);
 		Speaker speaker=new Speaker(review);
 		speaker.execute();
@@ -185,7 +184,7 @@ class GeneralFestivalWorker extends SwingWorker<Void, Void>{
 	@Override
 	protected Void doInBackground() throws Exception {
 		
-		String bashcmd= "festival -b "+ VoxModel.currentWorkingDirectory+"/target/classes/voxspell/resources/sysfiles/.sound.scm";
+		String bashcmd= "festival -b "+ VoxDatabase.sysfilesDirectory+".sound.scm";
 		ProcessBuilder p = new ProcessBuilder("/bin/bash","-c", bashcmd);
 
 		try {
