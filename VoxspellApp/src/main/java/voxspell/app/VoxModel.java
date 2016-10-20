@@ -80,10 +80,8 @@ public class VoxModel implements WindowListener, ActionListener{
 			JButton source = (JButton)e.getSource();
 			if (source.getText().equals("New Game")){
 				paintFrame(MainMenu.getmainMenuWindow(), VoxModel.From_Main_To_New_Game);
-				System.out.println("open new game");
 			}else if (source.getText().equals("Back to main menu")){
 				paintFrame(null, VoxModel.Return_To_Main);
-				System.out.println("return to main");
 			}else if (source.getText().equals("Stats")){
 				paintFrame(MainMenu.getmainMenuWindow(), VoxModel.From_Main_To_Stats);
 			}else if (source.getText().equals("Scoreboard")){

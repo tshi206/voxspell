@@ -21,6 +21,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
 
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
@@ -142,18 +148,40 @@ public class Settings extends JFrame implements WindowListener{
 		comboBox_2.setSelectedIndex(1);
 		panel.add(comboBox_2);
 		speed = comboBox_2;
-		
+
 		JButton btnImport = new JButton("Import Category");
 		btnImport.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 				JFileChooser fc = new JFileChooser(VoxDatabase.wordlistsDirectory);
 				fc.setAcceptAllFileFilterUsed(false);
-				fc.setMultiSelectionEnabled(false);
+				fc.setMultiSelectionEnabled(true);
 				fc.addChoosableFileFilter(new TXTFilter());
 				int returnVal = fc.showOpenDialog(itself);
-				//TODO - file open logic
+
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					File[] files = fc.getSelectedFiles();
+					for (File file : files){
+						try {
+							String path = file.getCanonicalPath().substring(0,file.getCanonicalPath().length()-file.getName().length());
+							if (!(path.equals(VoxDatabase.wordlistsDirectory))){
+								File temp = new File(VoxDatabase.wordlistsDirectory+file.getName());
+								if (!(temp.exists())){
+									temp.createNewFile();
+								}else{
+									temp.delete();
+									temp.createNewFile();
+								}
+								VoxDatabase.loadList(file, false);
+							}else{
+								VoxDatabase.loadList(file, true);
+							}
+						} catch (IOException e1) {
+							e1.printStackTrace();
+						}
+					}
+				}
 			}
 		});
 		btnImport.setForeground(new Color(102, 0, 255));
