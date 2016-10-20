@@ -5,6 +5,7 @@ package voxspell.gui;
 import java.awt.Color;
 
 import voxspell.toolbox.Festival;
+import voxspell.toolbox.TXTFilter;
 import voxspell.toolbox.VoiceChoice;
 import voxspell.toolbox.VoxDatabase;
 
@@ -12,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
 import java.awt.Font;
@@ -25,6 +27,8 @@ import javax.swing.JButton;
 
 @SuppressWarnings("serial")
 public class Settings extends JFrame implements WindowListener{
+	
+	private Settings itself = this;
 	
 	private static Settings settings = null;
 	
@@ -140,6 +144,18 @@ public class Settings extends JFrame implements WindowListener{
 		speed = comboBox_2;
 		
 		JButton btnImport = new JButton("Import Category");
+		btnImport.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				JFileChooser fc = new JFileChooser(VoxDatabase.wordlistsDirectory);
+				fc.setAcceptAllFileFilterUsed(false);
+				fc.setMultiSelectionEnabled(false);
+				fc.addChoosableFileFilter(new TXTFilter());
+				int returnVal = fc.showOpenDialog(itself);
+				//TODO - file open logic
+			}
+		});
 		btnImport.setForeground(new Color(102, 0, 255));
 		btnImport.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
 		btnImport.setBounds(115, 137, 195, 31);

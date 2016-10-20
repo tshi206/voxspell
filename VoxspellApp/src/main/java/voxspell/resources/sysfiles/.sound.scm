@@ -1,3 +1,3 @@
 (voice_kal_diphone)
 
-(SayText "Welcome to Vox spell")
+(SayText "Please spell the word my")
