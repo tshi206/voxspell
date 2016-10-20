@@ -11,7 +11,7 @@ import java.util.Random;
 
 import javax.swing.JButton;
 
-
+import voxspell.gui.EndOfCategory;
 import voxspell.gui.NewGame;
 import voxspell.gui.Settings;
 import voxspell.toolbox.Festival;
@@ -28,6 +28,7 @@ public class NewGameModel implements ActionListener{
 	private int wordsFailed=0;
 	private String word = "You have not start the game, please start the game first";
 
+	private EndOfCategory eofc = null;
 
 	protected int exit;
 
@@ -89,7 +90,7 @@ public class NewGameModel implements ActionListener{
 					NewGame.getNewGameWindow().getTextField().setText("");
 					if (turnend){
 						if (wc == 11){
-							VoxModel.createEndOfCategoryWindow(wordsCorrect, wordsFailed);
+							eofc = VoxModel.createEndOfCategoryWindow(wordsCorrect, wordsFailed);
 							NewGame.getNewGameWindow().getSubmit().setEnabled(false);
 							NewGame.getNewGameWindow().getRehear().setEnabled(false);
 						}
@@ -99,6 +100,10 @@ public class NewGameModel implements ActionListener{
 				Festival festival = new Festival(NewGame.getNewGameWindow(), lastAttemptFailed);
 				festival.festivalGenerator(word, this);
 			}else if (source.equals(NewGame.getNewGameWindow().getBackToMain())){
+				
+				if (eofc!=null){
+					eofc.dispose();
+				}
 				
 				Settings.getSettingsWindow().getCategory().setSelectedIndex(VoxDatabase.getLevelContents().indexOf(correspondingLevel));
 				

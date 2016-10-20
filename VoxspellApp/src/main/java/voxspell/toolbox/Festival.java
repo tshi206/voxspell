@@ -113,6 +113,11 @@ public class Festival {
 		gfw.execute();
 	}
 
+	public static void endOfCategorySound(String soundName){
+		SoundlWorker sw = new SoundlWorker(soundName);
+		sw.execute();
+	}
+	
 	public int getExitState() {
 		return exit;
 	}
@@ -154,9 +159,11 @@ public class Festival {
 		@Override
 		protected void done(){
 			if (!(reviewMode)){
-				newSpellingQuiz.getSubmit().setEnabled(true);
+				if (newSpellingQuiz.getModel().getWc()<11){
+					newSpellingQuiz.getSubmit().setEnabled(true);				
+					newSpellingQuiz.getRehear().setEnabled(true);
+				}
 				newSpellingQuiz.getBackToMain().setEnabled(true);
-				newSpellingQuiz.getRehear().setEnabled(true);
 				if (newSpellingQuiz.getModel().isTurnend()){
 					if (newSpellingQuiz.getModel().getWc()<11){
 						newSpellingQuiz.getSubmit().setText("Start!");
@@ -164,9 +171,11 @@ public class Festival {
 					}
 				}
 			}else{
-				review.getSubmit().setEnabled(true);
+				if (review.getModel().getWc()<review.getModel().getTotalWords()){
+					review.getSubmit().setEnabled(true);				
+					review.getRehear().setEnabled(true);
+				}
 				review.getBackToMain().setEnabled(true);
-				review.getRehear().setEnabled(true);
 				if (review.getModel().isTurnend()){
 					if (review.getModel().getWc()<review.getModel().getTotalWords()){
 						review.getSubmit().setText("Start!");
@@ -185,6 +194,31 @@ class GeneralFestivalWorker extends SwingWorker<Void, Void>{
 	protected Void doInBackground() throws Exception {
 		
 		String bashcmd= "festival -b "+ VoxDatabase.sysfilesDirectory+".sound.scm";
+		ProcessBuilder p = new ProcessBuilder("/bin/bash","-c", bashcmd);
+
+		try {
+			Process process = p.start();
+			@SuppressWarnings("unused")
+			int exit=process.waitFor();
+		} catch (IOException | InterruptedException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+}
+
+class SoundlWorker extends SwingWorker<Void, Void>{
+	
+	private String soundName;
+
+	public SoundlWorker(String soundFileName){
+		soundName = soundFileName;
+	}
+	
+	@Override
+	protected Void doInBackground() throws Exception {
+		
+		String bashcmd= "mplayer "+ VoxDatabase.videosDirectory+soundName;
 		ProcessBuilder p = new ProcessBuilder("/bin/bash","-c", bashcmd);
 
 		try {

@@ -4,6 +4,9 @@ package voxspell.gui;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import voxspell.toolbox.Festival;
+
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -136,16 +139,20 @@ public class EndOfCategory extends JFrame {
 
 	private void calculateStats(){
 		if (wordsCorrect >= 8){
+			Festival.endOfCategorySound("excellent.mp3");
 			result.setText("Excellent!!");
 			result.setForeground(Color.GREEN);
 			unlockReward(true);
 		}else if (wordsCorrect >= 5){
+			Festival.endOfCategorySound("average.mp3");
 			result.setText("Average");
 			result.setForeground(Color.BLACK);
 		}else if (wordsCorrect >= 3){
+			Festival.endOfCategorySound("notbad.mp3");
 			result.setText("...Not bad?");
 			result.setForeground(Color.DARK_GRAY);
 		}else{
+			Festival.endOfCategorySound("poor.mp3");
 			result.setText("Poor :)");
 			result.setForeground(Color.RED);
 		}

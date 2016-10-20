@@ -16,9 +16,9 @@ import voxspell.gui.Stats;
 public class VoxDatabase {
 	
 	public static String currentWorkingDirectory = System.getProperty("user.dir");
-	public static String wordlistsDirectory = System.getProperty("user.dir")+"/target/classes/voxspell/resources/wordlists/";
-	public static String sysfilesDirectory = System.getProperty("user.dir")+"/target/classes/voxspell/resources/sysfiles/";
-	public static String videosDirectory = System.getProperty("user.dir")+"/target/classes/voxspell/resources/videos/";
+	public static String wordlistsDirectory = System.getProperty("user.dir")+"/src/main/java/voxspell/resources/wordlists/";
+	public static String sysfilesDirectory = System.getProperty("user.dir")+"/src/main/java/voxspell/resources/sysfiles/";
+	public static String videosDirectory = System.getProperty("user.dir")+"/src/main/java/voxspell/resources/videos/";
 	
 
 	private static String[] levels = {"Level One","Level Two","Level Three","Level Four","Level Five","Level Six","Level Seven","Level Eight","Level Nine","Level Ten","Level Eleven"};

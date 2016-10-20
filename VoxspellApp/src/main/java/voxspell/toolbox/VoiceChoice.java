@@ -7,6 +7,7 @@ import java.io.IOException;
 import javax.swing.JOptionPane;
 
 public class VoiceChoice {
+	private String speed = "Normal";
 	private String whichChoice = "one";
 	private String word = "";
 	private File scm;
@@ -36,6 +37,10 @@ public class VoiceChoice {
 		this.scm = scm;
 	}
 	
+	public void setSpeed(String s){
+		speed = s;
+	}
+	
 	public void updateSCM(){
 		FileWriter writer;
 		try {
@@ -49,10 +54,18 @@ public class VoiceChoice {
 	
 	@Override
 	public String toString(){
-		if (whichChoice.equals("one")){
-			return "(voice_kal_diphone)\n(SayText \""+word+"\")\n";
+		String speedLevel;
+		if (speed.equals("Normal")){
+			speedLevel = "";
+		}else if (speed.equals("Slow")){
+			speedLevel = "(Parameter.set 'Duration_Stretch 2.2)";
 		}else{
-			return "(voice_akl_nz_jdt_diphone)\n(SayText \""+word+"\")\n";
+			speedLevel = "(Parameter.set 'Duration_Stretch 0.8)";
+		}
+		if (whichChoice.equals("one")){
+			return "(voice_kal_diphone)\n"+speedLevel+"\n(SayText \""+word+"\")\n";
+		}else{
+			return "(voice_akl_nz_jdt_diphone)\n"+speedLevel+"\n(SayText \""+word+"\")\n";
 		}
 	}
 }

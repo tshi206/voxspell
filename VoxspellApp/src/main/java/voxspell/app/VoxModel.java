@@ -105,10 +105,12 @@ public class VoxModel implements WindowListener, ActionListener{
 	 * @param wordCorrect
 	 * @param wordFailed
 	 * @param newGame
+	 * @return EndOfCategory
 	 */
-	public static void createEndOfCategoryWindow(int wordCorrect, int wordFailed){
+	public static EndOfCategory createEndOfCategoryWindow(int wordCorrect, int wordFailed){
 		EndOfCategory eofc = new EndOfCategory(wordCorrect, wordFailed);
 		eofc.setVisible(true);
+		return eofc;
 	}
 
 	/**

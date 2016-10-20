@@ -131,10 +131,11 @@ public class Settings extends JFrame implements WindowListener{
 			public void actionPerformed(ActionEvent e) {
 				String choice = comboBox_2.getItemAt(comboBox_2.getSelectedIndex());
 				voiceSpeed = choice;
-				//TODO - speed implementation
+				VoiceChoice.getVoiceChoice().setSpeed(choice);
 			}
 		});
 		comboBox_2.setBounds(215, 95, 203, 31);
+		comboBox_2.setSelectedIndex(1);
 		panel.add(comboBox_2);
 		speed = comboBox_2;
 		
@@ -165,6 +166,7 @@ public class Settings extends JFrame implements WindowListener{
 				previousSettings[1] = voiceChoice;
 				previousSettings[2] = voiceSpeed;
 				settings.setVisible(false);
+				//TODO - write to config files
 			}
 		});
 		btnBackToMain.setFont(new Font("Comic Sans MS", Font.BOLD, 17));
@@ -180,6 +182,21 @@ public class Settings extends JFrame implements WindowListener{
 		return category;
 	}
 
+	/**
+	 * USE WHEN PROJECT IS LOADING OR USER IS CHANGED
+	 * @param categoryName
+	 * @param voiceChoice
+	 * @param speedLevel
+	 */
+	public void updateSettings(String categoryName, String voiceName, String speedLevel){
+		category.setSelectedItem(categoryName);
+		speed.setSelectedItem(speedLevel);
+		choice.setSelectedItem(voiceName);
+		previousSettings[0] = selectedCategory;
+		previousSettings[1] = voiceChoice;
+		previousSettings[2] = voiceSpeed;
+	}
+	
 	
 	@Override
 	public void windowOpened(WindowEvent e) {
@@ -192,13 +209,13 @@ public class Settings extends JFrame implements WindowListener{
 		int exit = JOptionPane.showConfirmDialog(settings, "Close this page without saving any changes?", "Comfirm operation", JOptionPane.YES_NO_OPTION);
 		if (exit == JOptionPane.YES_OPTION){
 			if (previousSettings == null){
-				category.setSelectedIndex(0);
+				category.setSelectedIndex(0);				
+				speed.setSelectedIndex(1);
 				choice.setSelectedIndex(0);
-				speed.setSelectedIndex(0);
 			}else{
 				category.setSelectedItem(previousSettings[0]);
-				choice.setSelectedItem(previousSettings[1]);
 				speed.setSelectedItem(previousSettings[2]);
+				choice.setSelectedItem(previousSettings[1]);
 			}
 			settings.setVisible(false);
 		}
