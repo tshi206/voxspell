@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Vector;
 
-import javax.swing.JTable;
 import javax.swing.SwingWorker;
 
 import voxspell.gui.Stats;

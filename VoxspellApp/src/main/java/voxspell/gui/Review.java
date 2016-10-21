@@ -43,6 +43,8 @@ public class Review extends WindowPattern implements KeyListener{
 	 */
 	private Review() {
 		super();
+		edit.setEnabled(false);
+		delete.setEnabled(false);
 	}
 
 	public static Review getReviewWindow(){

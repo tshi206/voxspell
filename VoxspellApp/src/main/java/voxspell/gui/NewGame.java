@@ -48,6 +48,8 @@ public class NewGame extends WindowPattern implements KeyListener{
 	 */
 	private NewGame() {
 		super();
+		edit.setEnabled(false);
+		delete.setEnabled(false);
 	}
 	
 	public static NewGame getNewGameWindow(){

@@ -1,16 +1,20 @@
 package voxspell.gui;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import voxspell.app.VoxModel;
+import voxspell.toolbox.VoxDatabase;
 
 @SuppressWarnings("serial")
 public abstract class WindowPattern extends JFrame {
@@ -26,13 +30,14 @@ public abstract class WindowPattern extends JFrame {
 	protected JMenu help;
 	protected JMenuItem intro;
 	protected JMenuItem functionalities;
-	private JMenuItem edit;
+	protected JMenuItem edit;
 	protected JMenuItem delete;
 	protected JMenuItem clear;
 	
 	
 	protected String username = "anonymous";
 	
+	protected WindowPattern wp = this;
 	
 	
 	protected static VoxModel voxModel = VoxModel.getVoxModel();
@@ -112,6 +117,17 @@ public abstract class WindowPattern extends JFrame {
 		delete = mntmDelete;
 		
 		JMenuItem mntmClear = new JMenuItem("Clear your statistics");
+		mntmClear.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int option = JOptionPane.showConfirmDialog(wp, "Are you sure? Clearing statistics will not change your scoreboard record.", "Confirm", JOptionPane.YES_NO_OPTION);
+				if (option == JOptionPane.YES_OPTION){
+					VoxDatabase.deleteSysFile();
+				}
+			}
+			
+		});
 		mnHelp.add(mntmClear);
 		clear = mntmClear;
 		

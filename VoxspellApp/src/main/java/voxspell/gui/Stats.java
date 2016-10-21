@@ -41,6 +41,9 @@ public class Stats extends WindowPattern implements ActionListener {
 	 */
 	private Stats() {
 		super();
+		edit.setEnabled(false);
+		delete.setEnabled(false);
+		clear.setEnabled(false);
 	}
 
 	public static Stats getStatsWindow(){
