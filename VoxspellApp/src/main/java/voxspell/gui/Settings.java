@@ -5,6 +5,8 @@ package voxspell.gui;
 import java.awt.Color;
 
 import voxspell.toolbox.Festival;
+import voxspell.toolbox.ImportDefinitionsWorker;
+import voxspell.toolbox.ImportListWorker;
 import voxspell.toolbox.TXTFilter;
 import voxspell.toolbox.VoiceChoice;
 import voxspell.toolbox.VoxDatabase;
@@ -21,16 +23,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 
 @SuppressWarnings("serial")
-public class Settings extends JFrame implements WindowListener{
+public class Settings extends JFrame implements WindowListener, PropertyChangeListener{
+	
+	private boolean hasDefinitions = false;
+	private ArrayList<File> _definitionsCandidates = null;
 	
 	private Settings itself = this;
 	
@@ -117,6 +125,9 @@ public class Settings extends JFrame implements WindowListener{
 				}else{
 					VoiceChoice.getVoiceChoice().setChoice("two");
 					Festival.festivalGenerator("Welcome to Vox spell");
+					JOptionPane.showMessageDialog(itself, "Due to the amount of system's vocabulary,\n"
+							+ "some words might not be pronounced by Voice Two.\n"
+							+ "If that's the case, please change back to Voice One which has a larger amount of supporting vocabulary.", "Notice", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}			
 		});
@@ -158,41 +169,88 @@ public class Settings extends JFrame implements WindowListener{
 				fc.addChoosableFileFilter(new TXTFilter());
 				int returnVal = fc.showOpenDialog(itself);
 
+				ArrayList<File> wordsCandidates = new ArrayList<File>();
+				ArrayList<File> definitionsCandidates = new ArrayList<File>();
+				
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					
 					File[] files = fc.getSelectedFiles();
 					for (File file : files){
 						try {
-
-							File temp = new File(VoxDatabase.wordlistsDirectory+"."+file.getName());
-							if (temp.exists()){
-								JOptionPane.showMessageDialog(itself, "This file has already been included in the program's directory therefore cannot be imported.\n"
-										+ "If you do want to import please either rename the file or remove all relevant categories via\n"
-										+ "Help ---> Delete imported category", "Warning", JOptionPane.WARNING_MESSAGE);
-								return;
-							}
 							
-							Scanner scanner = new Scanner(new FileReader(file));
-							while (scanner.hasNext()){
-								String line = scanner.nextLine();
-								if (line.startsWith("%")){
-									String str = line.substring(1);
-									if (VoxDatabase.getCategories().contains(str)){
-										JOptionPane.showMessageDialog(itself, "A category with the same name ("+str+") has already been created in the application therefore this file cannot be imported.\n"
-												+ "If you do want to import please either rename the categories containing this file or remove all relevant categories via\n"
-												+ "Help ---> Delete imported category", "Warning", JOptionPane.WARNING_MESSAGE);
-										scanner.close();
-										return;
+							if (file.getName().endsWith("_def.txt")){
+								
+								File temp = new File(VoxDatabase.wordlistsDirectory+"."+file.getName());
+								if (temp.exists()){
+									temp.delete();
+								}
+
+								definitionsCandidates.add(file);
+								
+							}else{
+
+								boolean importFailed = false;
+
+								File temp = new File(VoxDatabase.wordlistsDirectory+"."+file.getName());
+								if (temp.exists()){
+									JOptionPane.showMessageDialog(itself, "This file ("+file.getName()+") has already been included in the program's directory therefore cannot be imported.\n"
+											+ "If you do want to import please either rename the file or remove all relevant categories via\n"
+											+ "Help ---> Delete imported category", "Warning", JOptionPane.WARNING_MESSAGE);
+									continue;
+								}
+								
+								Scanner scanner = new Scanner(new FileReader(file));
+								while (scanner.hasNext()){
+									String line = scanner.nextLine();
+									if (line.equals("")){
+										continue;
+									}
+									if (line.startsWith("%")){
+										String str = line.substring(1);
+										if (VoxDatabase.getCategories().contains(str)){
+											JOptionPane.showMessageDialog(itself, "A category with the same name ("+str+") has already been created in the application therefore this file cannot be imported.\n"
+													+ "If you do want to import please either rename the categories containing this file or remove all relevant categories via\n"
+													+ "Help ---> Delete imported category", "Warning", JOptionPane.WARNING_MESSAGE);
+											scanner.close();
+											importFailed = true;
+											break;
+										}
 									}
 								}
+								scanner.close();
+								
+								if (importFailed){
+									continue;
+								}
+								
+								wordsCandidates.add(file);
 							}
-							scanner.close();
 							
-							//TODO
 
 						} catch (IOException e1) {
 							e1.printStackTrace();
 						}
 					}
+					
+					if (!(definitionsCandidates.isEmpty())){
+						hasDefinitions = true;
+						_definitionsCandidates = definitionsCandidates;
+					}
+					
+					if (!(wordsCandidates.isEmpty())){
+						ArrayList<File> filesToWriteTo = new ArrayList<File>();
+						for (File file : wordsCandidates){
+							File temp = VoxDatabase.createWordsFile(file.getName());
+							filesToWriteTo.add(temp);
+						}
+						ImportListWorker ilw = new ImportListWorker(filesToWriteTo, wordsCandidates);
+						ilw.execute();
+					}else{
+						if (hasDefinitions){
+							startLoadingDefinitions();
+						}
+					}
+					
 				}
 			}
 		});
@@ -306,4 +364,32 @@ public class Settings extends JFrame implements WindowListener{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		
+		if (hasDefinitions){
+			
+			startLoadingDefinitions();
+			
+		}
+		
+	}
+	
+	private void startLoadingDefinitions(){
+		
+		if (_definitionsCandidates != null){
+			
+			ArrayList<File> filesToWriteTo = new ArrayList<File>();
+			for (File file : _definitionsCandidates){
+				File temp = VoxDatabase.createWordsFile(file.getName());
+				filesToWriteTo.add(temp);
+			}
+			ImportDefinitionsWorker idw = new ImportDefinitionsWorker(filesToWriteTo, _definitionsCandidates);
+			idw.execute();
+			
+		}
+		
+	}
+	
 }

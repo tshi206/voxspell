@@ -104,19 +104,34 @@ public class CreateCategory extends JFrame {
 						JOptionPane.showMessageDialog(itself, "Minimum number of words must be ten", "Warning", JOptionPane.OK_OPTION);
 					}else{
 						
+						if (VoxDatabase.getCategories().contains(textField.getText())){
+							JOptionPane.showMessageDialog(itself, "Creation fails: A category with the same name ("+textField.getText()+") already exists", "Warning", JOptionPane.OK_OPTION);
+							return;
+						}else{
+							for (String word : ta){
+								if (word.startsWith("%")){
+									word = word.substring(1);
+									if (VoxDatabase.getCategories().contains(word)){
+										JOptionPane.showMessageDialog(itself, "Creation fails: A category with the same name ("+word+") already exists", "Warning", JOptionPane.OK_OPTION);
+										return;
+									}
+								}
+							}
+						}
+						
 						boolean hasDefinition = false;
 						if (!(definitions.getText().matches("\\s*"))){
 							hasDefinition = true;
 						}
 
-						File temp1 = VoxDatabase.createWordsFile(textField.getText());
+						File temp1 = VoxDatabase.createWordsFile(textField.getText()+".txt");
 						VoxDatabase.writeToSysFile("customizedLists", "."+textField.getText()+"\n", true);
-						VoxDatabase.writeToWordsFile(textField.getText(), words.getText()+"\n", false);
+						VoxDatabase.writeToWordsFile(textField.getText()+".txt", words.getText()+"\n", false);
 
 
 						if (hasDefinition){
-							VoxDatabase.createWordsFile(textField.getText()+"_def");
-							VoxDatabase.writeToWordsFile(textField.getText()+"_def", definitions.getText()+"\n", false);
+							VoxDatabase.createWordsFile(textField.getText()+"_def.txt");
+							VoxDatabase.writeToWordsFile(textField.getText()+"_def.txt", definitions.getText()+"\n", false);
 						}
 
 						CreateCategoryWorker ccw = new CreateCategoryWorker(temp1);

@@ -133,7 +133,7 @@ public class FileLoadingWorker extends SwingWorker<Void, Void> {
 	private void loadDefaultCategories(){
 		if (levelContents.isEmpty()){
 			try {
-				wordlist = new FileReader(VoxDatabase.wordlistsDirectory+"NZCER-spelling-lists.txt");
+				wordlist = new FileReader(VoxDatabase.wordlistsDirectory+".NZCER-spelling-lists.txt");
 				for (@SuppressWarnings("unused") String s : levels){
 					levelContents.add(new ArrayList<String>());
 				}
@@ -183,7 +183,7 @@ public class FileLoadingWorker extends SwingWorker<Void, Void> {
 					}
 					if (line1.startsWith("%")){
 						if (categoryName.equals("")){
-							if (temp.isEmpty()){
+							if ((temp.isEmpty())||(temp.size()<10)){
 								categoryName = line1.substring(1);
 								continue;
 							}else{
@@ -195,7 +195,7 @@ public class FileLoadingWorker extends SwingWorker<Void, Void> {
 								continue;
 							}
 						}else{
-							if (!(temp.isEmpty())){
+							if ((!(temp.isEmpty()))&&(temp.size()>=10)){
 								VoxDatabase.categories.add(categoryName);
 								levelContents.add(temp);
 								customizedCategoriesContents.add(temp);
@@ -208,7 +208,7 @@ public class FileLoadingWorker extends SwingWorker<Void, Void> {
 					temp.add(line1);
 				}
 				
-				if (!(temp.isEmpty())){
+				if ((!(temp.isEmpty()))&&(temp.size()>=10)){
 					if (categoryName.equals("")){
 						VoxDatabase.categories.add(line);
 					}else{
@@ -223,7 +223,7 @@ public class FileLoadingWorker extends SwingWorker<Void, Void> {
 				
 				if (!(customizedCategoriesContents.isEmpty())){
 					
-					File tempfile = new File(VoxDatabase.wordlistsDirectory+"."+line+"_def");
+					File tempfile = new File(VoxDatabase.wordlistsDirectory+"."+line.substring(0,line.length()-".txt".length())+"_def.txt");
 					if (tempfile.exists()){
 						
 						ArrayList<String> tempContents = new ArrayList<String>();
@@ -238,6 +238,10 @@ public class FileLoadingWorker extends SwingWorker<Void, Void> {
 						while (s2.hasNext()){
 							String line2 = s2.nextLine();
 							if (line2.equals("")){
+								count++;
+								continue;
+							}
+							if (line2.startsWith("%")){
 								continue;
 							}
 							VoxDatabase.dictionary.put(tempContents.get(count), line2);

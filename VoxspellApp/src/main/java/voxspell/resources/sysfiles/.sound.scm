@@ -1,3 +1,3 @@
 (voice_kal_diphone)
-
-(SayText "Welcome to Vox spell")
+(Parameter.set 'Duration_Stretch 0.8)
+(SayText "Please spell the word apogalacticon")

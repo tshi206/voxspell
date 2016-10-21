@@ -9,12 +9,15 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
+import voxspell.gui.Settings;
+
 
 public class CreateCategoryWorker extends SwingWorker<Void, Void> {
-
+	
 	private File fileToReadFrom;
 
 	public CreateCategoryWorker(File fileToReadFrom){
+
 		this.fileToReadFrom = fileToReadFrom;
 	}
 
@@ -24,7 +27,7 @@ public class CreateCategoryWorker extends SwingWorker<Void, Void> {
 		return null;
 	}
 
-	public void loadCustomizedWordsFile(File fileToReadFrom){
+	private void loadCustomizedWordsFile(File fileToReadFrom){
 		try {
 
 			ArrayList<String> temp = new ArrayList<String>();
@@ -40,7 +43,7 @@ public class CreateCategoryWorker extends SwingWorker<Void, Void> {
 				}
 				if (line1.startsWith("%")){
 					if (categoryName.equals("")){
-						if (temp.isEmpty()){
+						if ((temp.isEmpty())||(temp.size()<10)){
 							categoryName = line1.substring(1);
 							continue;
 						}else{
@@ -53,9 +56,9 @@ public class CreateCategoryWorker extends SwingWorker<Void, Void> {
 							continue;
 						}
 					}else{
-						if (!(temp.isEmpty())){
+						if ((!(temp.isEmpty()))&&(temp.size()>=10)){
 
-							VoxDatabase.addCategory(temp, fileToReadFrom.getName().substring(1));
+							VoxDatabase.addCategory(temp, categoryName);
 							
 							customizedCategoriesContents.add(temp);
 						}
@@ -67,14 +70,17 @@ public class CreateCategoryWorker extends SwingWorker<Void, Void> {
 				temp.add(line1);
 			}
 
-			if (!(temp.isEmpty())){
+			if ((!(temp.isEmpty()))&&(temp.size()>=10)){
+				
 				if (categoryName.equals("")){
-					VoxDatabase.categories.add(fileToReadFrom.getName().substring(1));
+					
+					VoxDatabase.addCategory(temp, fileToReadFrom.getName().substring(1));
+					
 				}else{
-					VoxDatabase.categories.add(categoryName);
+					
+					VoxDatabase.addCategory(temp, categoryName);
+					
 				}
-
-				VoxDatabase.addCategory(temp, fileToReadFrom.getName().substring(1));
 				
 				customizedCategoriesContents.add(temp);
 			}
@@ -83,7 +89,7 @@ public class CreateCategoryWorker extends SwingWorker<Void, Void> {
 
 			if (!(customizedCategoriesContents.isEmpty())){
 
-				File tempfile = new File(VoxDatabase.wordlistsDirectory+fileToReadFrom.getName()+"_def");
+				File tempfile = new File(VoxDatabase.wordlistsDirectory+fileToReadFrom.getName().substring(0, fileToReadFrom.getName().length()-".txt".length())+"_def.txt");
 				if (tempfile.exists()){
 
 					ArrayList<String> tempContents = new ArrayList<String>();
@@ -98,6 +104,10 @@ public class CreateCategoryWorker extends SwingWorker<Void, Void> {
 					while (s2.hasNext()){
 						String line2 = s2.nextLine();
 						if (line2.equals("")){
+							count++;
+							continue;
+						}
+						if (line2.startsWith("%")){
 							continue;
 						}
 						VoxDatabase.dictionary.put(tempContents.get(count), line2);
@@ -117,6 +127,6 @@ public class CreateCategoryWorker extends SwingWorker<Void, Void> {
 	
 	@Override
 	protected void done(){
-		JOptionPane.showMessageDialog(null, "Finish creating category", "Operation complete", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(Settings.getSettingsWindow(), "Finish creating category", "Operation complete", JOptionPane.INFORMATION_MESSAGE);
 	}
 }
