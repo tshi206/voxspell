@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import voxspell.toolbox.CreateCategoryWorker;
 import voxspell.toolbox.VoxDatabase;
 
 import javax.swing.JLabel;
@@ -15,10 +16,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -106,52 +103,27 @@ public class CreateCategory extends JFrame {
 					if (ta.length<10){
 						JOptionPane.showMessageDialog(itself, "Minimum number of words must be ten", "Warning", JOptionPane.OK_OPTION);
 					}else{
+						
 						boolean hasDefinition = false;
 						if (!(definitions.getText().matches("\\s*"))){
 							hasDefinition = true;
 						}
 
-						try {
-							File temp1 = VoxDatabase.createWordsFile(textField.getText());
-							VoxDatabase.writeToSysFile("customizedLists", "."+textField.getText()+"\n", true);
-							VoxDatabase.writeToWordsFile(textField.getText(), words.getText()+"\n", false);
-							
-							ArrayList<String> temparray = new ArrayList<String>();
-							Scanner s = new Scanner(new FileReader(temp1));
-							while (s.hasNext()){
-								String line = s.nextLine();
-								if (line.equals("")){
-									continue;
-								}
-								temparray.add(line);
-							}
-							s.close();
-							
-							VoxDatabase.addCategory(temparray, textField.getText());
-							
-							if (hasDefinition){
-								File temp2 = VoxDatabase.createWordsFile(textField.getText()+"_def");
-								VoxDatabase.writeToWordsFile(textField.getText()+"_def", definitions.getText()+"\n", false);
-								s = new Scanner(new FileReader(temp2));
-								int count = 0;
-								while (s.hasNext()){
-									String line = s.nextLine();
-									if (line.equals("")){
-										continue;
-									}
-									VoxDatabase.getDictionary().put(temparray.get(count), line);
-									count++;
-									if (count==temparray.size()){
-										break;
-									}
-								}
-								s.close();
-							}
-							itself.dispose();
-						} catch (IOException e1) {
-							itself.dispose();
-							e1.printStackTrace();
+						File temp1 = VoxDatabase.createWordsFile(textField.getText());
+						VoxDatabase.writeToSysFile("customizedLists", "."+textField.getText()+"\n", true);
+						VoxDatabase.writeToWordsFile(textField.getText(), words.getText()+"\n", false);
+
+
+						if (hasDefinition){
+							VoxDatabase.createWordsFile(textField.getText()+"_def");
+							VoxDatabase.writeToWordsFile(textField.getText()+"_def", definitions.getText()+"\n", false);
 						}
+
+						CreateCategoryWorker ccw = new CreateCategoryWorker(temp1);
+						ccw.execute();
+
+						itself.dispose();
+
 					}
 				}
 			}

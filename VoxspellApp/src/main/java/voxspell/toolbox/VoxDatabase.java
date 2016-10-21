@@ -1,13 +1,10 @@
 package voxspell.toolbox;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
-import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
@@ -90,7 +87,7 @@ public class VoxDatabase {
 //		uw.execute();
 		
 		//start files setup
-		FileLoadingWorker fw = new FileLoadingWorker(files, fn, sysfiles, contents, filenames, levelContents, levels, categories);
+		FileLoadingWorker fw = new FileLoadingWorker(true, true, true);
 		fw.execute();
 		
 		//create scm file
@@ -116,6 +113,7 @@ public class VoxDatabase {
 	}
 	
 
+	
 	/**
 	 * This method can only be used to .mastered, .faulted, .failed and their corresponding history files.
 	 * Use the GENERAL VERSION of saveChangedFile method to write to the other sys files.
@@ -203,36 +201,7 @@ public class VoxDatabase {
 		Stats.getStatsWindow().getComboBox().addItem(categoryName);
 	}
 
-	/**
-	 * Load contents to system from imported lists
-	 * @param file - word list file (.txt) been imported
-	 */
-	public static void loadList(File file, boolean isInWordlistsFolder){
-		String categoryName = "Anonymous Category "+new Random().nextInt()*new Random().nextInt();
-		ArrayList<String> categoryContents = new ArrayList<String>();
-		try {
-			Scanner scanner = new Scanner(new FileReader(file));
-			while (scanner.hasNext()){
-				String line = scanner.nextLine();
-				if (line.equals("")){
-					continue;
-				}
-				if (line.startsWith("%")){
-					categoryName = line.substring(1);
-				}else{
-					categoryContents.add(line);
-				}
-				
-				if (!(isInWordlistsFolder)){
-					VoxDatabase.writeToWordsFile(file.getName(), line, true);
-				}
-			}
-			scanner.close();
-			VoxDatabase.addCategory(categoryContents, categoryName);
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-	}
+	
 	
 	public static ArrayList<String> getFilenames() {
 		return filenames;
@@ -267,6 +236,19 @@ public class VoxDatabase {
 	
 	public static ArrayList<ArrayList<String>> getLevelContents() {
 		return levelContents;
+	}
+
+
+	public static String[] getLevels() {
+		return levels;
+	}
+
+	public static String[] getFn() {
+		return fn;
+	}
+
+	public static File[] getFiles() {
+		return files;
 	}
 
 }

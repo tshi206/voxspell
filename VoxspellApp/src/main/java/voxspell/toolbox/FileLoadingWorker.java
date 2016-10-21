@@ -28,97 +28,49 @@ public class FileLoadingWorker extends SwingWorker<Void, Void> {
 	protected String[] levels;
 	protected ArrayList<String> categories;
 	
-	public FileLoadingWorker(File[] files, String[] fn, ArrayList<File> sysfiles, ArrayList<ArrayList<String>> contents,
-			ArrayList<String> filenames, ArrayList<ArrayList<String>> levelContents, String[] levels, ArrayList<String> categories){
-		this.fn = fn;
-		this.files = files;
-		this.sysfiles = sysfiles;
-		this.contents = contents;
-		this.filenames = filenames;
-		this.levelContents = levelContents;
-		this.levels = levels;
-		this.categories = categories;
+	private boolean loadFiles = true;
+	private boolean loadCustomizedCategories = true;
+	private boolean setupVideo = true;
+	
+	public FileLoadingWorker(boolean loadFiles, boolean loadCustomizedCategories, boolean setupVideo){
+		
+		this.loadFiles = loadFiles;
+		this.loadCustomizedCategories = loadCustomizedCategories;
+		this.setupVideo = setupVideo;
+		
+		this.fn = VoxDatabase.getFn();
+		this.files = VoxDatabase.getFiles();
+		this.sysfiles = VoxDatabase.getSysfiles();
+		this.contents = VoxDatabase.getContents();
+		this.filenames = VoxDatabase.getFilenames();
+		this.levelContents = VoxDatabase.getLevelContents();
+		this.levels = VoxDatabase.getLevels();
+		this.categories = VoxDatabase.getCategories();
 	}
 	
 	@Override
 	protected Void doInBackground(){
 		
 		System.out.println("Project files loading starts......");
-		if (levelContents.isEmpty()){
-			try {
-				wordlist = new FileReader(VoxDatabase.wordlistsDirectory+"NZCER-spelling-lists.txt");
-				for (@SuppressWarnings("unused") String s : levels){
-					levelContents.add(new ArrayList<String>());
-				}
-				Scanner scanner = new Scanner(wordlist);
-				int count = -1;
-				while (scanner.hasNext()){
-					String line = scanner.nextLine();
-					if (line.contains("%")){
-						count++;
-						continue;
-					}
-					levelContents.get(count).add(line);
-				}
-				scanner.close();
-			} catch (FileNotFoundException e) {
-				JOptionPane.showMessageDialog(null, "Error! Required file(s) cannot be found! Please check if NZCER-spelling-lists.txt file have been modified or deleted.", "Warning", JOptionPane.WARNING_MESSAGE);
-			}
+		
+		loadDefaultCategories();
+		
+		
+		if (loadFiles){
+			//create all sys files if needed otherwise load them.
+			loadFiles(files, fn, sysfiles, contents, filenames);
 		}
 		
-		//create all sys files if needed otherwise load them.
-		loadFiles(files, fn, sysfiles, contents, filenames);
 		
-		
-		for (String s : levels){
-			categories.add(s);
-		}
-
-		try {
-			Scanner s = new Scanner(new FileReader(sysfiles.get(sysfiles.size()-1)));
-			while (s.hasNext()){
-				String line = s.nextLine();
-				if (line.equals("")){
-					continue;
-				}
-				ArrayList<String> temp = new ArrayList<String>();
-				line = line.substring(1, line.length());
-				VoxDatabase.categories.add(line);
-				Scanner s1 = new Scanner(new FileReader(VoxDatabase.wordlistsDirectory+"."+line));
-				while (s1.hasNext()){
-					String line1 = s1.nextLine();
-					if (line1.equals("")){
-						continue;
-					}
-					temp.add(line1);
-				}
-				levelContents.add(temp);
-				s1.close();
-				
-				File tempfile = new File(VoxDatabase.wordlistsDirectory+"."+line+"_def");
-				if (tempfile.exists()){
-					Scanner s2 = new Scanner(new FileReader(tempfile));
-					int count = 0;
-					while (s2.hasNext()){
-						String line2 = s2.nextLine();
-						if (line2.equals("")){
-							continue;
-						}
-						VoxDatabase.dictionary.put(temp.get(count), line2);
-						count++;
-						if (count==temp.size()){
-							break;
-						}
-					}
-					s2.close();
-				}
-			}
-			s.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+		if (loadCustomizedCategories){
+			loadCustomizedCategories();
 		}
 		
-		videoSetup();
+		
+		if (setupVideo){
+			videoSetup();
+		}
+		
 		
 		return null;
 	}
@@ -178,7 +130,134 @@ public class FileLoadingWorker extends SwingWorker<Void, Void> {
 		}
 	}
 
+	private void loadDefaultCategories(){
+		if (levelContents.isEmpty()){
+			try {
+				wordlist = new FileReader(VoxDatabase.wordlistsDirectory+"NZCER-spelling-lists.txt");
+				for (@SuppressWarnings("unused") String s : levels){
+					levelContents.add(new ArrayList<String>());
+				}
+				Scanner scanner = new Scanner(wordlist);
+				int count = -1;
+				while (scanner.hasNext()){
+					String line = scanner.nextLine();
+					if (line.contains("%")){
+						count++;
+						continue;
+					}
+					levelContents.get(count).add(line);
+				}
+				
+				for (String s : levels){
+					categories.add(s);
+				}
 
+				scanner.close();
+			} catch (FileNotFoundException e) {
+				JOptionPane.showMessageDialog(null, "Error! Required file(s) cannot be found! Please check if NZCER-spelling-lists.txt file have been modified or deleted.", "Warning", JOptionPane.WARNING_MESSAGE);
+			}
+		}
+	}
+	
+	private void loadCustomizedCategories(){
+		try {
+			Scanner s = new Scanner(new FileReader(sysfiles.get(sysfiles.size()-1)));
+			while (s.hasNext()){
+				String line = s.nextLine();
+				if (line.equals("")){
+					continue;
+				}
+				
+				line = line.substring(1, line.length());
+				
+				ArrayList<String> temp = new ArrayList<String>();
+				
+				ArrayList<ArrayList<String>> customizedCategoriesContents = new ArrayList<ArrayList<String>>();
+				
+				String categoryName = "";
+				Scanner s1 = new Scanner(new FileReader(VoxDatabase.wordlistsDirectory+"."+line));
+				while (s1.hasNext()){
+					String line1 = s1.nextLine();
+					if (line1.equals("")){
+						continue;
+					}
+					if (line1.startsWith("%")){
+						if (categoryName.equals("")){
+							if (temp.isEmpty()){
+								categoryName = line1.substring(1);
+								continue;
+							}else{
+								VoxDatabase.categories.add(line);
+								levelContents.add(temp);
+								customizedCategoriesContents.add(temp);
+								temp = new ArrayList<String>();
+								categoryName = line1.substring(1);
+								continue;
+							}
+						}else{
+							if (!(temp.isEmpty())){
+								VoxDatabase.categories.add(categoryName);
+								levelContents.add(temp);
+								customizedCategoriesContents.add(temp);
+							}
+							temp = new ArrayList<String>();
+							categoryName = line1.substring(1);
+							continue;
+						}
+					}
+					temp.add(line1);
+				}
+				
+				if (!(temp.isEmpty())){
+					if (categoryName.equals("")){
+						VoxDatabase.categories.add(line);
+					}else{
+						VoxDatabase.categories.add(categoryName);
+					}
+					
+					levelContents.add(temp);
+					customizedCategoriesContents.add(temp);
+				}
+				
+				s1.close();
+				
+				if (!(customizedCategoriesContents.isEmpty())){
+					
+					File tempfile = new File(VoxDatabase.wordlistsDirectory+"."+line+"_def");
+					if (tempfile.exists()){
+						
+						ArrayList<String> tempContents = new ArrayList<String>();
+						for (ArrayList<String> array : customizedCategoriesContents){
+							for (String word : array){
+								tempContents.add(word);
+							}
+						}
+						
+						Scanner s2 = new Scanner(new FileReader(tempfile));
+						int count = 0;
+						while (s2.hasNext()){
+							String line2 = s2.nextLine();
+							if (line2.equals("")){
+								continue;
+							}
+							VoxDatabase.dictionary.put(tempContents.get(count), line2);
+							count++;
+							if (count==tempContents.size()){
+								break;
+							}
+						}
+						s2.close();
+					}
+				}
+				
+			}
+			s.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 	@Override
 	protected void done(){
 		System.out.println("Project files loading done.");
@@ -189,5 +268,6 @@ public class FileLoadingWorker extends SwingWorker<Void, Void> {
 		Stats.getStatsWindow().getComboBox().setModel(model);
 		Stats.getStatsWindow().getComboBox().setSelectedIndex(0);
 	}
+	
 }
 

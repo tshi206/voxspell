@@ -24,8 +24,6 @@ import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 
 import javax.swing.SwingConstants;
@@ -164,19 +162,33 @@ public class Settings extends JFrame implements WindowListener{
 					File[] files = fc.getSelectedFiles();
 					for (File file : files){
 						try {
-							String path = file.getCanonicalPath().substring(0,file.getCanonicalPath().length()-file.getName().length());
-							if (!(path.equals(VoxDatabase.wordlistsDirectory))){
-								File temp = new File(VoxDatabase.wordlistsDirectory+file.getName());
-								if (!(temp.exists())){
-									temp.createNewFile();
-								}else{
-									temp.delete();
-									temp.createNewFile();
-								}
-								VoxDatabase.loadList(file, false);
-							}else{
-								VoxDatabase.loadList(file, true);
+
+							File temp = new File(VoxDatabase.wordlistsDirectory+"."+file.getName());
+							if (temp.exists()){
+								JOptionPane.showMessageDialog(itself, "This file has already been included in the program's directory therefore cannot be imported.\n"
+										+ "If you do want to import please either rename the file or remove all relevant categories via\n"
+										+ "Help ---> Delete imported category", "Warning", JOptionPane.WARNING_MESSAGE);
+								return;
 							}
+							
+							Scanner scanner = new Scanner(new FileReader(file));
+							while (scanner.hasNext()){
+								String line = scanner.nextLine();
+								if (line.startsWith("%")){
+									String str = line.substring(1);
+									if (VoxDatabase.getCategories().contains(str)){
+										JOptionPane.showMessageDialog(itself, "A category with the same name ("+str+") has already been created in the application therefore this file cannot be imported.\n"
+												+ "If you do want to import please either rename the categories containing this file or remove all relevant categories via\n"
+												+ "Help ---> Delete imported category", "Warning", JOptionPane.WARNING_MESSAGE);
+										scanner.close();
+										return;
+									}
+								}
+							}
+							scanner.close();
+							
+							//TODO
+
 						} catch (IOException e1) {
 							e1.printStackTrace();
 						}
