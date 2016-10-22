@@ -20,6 +20,7 @@ public class VoxDatabase {
 	public static String sysfilesDirectory = System.getProperty("user.dir")+"/src/main/java/voxspell/resources/sysfiles/";
 	public static String videosDirectory = System.getProperty("user.dir")+"/src/main/java/voxspell/resources/videos/";
 	public static String helpDirectory = System.getProperty("user.dir")+"/src/main/java/voxspell/resources/help/";
+	public static String usrDirectory = System.getProperty("user.dir")+"/src/main/java/voxspell/resources/usrInfo/";
 	
 
 	private static String[] levels = {"Level One","Level Two","Level Three","Level Four","Level Five","Level Six","Level Seven","Level Eight","Level Nine","Level Ten","Level Eleven"};
@@ -32,6 +33,7 @@ public class VoxDatabase {
 	
 	protected static File introduction = new File(VoxDatabase.helpDirectory+"introduction");
 	protected static File registeredUsr = new File(VoxDatabase.sysfilesDirectory+"registeredUsr");
+	
 	protected static File defaultSettings = new File(VoxDatabase.sysfilesDirectory+".defaultSettings");
 	
 	protected static File mastered = new File(VoxDatabase.sysfilesDirectory+".mastered");
@@ -207,6 +209,10 @@ public class VoxDatabase {
 		VoxDatabase.getCategories().remove(categoryName);
 		Settings.getSettingsWindow().getCategory().removeItem(categoryName);
 		Stats.getStatsWindow().getComboBox().removeItem(categoryName);
+	}
+	
+	public static void loadUsrInfo(String usrName){
+		//TODO
 	}
 	
 	public static ArrayList<String> getFilenames() {
