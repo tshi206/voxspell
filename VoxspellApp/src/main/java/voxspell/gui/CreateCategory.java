@@ -42,13 +42,13 @@ public class CreateCategory extends JFrame {
 		setResizable(false);
 		
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(204, 255, 255));
-		panel.setBounds(0, 0, 464, 401);
+		panel.setBounds(0, 0, 480, 440);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -125,7 +125,7 @@ public class CreateCategory extends JFrame {
 						}
 
 						File temp1 = VoxDatabase.createWordsFile(textField.getText()+".txt");
-						VoxDatabase.writeToSysFile("customizedLists", "."+textField.getText()+"\n", true);
+						VoxDatabase.writeToSysFile("customizedLists", "."+textField.getText()+".txt"+"\n", true);
 						VoxDatabase.writeToWordsFile(textField.getText()+".txt", words.getText()+"\n", false);
 
 

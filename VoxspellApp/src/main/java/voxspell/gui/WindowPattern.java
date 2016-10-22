@@ -109,6 +109,20 @@ public abstract class WindowPattern extends JFrame {
 		functionalities = mntmFunctonalities;
 		
 		JMenuItem mntmEdit = new JMenuItem("Edit imported category");
+		mntmEdit.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int option = JOptionPane.showConfirmDialog(wp, "Editing imported files may let you lose some of your statistics.\n"
+						+ "Continue?", "Confirm", JOptionPane.YES_NO_OPTION);
+				if (option == JOptionPane.YES_OPTION){
+					EditImportedFiles eif = new EditImportedFiles();
+					eif.setVisible(true);
+					delete.setEnabled(false);
+				}
+			}
+			
+		});
 		mnHelp.add(mntmEdit);
 		edit = mntmEdit;
 		
@@ -119,6 +133,7 @@ public abstract class WindowPattern extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				DeleteCategory dc = new DeleteCategory();
 				dc.setVisible(true);
+				edit.setEnabled(false);
 			}
 			
 		});
@@ -142,6 +157,14 @@ public abstract class WindowPattern extends JFrame {
 		
 	}
 	
+	public JMenuItem getDelete() {
+		return delete;
+	}
+
+	public JMenuItem getEdit() {
+		return edit;
+	}
+
 	/**
 	 * update the userInfo label content.
 	 * @param usrname - String, the username to be updated

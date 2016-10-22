@@ -2,7 +2,7 @@ a celestial body moving in an elliptical orbit round a star.
 
 
 
-
+the planet where we live
 
 
 
@@ -25,3 +25,4 @@ the region of the atmosphere of a star (as the sun) between the star's photosphe
 name of a satellite
 an astronomical calculating instrument.
 name of a satellite
+

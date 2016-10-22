@@ -15,6 +15,8 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 
 import javax.swing.JComboBox;
@@ -22,7 +24,7 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
 @SuppressWarnings("serial")
-public class DeleteCategory extends JFrame {
+public class DeleteCategory extends JFrame implements WindowListener{
 
 	private DeleteCategory itself = this;
 	
@@ -41,6 +43,8 @@ public class DeleteCategory extends JFrame {
 		setLocationRelativeTo(null);
 		setAlwaysOnTop(true);
 		setResizable(false);
+		
+		addWindowListener(this);
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(204, 255, 255));
@@ -118,5 +122,53 @@ public class DeleteCategory extends JFrame {
 
 	public JComboBox<String> getComboBox() {
 		return comboBox;
+	}
+
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		MainMenu.getmainMenuWindow().getEdit().setEnabled(true);
+	}
+
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
