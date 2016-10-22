@@ -113,6 +113,15 @@ public abstract class WindowPattern extends JFrame {
 		edit = mntmEdit;
 		
 		JMenuItem mntmDelete = new JMenuItem("Delete imported category");
+		mntmDelete.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DeleteCategory dc = new DeleteCategory();
+				dc.setVisible(true);
+			}
+			
+		});
 		mnHelp.add(mntmDelete);
 		delete = mntmDelete;
 		

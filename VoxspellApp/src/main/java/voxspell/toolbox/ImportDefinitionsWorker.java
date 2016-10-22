@@ -33,13 +33,15 @@ public class ImportDefinitionsWorker extends SwingWorker<Void, Void> {
 			
 			try {
 				Scanner scanner = new Scanner(new FileReader(filesToReadFrom.get(i)));
-				FileWriter fw = new FileWriter(filesToWriteTo.get(i), true);
+				FileWriter fw = new FileWriter(filesToWriteTo.get(i), false);
 				
+				String newContent = "";
 				while (scanner.hasNext()){
 					String line = scanner.nextLine();
-					fw.write(line+"\n");
+					newContent = newContent + line + "\n";
 				}
 				
+				fw.write(newContent);
 				scanner.close();
 				fw.close();
 				

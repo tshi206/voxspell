@@ -19,6 +19,7 @@ public class VoxDatabase {
 	public static String wordlistsDirectory = System.getProperty("user.dir")+"/src/main/java/voxspell/resources/wordlists/";
 	public static String sysfilesDirectory = System.getProperty("user.dir")+"/src/main/java/voxspell/resources/sysfiles/";
 	public static String videosDirectory = System.getProperty("user.dir")+"/src/main/java/voxspell/resources/videos/";
+	public static String helpDirectory = System.getProperty("user.dir")+"/src/main/java/voxspell/resources/help/";
 	
 
 	private static String[] levels = {"Level One","Level Two","Level Three","Level Four","Level Five","Level Six","Level Seven","Level Eight","Level Nine","Level Ten","Level Eleven"};
@@ -29,7 +30,7 @@ public class VoxDatabase {
 
 	protected static File scm = new File(VoxDatabase.sysfilesDirectory+".sound.scm");
 	
-	protected static File importedLists = new File(VoxDatabase.sysfilesDirectory+"importedLists");
+	protected static File introduction = new File(VoxDatabase.helpDirectory+"introduction");
 	protected static File registeredUsr = new File(VoxDatabase.sysfilesDirectory+"registeredUsr");
 	protected static File defaultSettings = new File(VoxDatabase.sysfilesDirectory+".defaultSettings");
 	
@@ -52,8 +53,8 @@ public class VoxDatabase {
 	protected static ArrayList<String> filenames = new ArrayList<String>();
 	
 	
-	static String[] fn = {"importedLists", "registeredUsr", "usrSettings", "mastered", "failed", "faulted", "masteredhistory", "faultedhistory", "failedhistory", "customizedLists"};
-	static File[] files = {importedLists, registeredUsr, defaultSettings, mastered, failed, faulted, masteredhistory, faultedhistory, failedhistory, customizedLists};
+	static String[] fn = {"introduction", "registeredUsr", "usrSettings", "mastered", "failed", "faulted", "masteredhistory", "faultedhistory", "failedhistory", "customizedLists"};
+	static File[] files = {introduction, registeredUsr, defaultSettings, mastered, failed, faulted, masteredhistory, faultedhistory, failedhistory, customizedLists};
 	
 	protected static WordsCounter counter = WordsCounter.getWordsCounter();
 	
@@ -201,7 +202,12 @@ public class VoxDatabase {
 		Stats.getStatsWindow().getComboBox().addItem(categoryName);
 	}
 
-	
+	public static void deleteCategory(ArrayList<String> categoryContents, String categoryName){
+		VoxDatabase.getLevelContents().remove(categoryContents);
+		VoxDatabase.getCategories().remove(categoryName);
+		Settings.getSettingsWindow().getCategory().removeItem(categoryName);
+		Stats.getStatsWindow().getComboBox().removeItem(categoryName);
+	}
 	
 	public static ArrayList<String> getFilenames() {
 		return filenames;
