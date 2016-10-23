@@ -147,10 +147,28 @@ public abstract class WindowPattern extends JFrame {
 		help = mnHelp;
 		
 		JMenuItem mntmIntro = new JMenuItem("Intro");
+		mntmIntro.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Intro intro = new Intro();
+				intro.setVisible(true);
+			}
+			
+		});
 		mnHelp.add(mntmIntro);
 		intro = mntmIntro;
 		
 		JMenuItem mntmFunctonalities = new JMenuItem("Functonalities");
+		mntmFunctonalities.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Functionalities functionalities = new Functionalities();
+				functionalities.setVisible(true);
+			}
+			
+		});
 		mnHelp.add(mntmFunctonalities);
 		functionalities = mntmFunctonalities;
 		
