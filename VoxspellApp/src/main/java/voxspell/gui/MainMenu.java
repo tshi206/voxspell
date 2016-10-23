@@ -92,6 +92,7 @@ public class MainMenu extends WindowPattern{
 		quit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				menu.dispose();
+				System.exit(0);
 			}
 		});
 		quit.setForeground(new Color(204, 255, 255));

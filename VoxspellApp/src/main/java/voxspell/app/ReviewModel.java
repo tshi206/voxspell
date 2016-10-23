@@ -157,6 +157,7 @@ public class ReviewModel implements ActionListener{
 					contents.get(filenames.indexOf("failed")).remove(word);
 				}
 				contents.get(filenames.indexOf("masteredhistory")).add(word);
+				contents.get(filenames.indexOf("records")).add(word);
 				savePoint();
 				wordsCorrect++;
 				counter.count(true);
@@ -219,5 +220,6 @@ public class ReviewModel implements ActionListener{
 		VoxDatabase.saveChangedFile("masteredhistory");
 		VoxDatabase.saveChangedFile("faultedhistory");
 		VoxDatabase.saveChangedFile("failedhistory");
+		VoxDatabase.saveChangedFile("records");
 	}
 }

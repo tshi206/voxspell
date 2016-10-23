@@ -50,6 +50,7 @@ public class VoxDatabase {
 	protected static File faultedhistory = new File(VoxDatabase.sysfilesDirectory+".faultedhistory");
 	protected static File failedhistory = new File(VoxDatabase.sysfilesDirectory+".failedhistory");
 	
+	protected static File records = new File(VoxDatabase.sysfilesDirectory+".records");
 	
 	protected static File customizedLists = new File(VoxDatabase.sysfilesDirectory+".userCategories");
 	
@@ -62,8 +63,8 @@ public class VoxDatabase {
 	protected static ArrayList<String> filenames = new ArrayList<String>();
 	
 	
-	static String[] fn = {"rememberedUsr", "registeredUsr", "usrSettings", "mastered", "failed", "faulted", "masteredhistory", "faultedhistory", "failedhistory", "customizedLists"};
-	static File[] files = {rememberedUsr, registeredUsr, defaultSettings, mastered, failed, faulted, masteredhistory, faultedhistory, failedhistory, customizedLists};
+	static String[] fn = {"rememberedUsr", "registeredUsr", "usrSettings", "mastered", "failed", "faulted", "masteredhistory", "faultedhistory", "failedhistory", "records", "customizedLists"};
+	static File[] files = {rememberedUsr, registeredUsr, defaultSettings, mastered, failed, faulted, masteredhistory, faultedhistory, failedhistory, records, customizedLists};
 	
 	protected static WordsCounter counter = WordsCounter.getWordsCounter();
 	
@@ -92,7 +93,7 @@ public class VoxDatabase {
 
 		
 		
-		//Load user information TODO -- unimplemented, will change the file list in VoxDatabase depending on user 
+		//Load user information
 		try {
 			
 			if (!(rememberedUsr.exists())){
@@ -231,7 +232,7 @@ public class VoxDatabase {
 	}
 	
 	public static void deleteSysFile(){
-		for (int i = 3; i<6; i++){
+		for (int i = 3; i<9; i++){
 			VoxDatabase.getSysfiles().get(i).delete();
 			try {
 				VoxDatabase.getSysfiles().get(i).createNewFile();
@@ -267,7 +268,7 @@ public class VoxDatabase {
 		String usrDir = VoxDatabase.usrDirectory+usrName+"/";
 		
 		File[] temp = VoxDatabase.getFiles();
-		for (int i = 2; i<9; i++){
+		for (int i = 2; i<10; i++){
 			temp[i] = new File(usrDir+temp[i].getName());
 		}
 		

@@ -66,7 +66,7 @@ public class User implements Comparable<User>{
 		int count = 0;
 		Scanner scanner;
 		try {
-			scanner = new Scanner(new FileReader(userDir+".masteredhistory"));
+			scanner = new Scanner(new FileReader(userDir+".records"));
 			while (scanner.hasNext()){
 				scanner.nextLine();
 				count++;
