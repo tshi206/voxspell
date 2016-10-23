@@ -1,4 +1,95 @@
-asfsa
-ccsav
-xxcax
-zxcx
+
+================================================================
+Welcome to Voxspell!
+================================================================
+
+Voxspell is an application targeting second-language learners to
+ help them inmprove their spelling capability.
+
+This is a multi-user application where each user can compete in 
+the scoreboard and also contribute their customized categories 
+to share with others.
+
+There are four modes in the application: Quiz Mode, Statistics 
+Mode, Scoreboard Mode, and Review Mode.
+
+
+================================================================
+Quiz Mode:
+Users can start a category as their choice with 10 words ready 
+for them to spell.
+Progress is shown at the bottom as a progress bar recording 
+the number of correct spelling at that session.
+Users can obtain a video reward if they correctly spell 8 
+or more words.
+Depending on the result of that session they can either 
+go to the next category or stay at the current one.
+They can go back to main menu at any time they like without 
+penalty.
+Also they can rehear a word as many time as they like.
+Submit a spelling can be done by either click the Submit 
+button or press Enter key.
+The accuracy records the overall accuary from the time when 
+the application starts running until it is closed.
+A word which is successfully spelled at the first time will 
+be marked as 'mastered'.
+A word which is successfully spelled at the second time will 
+be marked as 
+'faulted'.
+A word which is failed twice will be marked as 'failed'.
+Each word will be given two trials to be spelled.
+===============================================================
+
+===============================================================
+Stats Mode:
+This mode shows the statistics of the current logged-in user 
+regarding their number of mastered words, faulted words, and 
+failed words.
+Users can clear their stats under: 
+Help ----> Clear your statistics.
+===============================================================
+
+===============================================================
+Scoreboard Mode:
+This mode shows the records of all registered users including
+ 'anonymous' as default system's username. Any activity 
+happened under a non-registered account will be recorded in 
+the 'anonymous' account.
+Users' records are permenantly established. Clearing individual 
+statistics will not affect the highest record of the number of 
+mastered words of each users.
+However, the most often played category will change if the 
+corresponding user's statistics gets cleared.
+===============================================================
+
+===============================================================
+Review Mode:
+Users can review and retry their failed words here.
+The rules is similar to Quiz Mode while there is not reward 
+here and the number of words to be spelled depending on the 
+number of failed words.
+Users can always continue on this mode as long as they have 
+failed words.
+If a word being correctly spelled (either 'mastered' or 
+'faulted'), it will be remove from the failed words' list.
+If there is no more failed words, the mode will not be able 
+to be played and users can only go back to main menu.
+There will be at most ten words in each sessions. Users can 
+always continue playing another sessions if there are failed 
+words remaining.
+If the number of failed words is less than ten, then all the 
+words will be tested in one session.
+The performance in the Review Mode is also counted towards 
+the scoreboard, just like Quiz Mode. It is always a good idea 
+to improve your records here.
+==============================================================
+
+==============================================================
+Others:
+For the other information on applications' functionalities 
+please have a look at:
+Help ----> functionalities.
+==============================================================
+
+Finally,
+Thank you for using Voxspell!

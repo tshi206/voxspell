@@ -1,4 +1,149 @@
-test
-as
-asfas
-ascacscsas
+================================================================
+Functionalities
+================================================================
+
+
+
+================================================================
+Login & Logout:
+Login and logout are very convenient.
+To login, use your username and password.
+To register, use a non existing username.
+
+If you select the 'remember me next time' option and your login 
+succeeds, the application will automatically log you in next 
+time when it starts running withour asking your password.
+
+If you click 'Don't remember anyone next time' option under 
+'Login&logout' menu, the system will restore the default account
+'anonymous' next time.
+
+The customized settings for each user will be saved individually
+and automatically applied when a corresponding user logs in.
+================================================================
+
+
+================================================================
+Create your customized category:
+You can always create your own category under:
+Settings ----> Create Category.
+
+The formatting of the category must be:
+1) a valid name which has not been included in the system's
+   current categories.
+2) one word per line.
+3) you can specify a sub-category within this category using a 
+   '%' tag followed by the word you choose to be the name of 
+   this category. (e.g. '%simple_category'). This name must
+   also fulfil requirement 1).
+4) each category must have a minimum number of ten words 
+   otherwise it will be ignored by the system when loading and
+   will not appear in the category selection under settings 
+   menu.
+
+a valid format should be:
+>>filename.txt
+  >>some words...
+  >>%a_name
+  >>some words...
+  >>...
+=================================================================
+
+
+=================================================================
+Importing categories from local files:
+You can always import your own category under:
+Settings ----> Import Category.
+
+1) The file must be named with a suffix of '.txt'
+2) The formatting must meet all the requirements in 'Create your 
+   customized category' section.
+3) A file with the same name as an included file or containing
+   a category with the same name as an existing category cannot
+   be imported. If you do want to import, please delete the 
+   existing category first under:
+   Help ---> Delete imported category
+   Note that you can only delete you customized categories.
+   No user can modify the system's default categories.
+   (e.g. Level One ~ Level Eleven)
+=================================================================
+
+
+=================================================================
+Definitions:
+
+You can either create your own definitions along with creating 
+your category or import them using 'Import Category' function.
+
+A definition file must be named with a suffix of '_def.txt' to
+be able to be recognized by the system.
+
+Definitions following the same formatting requirements in 
+'Importing categories from local files' section, where 
+each definition is corresponding to the word at the same 
+position in the category .txt file.
+
+If you don't want to give definition for any particular word,
+just leave that line blank in the definition file.
+While encountering a tag (e.g. '%a_name'), you can either put
+the same tag in the corresponding location in the definition
+file or simple leave it as a '%'.
+
+Note that if you leave any line blank, the system will just skip
+them when loading your definition text file.
+
+Importing definitions is independent from importing categories.
+The application will automatically match definitions with words
+when importing happens as long as it can find a matching file in
+its directory.
+
+So it doesn't matter you import a category first or import its
+definitions first, the system will match them as long as they're
+both imported.
+
+This means you can always add definitions to a category as long as
+you follow the correct format.
+
+Importing a definition file with the same name as an existing 
+definition file will replace the old one completely with the new 
+contents.
+===================================================================
+
+
+===================================================================
+Deleting imported category:
+
+You can delete an imported category via:
+Help ---> Delete imported category
+
+This deletion will only delete the file imported in the system's
+directory.
+
+The original file in the file system won't be affected.
+
+The corresponding definition file won't be deleted.
+As you can always replace it with a new one.
+
+====================================================================
+
+
+====================================================================
+Editing imported files:
+
+You can edit an imported file via:
+Help ---> Edit imported category
+
+You can only edit customized categories.
+
+All results of editting must satify the same requirements in both 
+'Create your customized category' and 'Importing categories from 
+local files'section.
+
+Same requirements apply to definitions file as well.
+
+=====================================================================
+
+Finally,
+thank you for using Voxspell!
+
+
