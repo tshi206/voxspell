@@ -37,7 +37,7 @@ public class LoginWindow extends JFrame {
 	 */
 	public LoginWindow() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 375, 221);
+		setBounds(100, 100, 400, 221);
 		setAlwaysOnTop(true);
 		setLocationRelativeTo(null);
 		
@@ -51,36 +51,36 @@ public class LoginWindow extends JFrame {
 		lblLogIn.setFont(new Font("Comic Sans MS", Font.BOLD, 28));
 		lblLogIn.setForeground(new Color(102, 0, 255));
 		lblLogIn.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLogIn.setBounds(34, 11, 287, 38);
+		lblLogIn.setBounds(34, 11, 320, 38);
 		contentPane.add(lblLogIn);
 		
 		JLabel lblUserName = new JLabel("User name:");
 		lblUserName.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblUserName.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblUserName.setBounds(26, 60, 71, 20);
+		lblUserName.setBounds(26, 60, 96, 20);
 		contentPane.add(lblUserName);
 		
 		JLabel lblPassword = new JLabel("Password:");
 		lblPassword.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblPassword.setBounds(26, 91, 71, 20);
+		lblPassword.setBounds(26, 91, 96, 20);
 		contentPane.add(lblPassword);
 		
 		usrName = new JTextField();
-		usrName.setBounds(100, 60, 232, 20);
+		usrName.setBounds(145, 60, 232, 20);
 		usrName.setText("");
 		contentPane.add(usrName);
 		usrName.setColumns(10);
 		
 		password = new JTextField();
-		password.setBounds(100, 91, 232, 20);
+		password.setBounds(145, 91, 232, 20);
 		password.setText("");
 		contentPane.add(password);
 		password.setColumns(10);
 		
 		final JCheckBox rememberMe = new JCheckBox("Remember me next time");
 		rememberMe.setBackground(new Color(204, 255, 255));
-		rememberMe.setBounds(100, 118, 182, 20);
+		rememberMe.setBounds(100, 118, 240, 20);
 		contentPane.add(rememberMe);
 		
 		
@@ -128,7 +128,7 @@ public class LoginWindow extends JFrame {
 		btnLogin.setBackground(new Color(51, 102, 255));
 		btnLogin.setForeground(new Color(204, 255, 255));
 		btnLogin.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
-		btnLogin.setBounds(177, 145, 131, 26);
+		btnLogin.setBounds(202, 145, 131, 26);
 		contentPane.add(btnLogin);
 		
 		JButton btnRegister = new JButton("Register");
@@ -174,7 +174,7 @@ public class LoginWindow extends JFrame {
 		btnRegister.setBackground(new Color(51, 102, 255));
 		btnRegister.setForeground(new Color(204, 255, 255));
 		btnRegister.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
-		btnRegister.setBounds(44, 145, 118, 26);
+		btnRegister.setBounds(69, 145, 118, 26);
 		contentPane.add(btnRegister);
 	}
 	

@@ -231,13 +231,15 @@ public class VoxDatabase {
 	}
 	
 	public static void deleteSysFile(){
-		for (int i = 3; i<9; i++){
+		for (int i = 3; i<6; i++){
 			VoxDatabase.getSysfiles().get(i).delete();
 			try {
 				VoxDatabase.getSysfiles().get(i).createNewFile();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			VoxDatabase.getContents().get(i).removeAll(VoxDatabase.getContents().get(i));
+			Stats.getStatsWindow().getComboBox().setSelectedIndex(Stats.lastSelectedIndex);
 		}
 	}
 	

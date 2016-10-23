@@ -67,6 +67,7 @@ public class VoxModel implements WindowListener, ActionListener{
 			window.setVisible(false);
 			Stats.getStatsWindow().setVisible(true);
 			Stats.getStatsWindow().setLocationRelativeTo(null);
+			Stats.getStatsWindow().getComboBox().setSelectedIndex(Stats.lastSelectedIndex);
 		}else if (option == 3){
 			window.setVisible(false);
 			Scoreboard.getScoreboardWindow().setVisible(true);

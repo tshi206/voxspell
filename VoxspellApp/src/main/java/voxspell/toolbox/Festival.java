@@ -218,7 +218,7 @@ class SoundlWorker extends SwingWorker<Void, Void>{
 	@Override
 	protected Void doInBackground() throws Exception {
 		
-		String bashcmd= "mplayer "+ VoxDatabase.videosDirectory+soundName;
+		String bashcmd= "vlc -d "+ VoxDatabase.videosDirectory+soundName;
 		ProcessBuilder p = new ProcessBuilder("/bin/bash","-c", bashcmd);
 
 		try {

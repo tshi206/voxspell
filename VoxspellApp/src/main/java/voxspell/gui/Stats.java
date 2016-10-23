@@ -35,6 +35,8 @@ public class Stats extends WindowPattern implements ActionListener {
 	private JScrollPane scrollPane;
 
 	private JCheckBox showAll;
+	
+	public static int lastSelectedIndex = 0;
 
 	private static Stats statsGUI = null;
 
@@ -125,6 +127,7 @@ public class Stats extends WindowPattern implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		lastSelectedIndex = comboBox.getSelectedIndex();
 		if (e.getSource().equals(showAll)){
 			JCheckBox checkbox = (JCheckBox)e.getSource();
 			if (checkbox.isSelected()){
@@ -139,6 +142,9 @@ public class Stats extends WindowPattern implements ActionListener {
 			if (!(showAll.isSelected())){
 				ArrayList<String> wordlistOfTheLevel = VoxDatabase.getLevelContents().get(comboBox.getSelectedIndex());
 				StatsWorker sw = new StatsWorker(VoxDatabase.getContents(), wordlistOfTheLevel);
+				sw.execute();
+			}else{
+				StatsWorker sw = new StatsWorker(VoxDatabase.getContents());
 				sw.execute();
 			}
 		}

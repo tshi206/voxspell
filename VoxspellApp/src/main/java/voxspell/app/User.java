@@ -55,6 +55,9 @@ public class User implements Comparable<User>{
 		}
 		Collections.sort(cats);
 		
+		if (cats.get(cats.size()-1).wordsCount==0){
+			return "N/A";
+		}
 		return cats.get(cats.size()-1).getName();
 	}
 

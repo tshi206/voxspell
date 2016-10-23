@@ -42,7 +42,7 @@ public class EditImportedFiles extends JFrame implements WindowListener, ActionL
 	public EditImportedFiles() {
 		setBackground(new Color(204, 255, 255));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 480, 440);
+		setBounds(100, 100, 474, 450);
 		setLocationRelativeTo(null);
 		setAlwaysOnTop (true);
 		setResizable(false);
@@ -50,13 +50,13 @@ public class EditImportedFiles extends JFrame implements WindowListener, ActionL
 		addWindowListener(this);
 		
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(204, 255, 255));
-		panel.setBounds(0, 0, 474, 411);
+		panel.setBounds(0, 0, 474, 450);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -68,10 +68,12 @@ public class EditImportedFiles extends JFrame implements WindowListener, ActionL
 		panel.add(lblCreateCategory);
 		
 		JLabel lblWordsonePer = new JLabel("Words (one per line)");
+		lblWordsonePer.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
 		lblWordsonePer.setBounds(10, 114, 135, 14);
 		panel.add(lblWordsonePer);
 		
 		JLabel lblDefinitionsonePer = new JLabel("Corresponding definitions (one per line)");
+		lblDefinitionsonePer.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
 		lblDefinitionsonePer.setBounds(228, 114, 226, 14);
 		panel.add(lblDefinitionsonePer);
 		
@@ -92,10 +94,12 @@ public class EditImportedFiles extends JFrame implements WindowListener, ActionL
 		this.definitions = definitions;
 		
 		JLabel lbldefinitionsFieldCan = new JLabel("(Definitions field can be left blank)");
+		lbldefinitionsFieldCan.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
 		lbldefinitionsFieldCan.setBounds(228, 342, 226, 14);
 		panel.add(lbldefinitionsFieldCan);
 		
 		JLabel lblminimumNumberOf = new JLabel("*Minimum number of words is ten");
+		lblminimumNumberOf.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
 		lblminimumNumberOf.setBounds(10, 342, 196, 14);
 		panel.add(lblminimumNumberOf);
 		
@@ -207,8 +211,8 @@ public class EditImportedFiles extends JFrame implements WindowListener, ActionL
 		panel.add(btnSubmitAndClose);
 		
 		JLabel lblName = new JLabel("File name:");
-		lblName.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblName.setBounds(39, 77, 108, 23);
+		lblName.setFont(new Font("Comic Sans MS", Font.PLAIN, 17));
+		lblName.setBounds(60, 77, 108, 23);
 		panel.add(lblName);
 		
 		

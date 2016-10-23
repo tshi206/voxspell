@@ -19,8 +19,8 @@ public class ScoreBoardWorker extends SwingWorker<Void, Void> {
 	public ScoreBoardWorker(){
 		columnNames.add("Rank:");
 		columnNames.add("Name:");
-		columnNames.add("Highest record of mastered words:");
-		columnNames.add("Most often played category:");
+		columnNames.add("Highest mastered record:");
+		columnNames.add("Most frequently played:");
 	}
 	
 	@Override

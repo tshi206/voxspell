@@ -36,7 +36,7 @@ public class CreateCategory extends JFrame {
 		
 		setBackground(new Color(204, 255, 255));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 480, 440);
+		setBounds(100, 100, 474, 450);
 		setLocationRelativeTo(null);
 		setAlwaysOnTop (true);
 		setResizable(false);
@@ -48,7 +48,7 @@ public class CreateCategory extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(204, 255, 255));
-		panel.setBounds(0, 0, 480, 440);
+		panel.setBounds(0, 0, 474, 450);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -60,10 +60,12 @@ public class CreateCategory extends JFrame {
 		panel.add(lblCreateCategory);
 		
 		JLabel lblWordsonePer = new JLabel("Words (one per line)");
+		lblWordsonePer.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
 		lblWordsonePer.setBounds(10, 86, 135, 14);
 		panel.add(lblWordsonePer);
 		
 		JLabel lblDefinitionsonePer = new JLabel("Corresponding definitions (one per line)");
+		lblDefinitionsonePer.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
 		lblDefinitionsonePer.setBounds(228, 86, 226, 14);
 		panel.add(lblDefinitionsonePer);
 		
@@ -75,17 +77,19 @@ public class CreateCategory extends JFrame {
 		scrollPane.setViewportView(words);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(228, 111, 226, 205);
+		scrollPane_1.setBounds(228, 111, 235, 205);
 		panel.add(scrollPane_1);
 		
 		final JTextArea definitions = new JTextArea();
 		scrollPane_1.setViewportView(definitions);
 		
 		JLabel lbldefinitionsFieldCan = new JLabel("(Definitions field can be left blank)");
+		lbldefinitionsFieldCan.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
 		lbldefinitionsFieldCan.setBounds(228, 314, 226, 14);
 		panel.add(lbldefinitionsFieldCan);
 		
 		JLabel lblminimumNumberOf = new JLabel("*Minimum number of words is ten");
+		lblminimumNumberOf.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
 		lblminimumNumberOf.setBounds(10, 314, 196, 14);
 		panel.add(lblminimumNumberOf);
 		
@@ -150,6 +154,7 @@ public class CreateCategory extends JFrame {
 		panel.add(btnSubmitAndClose);
 		
 		JLabel lblName = new JLabel("Name of category:");
+		lblName.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
 		lblName.setBounds(37, 340, 108, 23);
 		panel.add(lblName);
 		

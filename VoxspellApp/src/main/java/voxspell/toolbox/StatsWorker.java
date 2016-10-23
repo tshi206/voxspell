@@ -110,9 +110,9 @@ public class StatsWorker extends SwingWorker<Void,Void> {
 				}
 				hist.add(new Words(mastered, faulted, failed, str));
 
-				Collections.sort(hist);
-
+				
 			}
+			Collections.sort(hist);
 			return;
 		}
 
@@ -139,10 +139,10 @@ public class StatsWorker extends SwingWorker<Void,Void> {
 				}
 				hist.add(new Words(mastered, faulted, failed, str));
 
-				Collections.sort(hist);
+				
 			}
 		}
-		
+		Collections.sort(hist);
 	}
 	
 }
