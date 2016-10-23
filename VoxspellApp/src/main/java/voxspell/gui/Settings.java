@@ -335,6 +335,7 @@ public class Settings extends JFrame implements WindowListener, PropertyChangeLi
 			haveSettings = true;
 		}
 
+		previousSettings = new String[3];
 		if (haveSettings){
 			category.setSelectedItem(categoryName);
 			speed.setSelectedItem(speedLevel);

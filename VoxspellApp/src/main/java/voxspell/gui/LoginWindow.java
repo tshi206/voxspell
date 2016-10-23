@@ -90,6 +90,17 @@ public class LoginWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
+				if (usrName.getText().matches("\\s*")){
+					JOptionPane.showMessageDialog(itself, "Sorry. Username cannot be blank.\n");
+					return;
+				}
+				
+				if (password.getText().matches("\\s*")){
+					JOptionPane.showMessageDialog(itself, "Sorry. Password cannot be blank.\n");
+					return;
+				}
+				
+				
 				boolean userExists = checkIfUsrExists();
 				if (!userExists){
 					JOptionPane.showMessageDialog(itself, "Sorry. Your supplied username is invalid.\n"
@@ -126,7 +137,20 @@ public class LoginWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
+
+				if (usrName.getText().matches("\\s*")){
+					JOptionPane.showMessageDialog(itself, "Sorry. Username cannot be blank.\n");
+					return;
+				}
+				
+				if (password.getText().matches("\\s*")){
+					JOptionPane.showMessageDialog(itself, "Sorry. Password cannot be blank.\n");
+					return;
+				}
+				
+				
 				boolean userExists = checkIfUsrExists();
+				
 				if (userExists){
 					JOptionPane.showMessageDialog(itself, "Sorry. This username has already been registered.\n"
 							+ "Please try another one.");
@@ -224,7 +248,7 @@ public class LoginWindow extends JFrame {
 	
 	private void login(String usrName){
 		
-		VoxDatabase.loadUsrInfo(usrName);
+		VoxDatabase.loadUsrInfo(usrName, true);
 		
 		for (WindowPattern wp : VoxModel.getVoxModel().getGuis()){
 			wp.getLogin().setEnabled(false);

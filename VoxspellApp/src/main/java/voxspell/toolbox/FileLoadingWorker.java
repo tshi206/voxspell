@@ -98,6 +98,7 @@ public class FileLoadingWorker extends SwingWorker<Void, Void> {
 				scanner.close();
 			}
 		} catch (IOException e) {
+			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Error! Fatal error occurs! Program will not be functioning correctly.", "Warning", JOptionPane.WARNING_MESSAGE);
 		} 		
 		

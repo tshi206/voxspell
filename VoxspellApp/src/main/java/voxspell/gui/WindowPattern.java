@@ -125,6 +125,20 @@ public abstract class WindowPattern extends JFrame {
 		logoff = mntmLogOff;
 		
 		JMenuItem mntmDontRememberAnyone = new JMenuItem("Don't remember anyone next time");
+		mntmDontRememberAnyone.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				int option = JOptionPane.showConfirmDialog(wp, "This operation may affect other users.\n"
+						+ "Continue?", "Confirm", JOptionPane.YES_NO_OPTION);
+				if (option == JOptionPane.YES_OPTION){
+					VoxDatabase.writeToSysFile("rememberedUsr", "", false);
+				}
+				
+			}
+			
+		});
 		mnLoginlogout.add(mntmDontRememberAnyone);
 		dontRememberAnyone = mntmDontRememberAnyone;
 		

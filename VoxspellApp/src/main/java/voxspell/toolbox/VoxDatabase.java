@@ -94,6 +94,11 @@ public class VoxDatabase {
 		
 		//Load user information TODO -- unimplemented, will change the file list in VoxDatabase depending on user 
 		try {
+			
+			if (!(rememberedUsr.exists())){
+				rememberedUsr.createNewFile();
+			}
+			
 			Scanner scanner = new Scanner(new FileReader(rememberedUsr));
 			String username = "";
 			while (scanner.hasNext()){
@@ -103,7 +108,7 @@ public class VoxDatabase {
 			scanner.close();
 			if (!(username.equals(""))){
 				
-				VoxDatabase.loadUsrInfo(username);
+				VoxDatabase.loadUsrInfo(username, false);
 				
 				for (WindowPattern wp : VoxModel.getVoxModel().getGuis()){
 					wp.getLogin().setEnabled(false);
@@ -124,6 +129,8 @@ public class VoxDatabase {
 			}
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		
 		//start files setup
@@ -248,7 +255,13 @@ public class VoxDatabase {
 		Stats.getStatsWindow().getComboBox().removeItem(categoryName);
 	}
 	
-	public static void loadUsrInfo(String usrName){
+	public static void loadUsrInfo(String usrName, boolean reloadFile){
+		
+		File newDir = new File(VoxDatabase.usrDirectory+usrName);
+		if (!(newDir.exists())){
+			newDir.mkdir();
+		}
+		
 		String usrDir = VoxDatabase.usrDirectory+usrName+"/";
 		
 		File[] temp = VoxDatabase.getFiles();
@@ -260,11 +273,15 @@ public class VoxDatabase {
 		VoxDatabase.getFilenames().removeAll(filenames);
 		VoxDatabase.getSysfiles().removeAll(sysfiles);
 		
-		FileLoadingWorker flw = new FileLoadingWorker(false, true , false, false);
-		flw.execute();
+		if (reloadFile){
+			FileLoadingWorker flw = new FileLoadingWorker(false, true , false, false);
+			flw.execute();
+		}
+		
 	}
 	
 	public static void backToAnonymous(){
+		
 		String usrDir = VoxDatabase.sysfilesDirectory;
 		
 		File[] temp = VoxDatabase.getFiles();
@@ -278,6 +295,7 @@ public class VoxDatabase {
 		
 		FileLoadingWorker flw = new FileLoadingWorker(false, true , false, false);
 		flw.execute();
+		
 	}
 	
 	public static ArrayList<String> getFilenames() {
