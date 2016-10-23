@@ -16,6 +16,7 @@ public class MainMenu extends WindowPattern{
 
 	private static MainMenu mainMenuGUI = null;
 	
+	
 	/**
 	 * Create the frame.
 	 */
@@ -23,6 +24,7 @@ public class MainMenu extends WindowPattern{
 		super();
 	}
 	
+
 	public static MainMenu getmainMenuWindow(){
 		if (mainMenuGUI == null){
 			mainMenuGUI = new MainMenu();

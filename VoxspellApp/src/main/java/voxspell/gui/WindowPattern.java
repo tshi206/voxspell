@@ -27,6 +27,7 @@ public abstract class WindowPattern extends JFrame {
 	protected JMenu loginlogout;
 	protected JMenuItem login;
 	protected JMenuItem logoff;
+	protected JMenuItem dontRememberAnyone;
 	protected JMenu help;
 	protected JMenuItem intro;
 	protected JMenuItem functionalities;
@@ -38,6 +39,7 @@ public abstract class WindowPattern extends JFrame {
 	protected String username = "anonymous";
 	
 	protected WindowPattern wp = this;
+	
 	
 	
 	protected static VoxModel voxModel = VoxModel.getVoxModel();
@@ -89,12 +91,42 @@ public abstract class WindowPattern extends JFrame {
 		loginlogout = mnLoginlogout;
 		
 		JMenuItem mntmLogin = new JMenuItem("Log in");
+		mntmLogin.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				LoginWindow lw = new LoginWindow();
+				lw.setVisible(true);
+			}
+			
+		});
 		mnLoginlogout.add(mntmLogin);
 		login = mntmLogin;
 		
 		JMenuItem mntmLogOff = new JMenuItem("Log off");
+		mntmLogOff.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				VoxDatabase.backToAnonymous();
+				for (WindowPattern wp : VoxModel.getVoxModel().getGuis()){
+					wp.getLogin().setEnabled(true);
+					wp.getLogoff().setEnabled(false);
+					wp.updateUsr("anonymous");
+				}
+				
+				JOptionPane.showMessageDialog(wp, "You will now log in as "+"anonymous"+".");
+				
+			}
+			
+		});
 		mnLoginlogout.add(mntmLogOff);
 		logoff = mntmLogOff;
+		
+		JMenuItem mntmDontRememberAnyone = new JMenuItem("Don't remember anyone next time");
+		mnLoginlogout.add(mntmDontRememberAnyone);
+		dontRememberAnyone = mntmDontRememberAnyone;
 		
 		JMenu mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
@@ -157,6 +189,14 @@ public abstract class WindowPattern extends JFrame {
 		
 	}
 	
+	public JMenuItem getLogin() {
+		return login;
+	}
+
+	public JMenuItem getLogoff() {
+		return logoff;
+	}
+
 	public JMenuItem getDelete() {
 		return delete;
 	}

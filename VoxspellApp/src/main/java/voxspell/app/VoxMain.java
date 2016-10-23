@@ -5,12 +5,17 @@ import voxspell.toolbox.VoxDatabase;
 
 import java.awt.EventQueue;
 
+import javax.swing.JOptionPane;
+
 /**
  * Entry of the entire program.
  *
  */
 public class VoxMain 
 {
+	public static boolean isUserBack = false;
+	public static String username = "";
+	
 	/**
 	 * Launch the application.
 	 */
@@ -23,6 +28,12 @@ public class VoxMain
 					VoxDatabase.projectSetup();
 					MainMenu mainmenu = MainMenu.getmainMenuWindow();
 					mainmenu.setVisible(true);
+					if (isUserBack){
+						
+						JOptionPane.showMessageDialog(mainmenu, "Welcome back! "+username+" :)");
+						
+						isUserBack = false;
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

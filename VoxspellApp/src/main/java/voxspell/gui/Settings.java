@@ -27,6 +27,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -101,7 +102,6 @@ public class Settings extends JFrame implements WindowListener, PropertyChangeLi
 			}			
 		});
 		comboBox.setBounds(215, 11, 203, 31);
-		comboBox.setSelectedIndex(0);
 		panel.add(comboBox);
 		category = comboBox;
 		
@@ -132,7 +132,6 @@ public class Settings extends JFrame implements WindowListener, PropertyChangeLi
 			}			
 		});
 		comboBox_1.setBounds(215, 53, 203, 31);
-		comboBox_1.setSelectedIndex(0);
 		panel.add(comboBox_1);
 		choice = comboBox_1;
 		
@@ -154,7 +153,6 @@ public class Settings extends JFrame implements WindowListener, PropertyChangeLi
 			}
 		});
 		comboBox_2.setBounds(215, 95, 203, 31);
-		comboBox_2.setSelectedIndex(1);
 		panel.add(comboBox_2);
 		speed = comboBox_2;
 
@@ -279,8 +277,8 @@ public class Settings extends JFrame implements WindowListener, PropertyChangeLi
 				previousSettings[0] = selectedCategory;
 				previousSettings[1] = voiceChoice;
 				previousSettings[2] = voiceSpeed;
+				updateSettings(VoxDatabase.getSysfiles().get(2), selectedCategory, voiceChoice, voiceSpeed);
 				settings.setVisible(false);
-				//TODO - write to config files
 			}
 		});
 		btnBackToMain.setFont(new Font("Comic Sans MS", Font.BOLD, 17));
@@ -296,22 +294,66 @@ public class Settings extends JFrame implements WindowListener, PropertyChangeLi
 		return category;
 	}
 
+	
 	/**
-	 * USE WHEN PROJECT IS LOADING OR USER IS CHANGED
-	 * @param categoryName
-	 * @param voiceChoice
-	 * @param speedLevel
+	 * USE WHEN SETTINGS ARE CHANGED
+	 * @param configFile - 2nd IN SYSFILES
 	 */
-	public void updateSettings(String categoryName, String voiceName, String speedLevel){
-		category.setSelectedItem(categoryName);
-		speed.setSelectedItem(speedLevel);
-		choice.setSelectedItem(voiceName);
-		previousSettings[0] = selectedCategory;
-		previousSettings[1] = voiceChoice;
-		previousSettings[2] = voiceSpeed;
+	public void updateSettings(File configFile, String categoryName, String voiceName, String speedLevel){
+		
+		if (!(configFile.exists())){
+			JOptionPane.showMessageDialog(itself, "Cannot find settings file: updating usr's settings failed");
+			return;
+		}
+		
+		String settingsContent = categoryName+"\n"+voiceName+"\n"+speedLevel+"\n";
+		
+		try {
+			FileWriter fw = new FileWriter(configFile, false);
+			fw.write(settingsContent);
+			fw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
-	
+	/**
+	 * USE WHEN PROJECT IS LOADING OR USER IS CHANGED
+	 * @param configFile - 2nd IN SYSFILES
+	 */
+	public void loadSettings(ArrayList<String> configs){
+
+		boolean haveSettings = false;
+		String categoryName = "";
+		String voiceName = "";
+		String speedLevel = "";
+		if (!(configs.isEmpty())){
+			categoryName = configs.get(0);
+			voiceName = configs.get(1);
+			speedLevel = configs.get(2);
+			haveSettings = true;
+		}
+
+		if (haveSettings){
+			category.setSelectedItem(categoryName);
+			speed.setSelectedItem(speedLevel);
+			choice.setSelectedItem(voiceName);
+			previousSettings[0] = selectedCategory;
+			previousSettings[1] = voiceChoice;
+			previousSettings[2] = voiceSpeed;
+		}else{
+			category.setSelectedIndex(0);
+			speed.setSelectedIndex(1);
+			choice.setSelectedIndex(0);
+			previousSettings[0] = selectedCategory;
+			previousSettings[1] = voiceChoice;
+			previousSettings[2] = voiceSpeed;
+		}
+
+	}
+
+
 	@Override
 	public void windowOpened(WindowEvent e) {
 		// TODO Auto-generated method stub

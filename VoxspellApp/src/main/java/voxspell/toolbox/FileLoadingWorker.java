@@ -28,11 +28,12 @@ public class FileLoadingWorker extends SwingWorker<Void, Void> {
 	protected String[] levels;
 	protected ArrayList<String> categories;
 	
+	private boolean loadDefaultCategories = true;
 	private boolean loadFiles = true;
 	private boolean loadCustomizedCategories = true;
 	private boolean setupVideo = true;
 	
-	public FileLoadingWorker(boolean loadFiles, boolean loadCustomizedCategories, boolean setupVideo){
+	public FileLoadingWorker(boolean loadDefaultCategories, boolean loadFiles, boolean loadCustomizedCategories, boolean setupVideo){
 		
 		this.loadFiles = loadFiles;
 		this.loadCustomizedCategories = loadCustomizedCategories;
@@ -53,11 +54,13 @@ public class FileLoadingWorker extends SwingWorker<Void, Void> {
 		
 		System.out.println("Project files loading starts......");
 		
-		loadDefaultCategories();
+		if (loadDefaultCategories){
+			loadDefaultCategories();
+		}
 		
 		
 		if (loadFiles){
-			//create all sys files if needed otherwise load them.
+			//create all sys files if needed and load them.
 			loadFiles(files, fn, sysfiles, contents, filenames);
 		}
 		
@@ -266,11 +269,12 @@ public class FileLoadingWorker extends SwingWorker<Void, Void> {
 	protected void done(){
 		System.out.println("Project files loading done.");
 		
-		Settings.getSettingsWindow();
+		Settings.getSettingsWindow().loadSettings(VoxDatabase.getContents().get(2));
 		
 		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>(VoxDatabase.getCategories().toArray(new String[VoxDatabase.getCategories().size()]));
 		Stats.getStatsWindow().getComboBox().setModel(model);
 		Stats.getStatsWindow().getComboBox().setSelectedIndex(0);
+		
 	}
 	
 }

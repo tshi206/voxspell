@@ -1,16 +1,22 @@
 package voxspell.toolbox;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
+import voxspell.app.VoxMain;
+import voxspell.app.VoxModel;
 import voxspell.gui.NewGame;
 import voxspell.gui.Settings;
 import voxspell.gui.Stats;
+import voxspell.gui.WindowPattern;
 
 
 public class VoxDatabase {
@@ -24,6 +30,7 @@ public class VoxDatabase {
 	
 
 	private static String[] levels = {"Level One","Level Two","Level Three","Level Four","Level Five","Level Six","Level Seven","Level Eight","Level Nine","Level Ten","Level Eleven"};
+	
 	protected static ArrayList<String> categories = new ArrayList<String>();
 	protected static HashMap<String, String> dictionary = new HashMap<String, String>();
 	
@@ -31,8 +38,8 @@ public class VoxDatabase {
 
 	protected static File scm = new File(VoxDatabase.sysfilesDirectory+".sound.scm");
 	
-	protected static File introduction = new File(VoxDatabase.helpDirectory+"introduction");
-	protected static File registeredUsr = new File(VoxDatabase.sysfilesDirectory+"registeredUsr");
+	protected static File rememberedUsr = new File(VoxDatabase.sysfilesDirectory+"rememberedUsr");
+	protected static File registeredUsr = new File(VoxDatabase.sysfilesDirectory+".registeredUsr");
 	
 	protected static File defaultSettings = new File(VoxDatabase.sysfilesDirectory+".defaultSettings");
 	
@@ -47,16 +54,16 @@ public class VoxDatabase {
 	protected static File customizedLists = new File(VoxDatabase.sysfilesDirectory+".userCategories");
 	
 	
-	protected static ArrayList<ArrayList<String>> levelContents = new ArrayList<ArrayList<String>>(); //contents of individual categories
+	protected static ArrayList<ArrayList<String>> levelContents = new ArrayList<ArrayList<String>>(); //contents of all categories
 	
 	
 	protected static ArrayList<File> sysfiles = new ArrayList<File>();
-	protected static ArrayList<ArrayList<String>> contents = new ArrayList<ArrayList<String>>(); //contents of individual sys files (e.g. .mastered)
+	protected static ArrayList<ArrayList<String>> contents = new ArrayList<ArrayList<String>>(); //contents of all sys files (e.g. .mastered)
 	protected static ArrayList<String> filenames = new ArrayList<String>();
 	
 	
-	static String[] fn = {"introduction", "registeredUsr", "usrSettings", "mastered", "failed", "faulted", "masteredhistory", "faultedhistory", "failedhistory", "customizedLists"};
-	static File[] files = {introduction, registeredUsr, defaultSettings, mastered, failed, faulted, masteredhistory, faultedhistory, failedhistory, customizedLists};
+	static String[] fn = {"rememberedUsr", "registeredUsr", "usrSettings", "mastered", "failed", "faulted", "masteredhistory", "faultedhistory", "failedhistory", "customizedLists"};
+	static File[] files = {rememberedUsr, registeredUsr, defaultSettings, mastered, failed, faulted, masteredhistory, faultedhistory, failedhistory, customizedLists};
 	
 	protected static WordsCounter counter = WordsCounter.getWordsCounter();
 	
@@ -86,11 +93,41 @@ public class VoxDatabase {
 		
 		
 		//Load user information TODO -- unimplemented, will change the file list in VoxDatabase depending on user 
-//		UsrInfoLoadingWorker uw = new UsrInfoLoadingWorker();
-//		uw.execute();
+		try {
+			Scanner scanner = new Scanner(new FileReader(rememberedUsr));
+			String username = "";
+			while (scanner.hasNext()){
+				String line = scanner.nextLine();
+				username = line;
+			}
+			scanner.close();
+			if (!(username.equals(""))){
+				
+				VoxDatabase.loadUsrInfo(username);
+				
+				for (WindowPattern wp : VoxModel.getVoxModel().getGuis()){
+					wp.getLogin().setEnabled(false);
+					wp.getLogoff().setEnabled(true);
+					wp.updateUsr(username);
+				}
+				
+				VoxMain.isUserBack = true;
+				VoxMain.username = username;
+				
+			}else{
+				
+				for (WindowPattern wp : VoxModel.getVoxModel().getGuis()){
+					wp.getLogin().setEnabled(true);
+					wp.getLogoff().setEnabled(false);
+				}
+				
+			}
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
 		
 		//start files setup
-		FileLoadingWorker fw = new FileLoadingWorker(true, true, true);
+		FileLoadingWorker fw = new FileLoadingWorker(true, true, true, true);
 		fw.execute();
 		
 		//create scm file
@@ -212,7 +249,35 @@ public class VoxDatabase {
 	}
 	
 	public static void loadUsrInfo(String usrName){
-		//TODO
+		String usrDir = VoxDatabase.usrDirectory+usrName+"/";
+		
+		File[] temp = VoxDatabase.getFiles();
+		for (int i = 2; i<9; i++){
+			temp[i] = new File(usrDir+temp[i].getName());
+		}
+		
+		VoxDatabase.getContents().removeAll(contents);
+		VoxDatabase.getFilenames().removeAll(filenames);
+		VoxDatabase.getSysfiles().removeAll(sysfiles);
+		
+		FileLoadingWorker flw = new FileLoadingWorker(false, true , false, false);
+		flw.execute();
+	}
+	
+	public static void backToAnonymous(){
+		String usrDir = VoxDatabase.sysfilesDirectory;
+		
+		File[] temp = VoxDatabase.getFiles();
+		for (int i = 2; i<9; i++){
+			temp[i] = new File(usrDir+temp[i].getName());
+		}
+		
+		VoxDatabase.getContents().removeAll(contents);
+		VoxDatabase.getFilenames().removeAll(filenames);
+		VoxDatabase.getSysfiles().removeAll(sysfiles);
+		
+		FileLoadingWorker flw = new FileLoadingWorker(false, true , false, false);
+		flw.execute();
 	}
 	
 	public static ArrayList<String> getFilenames() {

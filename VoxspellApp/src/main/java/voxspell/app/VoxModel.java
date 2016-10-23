@@ -40,6 +40,10 @@ public class VoxModel implements WindowListener, ActionListener{
 		guis.add(w);
 	}
 	
+	public ArrayList<WindowPattern> getGuis() {
+		return guis;
+	}
+
 	/**
 	 * Managing the swapping between windows.
 	 * IF YOU WANT TO RETURN TO MAIN MENU, USE ---null--- AS THE FIRST PARAM.
