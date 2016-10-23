@@ -6,6 +6,7 @@ import java.util.Vector;
 
 import javax.swing.SwingWorker;
 
+import voxspell.app.Words;
 import voxspell.gui.Stats;
 
 public class StatsWorker extends SwingWorker<Void,Void> {
@@ -32,7 +33,7 @@ public class StatsWorker extends SwingWorker<Void,Void> {
 		this.contents = contents;
 		isShowAll = true;
 		columnNames.add("Words");
-		columnNames.add("Master times");
+		columnNames.add("Mastered times");
 		columnNames.add("Faulted times");
 		columnNames.add("Failed times");
 	}
@@ -48,7 +49,7 @@ public class StatsWorker extends SwingWorker<Void,Void> {
 		this.contents = contents;
 		this.wordlistOfTheLevel = wordlistOfTheLevel;
 		columnNames.add("Words");
-		columnNames.add("Master times");
+		columnNames.add("Mastered times");
 		columnNames.add("Faulted times");
 		columnNames.add("Failed times");
 	}
@@ -56,11 +57,7 @@ public class StatsWorker extends SwingWorker<Void,Void> {
 	@Override
 	protected Void doInBackground() throws Exception { 
 		logGenerator();
-		return null;
-	}
-	
-	@Override
-	protected void done(){
+		
 		for (Words word : hist){
 			Vector<String> row = new Vector<String>();
 			row.add(word.name);
@@ -69,7 +66,15 @@ public class StatsWorker extends SwingWorker<Void,Void> {
 			row.add(word.failed+"");
 			rowResult.add(row);
 		}
+		
+		return null;
+	}
+	
+	@Override
+	protected void done(){
+		
 		Stats.getStatsWindow().updateTable(rowResult, columnNames);
+		
 	}
 	
 	private void logGenerator(){

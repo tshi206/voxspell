@@ -1,3 +1,3 @@
 (voice_kal_diphone)
 
-(SayText "Please spell the word venus")
+(SayText "Welcome to Vox spell")

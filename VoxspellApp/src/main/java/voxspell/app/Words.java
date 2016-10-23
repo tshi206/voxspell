@@ -1,12 +1,12 @@
-package voxspell.toolbox;
+package voxspell.app;
 
 public class Words implements Comparable<Words>{
 	
 	
-	protected int mastered;
-	protected int faulted;
-	protected int failed;
-	protected String name;
+	public int mastered;
+	public int faulted;
+	public int failed;
+	public String name;
 	
 	public Words(int i, int j, int k, String s){
 		mastered = i;

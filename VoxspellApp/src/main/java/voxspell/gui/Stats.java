@@ -12,7 +12,9 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 import voxspell.toolbox.StatsWorker;
 import voxspell.toolbox.VoxDatabase;
@@ -157,6 +159,13 @@ public class Stats extends WindowPattern implements ActionListener {
 		table.setBackground(new Color(204, 255, 255));
 		table.setForeground(new Color(51, 0, 255));
 		table.setGridColor(new Color(255, 255, 255));
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment( SwingConstants.CENTER );
+		TableColumn column = null;
+	    for (int i = 0; i < 4; i++) {
+	        column = table.getColumnModel().getColumn(i);
+	        column.setCellRenderer( centerRenderer );
+	    }
 		scrollPane.setViewportView(table);
 		scrollPane.getViewport().setBackground(new Color(204, 255, 255));
 	}

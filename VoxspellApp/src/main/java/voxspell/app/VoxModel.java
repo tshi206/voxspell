@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 
 import voxspell.gui.*;
+import voxspell.toolbox.ScoreBoardWorker;
 import voxspell.toolbox.VoxDatabase;
 
 public class VoxModel implements WindowListener, ActionListener{
@@ -70,6 +71,8 @@ public class VoxModel implements WindowListener, ActionListener{
 			window.setVisible(false);
 			Scoreboard.getScoreboardWindow().setVisible(true);
 			Scoreboard.getScoreboardWindow().setLocationRelativeTo(null);
+			ScoreBoardWorker sbw = new ScoreBoardWorker();
+			sbw.execute();
 		}else if (option == 4){
 			window.setVisible(false);
 			Review.getReviewWindow().setVisible(true);
