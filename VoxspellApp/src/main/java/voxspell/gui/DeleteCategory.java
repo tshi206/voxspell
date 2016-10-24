@@ -121,6 +121,7 @@ public class DeleteCategory extends JFrame implements WindowListener{
 		
 		
 		JLabel lblyouCanOnly = new JLabel("*You can only delete your customized categories.");
+		lblyouCanOnly.setFont(new Font("Comic Sans MS", Font.PLAIN, 11));
 		lblyouCanOnly.setBounds(55, 110, 328, 14);
 		contentPane.add(lblyouCanOnly);
 		
