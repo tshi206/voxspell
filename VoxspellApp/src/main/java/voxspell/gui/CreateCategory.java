@@ -22,6 +22,14 @@ import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 
+
+/**
+ * This is not a WindowPattern GUI meaning that its use must be one-off.
+ * It's responsible for managing the GUI in order to allow users to create their own categories.
+ * Its instantiation must be invoked in Settings GUI.
+ * @author mason23
+ *
+ */
 @SuppressWarnings("serial")
 public class CreateCategory extends JFrame {
 
@@ -96,7 +104,7 @@ public class CreateCategory extends JFrame {
 		JButton btnSubmitAndClose = new JButton("Submit and close");
 		btnSubmitAndClose.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) { // check if a submission is valid
 				if (((words.getText().equals(""))||(words.getText().matches("^\\d+$"))||(words.getText().matches("^\\s+$")))){
 					JOptionPane.showMessageDialog(itself, "No Words found", "Warning", JOptionPane.OK_OPTION);
 				}else if (textField.getText().matches("\\s*")){
@@ -128,6 +136,7 @@ public class CreateCategory extends JFrame {
 							hasDefinition = true;
 						}
 
+						// create any file that is required
 						File temp1 = VoxDatabase.createWordsFile(textField.getText()+".txt");
 						VoxDatabase.writeToSysFile("customizedLists", "."+textField.getText()+".txt"+"\n", true);
 						VoxDatabase.writeToWordsFile(textField.getText()+".txt", words.getText()+"\n", false);
@@ -138,7 +147,7 @@ public class CreateCategory extends JFrame {
 							VoxDatabase.writeToWordsFile(textField.getText()+"_def.txt", definitions.getText()+"\n", false);
 						}
 
-						CreateCategoryWorker ccw = new CreateCategoryWorker(temp1);
+						CreateCategoryWorker ccw = new CreateCategoryWorker(temp1); //Actual generation is done by CreateCategoryWorker
 						ccw.execute();
 
 						itself.dispose();

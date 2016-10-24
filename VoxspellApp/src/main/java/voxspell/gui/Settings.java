@@ -35,6 +35,19 @@ import java.util.Scanner;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 
+/**
+ * This is not a WindowPattern nor a one-off GUI window.
+ * It itself implements the logic of managing all sub-setting-windows.
+ * Therefore it is the model for itself.
+ * However, actual implementation of file I/O is always done via VoxDatabase or via relevant classes in voxspell.toolbox package.
+ * This GUI just manages all its relative sub-windows (e.g. CreateCategory).
+ * It also listens to the background thread (see @ImportListWorker).
+ * Logging of settings is also implemented within this class using VoxDatabase tool methods.
+ * This class is tightly linked to a couple of background thread and the VoxDatabase.
+ * VoxDatabase can be regarded as a super model of this class.
+ * @author mason23
+ *
+ */
 @SuppressWarnings("serial")
 public class Settings extends JFrame implements WindowListener, PropertyChangeListener{
 	

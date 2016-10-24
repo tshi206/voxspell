@@ -21,6 +21,12 @@ import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
 
+
+/**
+ * Simple one-off GUI managing users' login&logout actions.
+ * @author mason23
+ *
+ */
 @SuppressWarnings("serial")
 public class LoginWindow extends JFrame {
 

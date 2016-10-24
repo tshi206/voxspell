@@ -9,6 +9,14 @@ import javax.swing.SwingWorker;
 import voxspell.app.Words;
 import voxspell.gui.Stats;
 
+
+/**
+ * This background thread is managed by Stats.
+ * It uses the abstract data structures of Words to calculate the results and populating then into specific data structure for the use of JTable.
+ * When it finishes, it will inform the Stats object to update its JTable using the resulting data structure.
+ * @author mason23
+ *
+ */
 public class StatsWorker extends SwingWorker<Void,Void> {
 
 

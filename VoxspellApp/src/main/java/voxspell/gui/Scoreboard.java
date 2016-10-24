@@ -17,6 +17,13 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 
+
+/**
+ * Displaying Scoreboard Mode's GUI contents.
+ * This GUI is managed by both MainMenu (open & close) and by its ScoreBoardWorker (displaying results).
+ * @author mason23
+ *
+ */
 @SuppressWarnings("serial")
 public class Scoreboard extends WindowPattern {
 
@@ -73,6 +80,11 @@ public class Scoreboard extends WindowPattern {
 		panel.add(btnBackToMain);
 	}
 
+	/**
+	 * Called by ScoreBoardWorker to update the table's contents
+	 * @param rowData
+	 * @param columnNames
+	 */
 	public void updateTable(Vector<Vector<String>> rowData, Vector<String> columnNames){
 		table = new JTable(new DefaultTableModel(rowData, columnNames){
 			@Override

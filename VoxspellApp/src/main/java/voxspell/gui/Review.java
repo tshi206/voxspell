@@ -20,6 +20,13 @@ import javax.swing.SwingConstants;
 import voxspell.app.ReviewModel;
 import voxspell.toolbox.WordsCounter;
 
+
+/**
+ * Displaying Review Mode's GUI contents.
+ * This GUI is managed by both MainMenu (open & close) and by ReviewModel (gaming mechanism).
+ * @author mason23
+ *
+ */
 @SuppressWarnings("serial")
 public class Review extends WindowPattern implements KeyListener{
 

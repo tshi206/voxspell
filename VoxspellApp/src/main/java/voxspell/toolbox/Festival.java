@@ -9,6 +9,12 @@ import voxspell.app.ReviewModel;
 import voxspell.gui.NewGame;
 import voxspell.gui.Review;
 
+
+/**
+ * Festival manages all the sound generations.
+ * @author mason23
+ *
+ */
 public class Festival {
 
 	protected ProcessBuilder p = null;
@@ -26,20 +32,33 @@ public class Festival {
 
 	/**
 	 * ONLY USE THIS CONSTRUCTOR WHEN YOU WANT TO INVOKE THE GENERAL PURPOSE GENERATE.
-	 * OTHERWISE USE THE OTHER CONSTRUCTOR!
+	 * OTHERWISE USE THE OTHER CONSTRUCTORS!
 	 */
 	public Festival(){};
 	
+	/**
+	 * ONLY USE THIS CONSTRUCTOR WHEN IN QUIZ MODE.
+	 * OTHERWISE USE THE OTHER CONSTRUCTORS!
+	 */
 	public Festival(NewGame newGame, boolean lastAttemptFailed){
 		this.newGame = newGame;
 		reviewMode = false;
 	}
 
+	/**
+	 * ONLY USE THIS CONSTRUCTOR WHEN IN REVIEW MODE.
+	 * OTHERWISE USE THE OTHER CONSTRUCTORS!
+	 */
 	public Festival(Review newGame, boolean lastAttemptFailed){
 		this.review = newGame;
 		reviewMode = true;
 	}
 
+	/**
+	 * FESTIVAL GENERATOR FOR NEWGAMEMODEL ONLY!
+	 * @param lastAttemptFailed
+	 * @param ngm
+	 */
 	public void festivalGenerator(boolean lastAttemptFailed, NewGameModel ngm){
 		if (lastAttemptFailed){
 			String s = "Incorrect, try once more. "+ngm.getWord()+", "+ngm.getWord()+".";
@@ -56,6 +75,11 @@ public class Festival {
 		speaker.execute();
 	}
 
+	/**
+	 * FESTIVAL GENERATOR FOR REVIEWMODEL ONLY!
+	 * @param lastAttemptFailed
+	 * @param Rmodel
+	 */
 	public void festivalGenerator(boolean lastAttemptFailed, ReviewModel Rmodel){
 		if (lastAttemptFailed){
 			String s = "Incorrect, try once more. "+Rmodel.getWord()+", "+Rmodel.getWord()+".";
@@ -113,16 +137,28 @@ public class Festival {
 		gfw.execute();
 	}
 
+	/**
+	 * Generate end-of-category sound effects.
+	 * @param soundName
+	 */
 	public static void endOfCategorySound(String soundName){
 		SoundlWorker sw = new SoundlWorker(soundName);
 		sw.execute();
 	}
 	
+	/**
+	 * return exit state of the underlying bash command.
+	 * @return - int - the exit state, 0 if normal, otherwise there is an error in the underlying bash command.
+	 */
 	public int getExitState() {
 		return exit;
 	}
 
-	
+	/**
+	 * This is a small background thread used in Quiz Mode and Review Mode in order to maintain the GUI buttons functions consistently.
+	 * @author mason23
+	 *
+	 */
 	class Speaker extends SwingWorker<Void, Void>{
 
 		private NewGame newSpellingQuiz = null;
@@ -187,7 +223,11 @@ public class Festival {
 	}
 }
 
-
+/**
+ * This is a background thread used when a voice is generated regardless which GUI window it comes from.
+ * @author mason23
+ *
+ */
 class GeneralFestivalWorker extends SwingWorker<Void, Void>{
 
 	@Override
@@ -207,6 +247,11 @@ class GeneralFestivalWorker extends SwingWorker<Void, Void>{
 	}
 }
 
+/**
+ * This is a background thread used when a sound effect is generated in the end-of-category window.
+ * @author mason23
+ *
+ */
 class SoundlWorker extends SwingWorker<Void, Void>{
 	
 	private String soundName;

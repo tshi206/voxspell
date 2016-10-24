@@ -16,6 +16,14 @@ import javax.swing.border.EmptyBorder;
 import voxspell.app.VoxModel;
 import voxspell.toolbox.VoxDatabase;
 
+
+/**
+ * Abstract super class for all WindowPattern windows.
+ * It manages the display of menu bar as well as the actions of its menu bar components.
+ * It is also managed by VoxDatabase regarding the login&logout implementations.
+ * @author mason23
+ *
+ */
 @SuppressWarnings("serial")
 public abstract class WindowPattern extends JFrame {
 	

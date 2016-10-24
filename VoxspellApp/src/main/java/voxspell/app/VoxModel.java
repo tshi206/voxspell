@@ -12,6 +12,14 @@ import voxspell.gui.*;
 import voxspell.toolbox.ScoreBoardWorker;
 import voxspell.toolbox.VoxDatabase;
 
+
+/**
+ * This is the model for the overall application.
+ * It's responsible for managing general window swapping between each GUIs.
+ * It's an ActionListener linked to all the WindowPattern classes.
+ * @author mason23
+ *
+ */
 public class VoxModel implements WindowListener, ActionListener{
 	
 	private ArrayList<WindowPattern> guis = new ArrayList<WindowPattern>();

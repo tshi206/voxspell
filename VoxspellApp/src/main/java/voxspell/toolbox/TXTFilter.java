@@ -6,6 +6,12 @@ import javax.swing.filechooser.FileFilter;
 
 import org.apache.commons.io.FilenameUtils;
 
+/**
+ * This is a FileFilter children class used by JFileChooser in Settings window.
+ * It forces that only directories and .txt files can be displayed and selected in the JFileChooser window.
+ * @author mason23
+ *
+ */
 public class TXTFilter extends FileFilter {
 
 	@Override

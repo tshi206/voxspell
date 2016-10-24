@@ -8,6 +8,11 @@ import java.util.Scanner;
 
 import voxspell.toolbox.VoxDatabase;
 
+/**
+ * This class represents the abstraction of a user
+ * @author mason23
+ *
+ */
 public class User implements Comparable<User>{
 	
 	private String username;
@@ -26,6 +31,12 @@ public class User implements Comparable<User>{
 		return username;
 	}
 
+	/**
+	 * Return the most frequently played category of this user.
+	 * Calculation is based on the number of occurrence for each asked word in corresponding category.
+	 * Return the name of the category which has the largest amount of occurrence of its words in system's logged files.
+	 * @return name of the category
+	 */
 	public String getMostPlayedCategory(){
 		ArrayList<String> words = new ArrayList<String>();
 		String[] filenames = {".masteredhistory", ".faultedhistory", ".failedhistory"};
@@ -61,6 +72,12 @@ public class User implements Comparable<User>{
 		return cats.get(cats.size()-1).getName();
 	}
 
+	/**
+	 * Return the highest record of the number of mastered words.
+	 * Its calculation is based on the logs in system file ".records" in each user's directory.
+	 * @param userDir - String - full-path representation of a user's directory
+	 * @return int - number of lines counted in the ".records" file
+	 */
 	private int calculateHighestAmountOfMasteredWords(String userDir){
 		
 		int count = 0;
@@ -107,6 +124,11 @@ public class User implements Comparable<User>{
 	
 }
 
+/**
+ * This class represents the abstraction of a category.
+ * @author mason23
+ *
+ */
 class Category implements Comparable<Category>{
 	
 	protected int wordsCount = 0;

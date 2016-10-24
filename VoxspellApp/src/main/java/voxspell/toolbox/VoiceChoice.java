@@ -6,6 +6,14 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
+/**
+ * This object manages the voice settings.
+ * It is used in Settings class.
+ * It provides methods to edit and update a local festival scm file which is used by Festival to generated speeches.
+ * The creation of the scm file is done by VoxDatabase.
+ * @author mason23
+ *
+ */
 public class VoiceChoice {
 	private String speed = "Normal";
 	private String whichChoice = "one";

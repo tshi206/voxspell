@@ -1,5 +1,10 @@
 package voxspell.app;
 
+/**
+ * This class represents the abstraction of a word.
+ * @author mason23
+ *
+ */
 public class Words implements Comparable<Words>{
 	
 	

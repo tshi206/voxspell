@@ -11,6 +11,13 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+
+/**
+ * This is a WindowPattern children class managing all accesses to most of the GUI windows.
+ * Actual implementation of GUI swapping is done by VoxModel, which is a listener of this GUI.
+ * @author mason23
+ *
+ */
 @SuppressWarnings("serial")
 public class MainMenu extends WindowPattern{
 

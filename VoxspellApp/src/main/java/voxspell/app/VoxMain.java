@@ -42,8 +42,9 @@ public class VoxMain
     }
     
     /**
-     * populating the guis list in VoxModel.
+     * Populating the guis list in VoxModel.
      * MainMenu must always be the first element.
+     * All elements in the list are children classes of WindowPattern.
      */
     private static void GUIinitialiator(){
     	MainMenu mainMenu = MainMenu.getmainMenuWindow();

@@ -10,6 +10,14 @@ import javax.swing.SwingWorker;
 import voxspell.app.User;
 import voxspell.gui.Scoreboard;
 
+
+/**
+ * This background thread is managed by VoxModel.
+ * It uses two abstract data structures: User and Category to calculate the results and populating then into specific data structure for the use of JTable.
+ * When it finishes, it will inform the Scoreboard object to update its JTable using the resulting data structure.
+ * @author mason23
+ *
+ */
 public class ScoreBoardWorker extends SwingWorker<Void, Void> {
 
 	private Vector<Vector<String>> rowResult = new Vector<Vector<String>>();

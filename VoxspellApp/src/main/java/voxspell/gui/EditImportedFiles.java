@@ -27,6 +27,17 @@ import voxspell.toolbox.VoxDatabase;
 
 import javax.swing.JComboBox;
 
+
+/**
+ * This is not a WindowPattern GUI meaning that its use must be one-off.
+ * It's responsible for managing the GUI in order to allow users to edit their imported categories.
+ * Its instantiation must be invoked in the menu bar under Help ---> Edit imported category.
+ * It reuses the CreateCategoryWorker to generate the new category after edition.
+ * It will first delete the old one and apply the same logic to check the validity of the new submission.
+ * If the new one is failed to submit, the old version of the category will be restored.
+ * @author mason23
+ *
+ */
 @SuppressWarnings("serial")
 public class EditImportedFiles extends JFrame implements WindowListener, ActionListener{
 

@@ -31,6 +31,16 @@ import javax.swing.Timer;
 import com.sun.jna.Native;
 import com.sun.jna.NativeLibrary;
 
+
+/**
+ * Playing videos using external vlcj library.
+ * It itself manages its GUI contents.
+ * It is also managed by VLCPathSearcher which specifies the class path to the required vlcj library.
+ * VLCPathSearcher is managed by VoxDatabse.
+ * Hence VoxDatabase is a super model of this GUI window (see @VoxDatabase).
+ * @author mason23
+ *
+ */
 @SuppressWarnings("serial")
 public class VideoPlayer extends JFrame implements ActionListener, WindowListener {
 

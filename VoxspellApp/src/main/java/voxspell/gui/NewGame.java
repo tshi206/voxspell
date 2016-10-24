@@ -22,6 +22,12 @@ import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 
+/**
+ * Displaying Quiz Mode's GUI contents.
+ * This GUI is managed by both MainMenu (open & close) and by NewGameModel (gaming mechanism).
+ * @author mason23
+ *
+ */
 @SuppressWarnings("serial")
 public class NewGame extends WindowPattern implements KeyListener{
 

@@ -25,6 +25,13 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 
+
+/**
+ * Displaying Statistics Mode's GUI contents.
+ * This GUI is managed by both MainMenu (open & close) and by its StatsWorker (displaying results).
+ * @author mason23
+ *
+ */
 @SuppressWarnings("serial")
 public class Stats extends WindowPattern implements ActionListener {
 
@@ -125,6 +132,9 @@ public class Stats extends WindowPattern implements ActionListener {
 		return comboBox;
 	}
 
+	/**
+	 * Swapping between two mode: display all category or display a specified category based on GUI events.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		lastSelectedIndex = comboBox.getSelectedIndex();
@@ -150,6 +160,11 @@ public class Stats extends WindowPattern implements ActionListener {
 		}
 	}
 
+	/**
+	 * Called by StatsWorker to update the table's contents
+	 * @param rowData
+	 * @param columnNames
+	 */
 	public void updateTable(Vector<Vector<String>> rowData, Vector<String> columnNames){
 		table = new JTable(new DefaultTableModel(rowData, columnNames){
 			@Override

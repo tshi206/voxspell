@@ -12,6 +12,14 @@ import javax.swing.SwingWorker;
 import voxspell.gui.DeleteCategory;
 import voxspell.gui.Settings;
 
+
+/**
+ * This is a background thread handles the actual implementation of deleting a customized category.
+ * It uses a bunch of VoxDatabase file I/O methods to support its implementation.
+ * Its purpose is to delete the corresponding categories file and delete the contents in the abstract data structures of categories in the application as well.
+ * @author mason23
+ *
+ */
 public class DeleteCategoryWorker extends SwingWorker<Void, Void> {
 	
 	private String categoryName;

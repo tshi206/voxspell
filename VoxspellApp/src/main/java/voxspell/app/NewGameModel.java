@@ -18,6 +18,14 @@ import voxspell.toolbox.Festival;
 import voxspell.toolbox.VoxDatabase;
 import voxspell.toolbox.WordsCounter;
 
+
+/**
+ * NewGameModel is responsible for the gaming logic of Quiz Mode.
+ * It is corresponding to NewGame which is a GUI representation of this model.
+ * This class is a ActionListener of NewGame.
+ * @author mason23
+ *
+ */
 public class NewGameModel implements ActionListener{
 
 	private boolean lastAttemptFailed;
@@ -41,8 +49,13 @@ public class NewGameModel implements ActionListener{
 	private WordsCounter counter = WordsCounter.getWordsCounter();
 
 
+	/**
+	 * Reset the NewGame GUI environment whenever this constructor is called.
+	 * A new instance should be linked to NewGame whenever a new Quiz Mode session starts.
+	 * @param correspondingLevel
+	 */
 	public NewGameModel(ArrayList<String> correspondingLevel){
-		this.correspondingLevel=correspondingLevel;
+		this.correspondingLevel=correspondingLevel; // The category's content for a quiz session
 		NewGame.getNewGameWindow().getProgressBar().setValue(0);
 		NewGame.getNewGameWindow().getProgressBar().setString(0+" / 10");
 		NewGame.getNewGameWindow().getCurrentCategory().setText("Current category: "+VoxDatabase.getCategories().get(VoxDatabase.getLevelContents().indexOf(correspondingLevel)));
@@ -57,28 +70,36 @@ public class NewGameModel implements ActionListener{
 		NewGame.getNewGameWindow().getTextField().grabFocus();
 	}
 
+	/**
+	 * Return the word of a quiz in order to let Festival speaks.
+	 * @return word;
+	 */
 	public String getWord() {
 		return word;
 	}
 
+	
+	/**
+	 * Actions when a spelling is submitted in NewGame.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().getClass().getSimpleName().equals("JButton")){
 			JButton source = (JButton)e.getSource();
-			if (source.getText().equals("Start!")){
+			if (source.getText().equals("Start!")){ // Start a quiz
 				NewGame.getNewGameWindow().getTextField().setText("");
 				attempt = 0;
 				lastAttemptFailed = false;
 				turnend = false;
 				word = correspondingLevel.get(new Random().nextInt(correspondingLevel.size()));
-				while (wordsAlreadyTested.contains(word)){
+				while (wordsAlreadyTested.contains(word)){ // make sure no repeated word being asked again
 					word = correspondingLevel.get(new Random().nextInt(correspondingLevel.size()));
 				}
 				wordsAlreadyTested.add(word);
 				Festival festival = new Festival(NewGame.getNewGameWindow(), lastAttemptFailed);
 				festival.festivalGenerator(lastAttemptFailed, this);
 				NewGame.getNewGameWindow().getSubmit().setText("Submit!");
-				if (VoxDatabase.getDictionary().get(word)!=null){
+				if (VoxDatabase.getDictionary().get(word)!=null){ // gather the definition corresponding to the word
 					NewGame.getNewGameWindow().getHint().setText("Hint: "+VoxDatabase.getDictionary().get(word));
 				}else{
 					NewGame.getNewGameWindow().getHint().setText("Sorry. Currently no definition for this word.");
@@ -89,29 +110,29 @@ public class NewGameModel implements ActionListener{
 					checkWordCorrect();
 					NewGame.getNewGameWindow().getTextField().setText("");
 					if (turnend){
-						if (wc == 11){
-							eofc = VoxModel.createEndOfCategoryWindow(wordsCorrect, wordsFailed);
+						if (wc == 11){ // session ends when the number of words being asked is greater than 10
+							eofc = VoxModel.createEndOfCategoryWindow(wordsCorrect, wordsFailed); // end of category window generated.
 							NewGame.getNewGameWindow().getSubmit().setEnabled(false);
 							NewGame.getNewGameWindow().getRehear().setEnabled(false);
 						}
 					}
 				}
-			}else if (source.getText().equals("Rehear")){
+			}else if (source.getText().equals("Rehear")){ //rehear the word
 				Festival festival = new Festival(NewGame.getNewGameWindow(), lastAttemptFailed);
 				festival.festivalGenerator(word, this);
-			}else if (source.equals(NewGame.getNewGameWindow().getBackToMain())){
+			}else if (source.equals(NewGame.getNewGameWindow().getBackToMain())){ // back to main menu
 				
-				if (eofc!=null){
+				if (eofc!=null){ // also close end of category window if exists
 					eofc.dispose();
 				}
 				
 				Settings.getSettingsWindow().getCategory().setSelectedIndex(VoxDatabase.getLevelContents().indexOf(correspondingLevel));
 				
-			}else if (source.equals(NewGame.getNewGameWindow().getRetryCategory())){
+			}else if (source.equals(NewGame.getNewGameWindow().getRetryCategory())){ // retry - reallocate a new model for the GUI using the same category
 				
 				Settings.getSettingsWindow().getCategory().setSelectedIndex(VoxDatabase.getLevelContents().indexOf(correspondingLevel));
 				
-			}else if (source.equals(NewGame.getNewGameWindow().getNextCategory())){
+			}else if (source.equals(NewGame.getNewGameWindow().getNextCategory())){ // next category - allocate a new model for the GUI using the next category, this will fail if no more category remained
 				
 				if ((VoxDatabase.getLevelContents().indexOf(correspondingLevel)+1)==VoxDatabase.getLevelContents().size()){
 					NewGame.getNewGameWindow().getNextCategory().setText("Last Category");
@@ -124,10 +145,20 @@ public class NewGameModel implements ActionListener{
 		}
 	}
 
+	
+	/**
+	 * report whether a quiz is finished
+	 * @return boolean - true is a quiz is finished otherwise false
+	 */
 	public boolean isTurnend() {
 		return turnend;
 	}
 
+	/**
+	 * Check whether a submission of a quiz is correct or not.
+	 * Different voices will be generated by Festival depending on the correctness.
+	 * Words will be logged in corresponding system's files depending on the result.
+	 */
 	private void checkWordCorrect(){
 		Festival festival = new Festival(NewGame.getNewGameWindow(), lastAttemptFailed);
 		if (NewGame.getNewGameWindow().getTextField().getText().toLowerCase().equals(word.toLowerCase())){
@@ -200,10 +231,18 @@ public class NewGameModel implements ActionListener{
 		}
 	}
 	
+	/**
+	 * Return the number of quizzes being asked.
+	 * @return words count - total number of quizzes being asked so far in a session
+	 */
 	public int getWc() {
 		return wc;
 	}
 
+	/**
+	 * Save changes in the system's file.
+	 * Logging words in corresponding files depending on the result of correctness check.
+	 */
 	private void savePoint(){
 		VoxDatabase.saveChangedFile("mastered");
 		VoxDatabase.saveChangedFile("faulted");

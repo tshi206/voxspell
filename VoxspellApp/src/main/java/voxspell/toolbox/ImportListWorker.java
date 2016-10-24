@@ -14,6 +14,17 @@ import javax.swing.SwingWorker;
 
 import voxspell.gui.Settings;
 
+
+/**
+ * This background thread is managed by Settings class.
+ * It will load words from given files and match them with corresponding definitions if it finds any existing ones.
+ * It will also make a local copy of the importing file by simply rename the copy with a "." prefix and all further operation will be carried out only on this local copy.
+ * This make sure the original file will not be affected by edition or deletion from the system.
+ * All loading will be stored in the corresponding data structures in VoxDatabase.
+ * When it finishes, it will inform Settings class to start the ImportDefinitionsWorker thread in case if the user imports both definitions files and categories files at the same time.
+ * @author mason23
+ *
+ */
 public class ImportListWorker extends SwingWorker<Void, Void> {
 	
 	private String DONE_PROPERTY = "notDone";

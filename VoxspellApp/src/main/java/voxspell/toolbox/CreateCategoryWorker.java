@@ -11,7 +11,13 @@ import javax.swing.SwingWorker;
 
 import voxspell.gui.Settings;
 
-
+/**
+ * This is a background thread handles the actual implementation of creating a customized category.
+ * It uses a bunch of VoxDatabase file I/O methods to support its implementation.
+ * Its purpose is to load contents from categories file and use them to generate abstract data structures of categories for the application.
+ * @author mason23
+ *
+ */
 public class CreateCategoryWorker extends SwingWorker<Void, Void> {
 	
 	private File fileToReadFrom;
@@ -87,7 +93,7 @@ public class CreateCategoryWorker extends SwingWorker<Void, Void> {
 
 			s1.close();
 
-			if (!(customizedCategoriesContents.isEmpty())){
+			if (!(customizedCategoriesContents.isEmpty())){ // automatically allocate definitions to words if it finds any.
 
 				File tempfile = new File(VoxDatabase.wordlistsDirectory+fileToReadFrom.getName().substring(0, fileToReadFrom.getName().length()-".txt".length())+"_def.txt");
 				if (tempfile.exists()){

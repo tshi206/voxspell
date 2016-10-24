@@ -1,6 +1,11 @@
 package voxspell.gui;
 
 
+/**
+ * Simple one-off GUI showing the introduction of the application.
+ * @author mason23
+ *
+ */
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;

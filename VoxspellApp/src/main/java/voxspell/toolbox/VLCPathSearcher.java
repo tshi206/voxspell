@@ -18,6 +18,17 @@ import javax.swing.SwingWorker;
 
 import voxspell.gui.VideoPlayer;
 
+
+/**
+ * This thread is only managed by VoxDatabase to search for the valid class path in order to launch the VLC video player.
+ * It finds the third party package of vlcj to support playing the videos files.
+ * It can run in parallel with FileLoadingWorker safely.
+ * When it finishes, it will log any valid paths and append them in the default library paths.
+ * Because the newly use of Maven in building this project, the dependencies from vlcj is guaranteed to be included in the system's runtime environment.
+ * Nevertheless, this thread is still useful in displaying the searching progress of the vlcj library.
+ * @author mason23
+ *
+ */
 public class VLCPathSearcher extends SwingWorker<Void, Void> {
 
 	private Boolean findInDefault = false;

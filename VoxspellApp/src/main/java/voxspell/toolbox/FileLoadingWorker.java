@@ -16,6 +16,16 @@ import javax.swing.SwingWorker;
 import voxspell.gui.Settings;
 import voxspell.gui.Stats;
 
+
+/**
+ * This background thread loads all contents in system's file as well as categories files into abstract data structures for the use of the application.
+ * This thread is managed by VoxDatabase.
+ * It has four sections of loading where each section is toggled by corresponding boolean flag passed in the constructor.
+ * It will only perform a particular section if the corresponding flag is set to be true.
+ * This thread will inform the Settings Window and the Stats Window to update themselves whenever the thread is finished.
+ * @author mason23
+ *
+ */
 public class FileLoadingWorker extends SwingWorker<Void, Void> {
 	protected static FileReader wordlist;
 	protected static FileReader userCategories;

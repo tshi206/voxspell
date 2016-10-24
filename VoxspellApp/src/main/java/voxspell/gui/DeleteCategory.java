@@ -23,6 +23,13 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
+/**
+ * This is not a WindowPattern GUI meaning that its use must be one-off.
+ * It's responsible for managing the GUI in order to allow users to delete their imported categories.
+ * Its instantiation must be invoked in the menu bar under Help ---> Delete imported category.
+ * @author mason23
+ *
+ */
 @SuppressWarnings("serial")
 public class DeleteCategory extends JFrame implements WindowListener{
 
@@ -138,7 +145,9 @@ public class DeleteCategory extends JFrame implements WindowListener{
 		
 	}
 
-
+	/**
+	 * This allows only one instance of this GUI can be presented at a time.
+	 */
 	@Override
 	public void windowClosed(WindowEvent e) {
 		MainMenu.getmainMenuWindow().getEdit().setEnabled(true);

@@ -16,6 +16,11 @@ import javax.swing.border.EmptyBorder;
 
 import voxspell.toolbox.VoxDatabase;
 
+/**
+ * Simple one-off GUI showing user manual regarding system's functionalities
+ * @author mason23
+ *
+ */
 @SuppressWarnings("serial")
 public class Functionalities extends JFrame {
 

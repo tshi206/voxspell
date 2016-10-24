@@ -16,6 +16,19 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
+
+
+/**
+ * This is not a WindowPattern GUI meaning that its use must be one-off.
+ * It's responsible for managing the GUI in order to allow users to choose their end-of-category options.
+ * Its instantiation must be invoked whenever a quiz session ends.
+ * It displays the result of the category based on the user's performance.
+ * It will allow the user to choose his video reward if the performance is marked as excellent.
+ * Otherwise it will just disable the reward option and let the user to decide whether to retry the same category or go back to main menu.
+ * An opportunity of going to next category is given if a further category is available and the user performance is 'excellent'.
+ * @author mason23
+ *
+ */
 @SuppressWarnings("serial")
 public class EndOfCategory extends JFrame {
 
@@ -137,6 +150,10 @@ public class EndOfCategory extends JFrame {
 		calculateStats();
 	}
 
+	/**
+	 * Calculate the statistics for the session to be displayed.
+	 * Showing overall performance for the session based on the suppied statistics.
+	 */
 	private void calculateStats(){
 		if (wordsCorrect >= 8){
 			Festival.endOfCategorySound("excellent.mp3");
