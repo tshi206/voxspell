@@ -1,6 +1,7 @@
 package voxspell.gui;
 
 
+import javax.swing.ImageIcon;
 /**
  * Simple one-off GUI showing the introduction of the application.
  * @author mason23
@@ -44,7 +45,7 @@ public class Intro extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblIntroduction = new JLabel("Introduction");
-		lblIntroduction.setForeground(new Color(102, 0, 255));
+		lblIntroduction.setForeground(new Color(0, 0, 0));
 		lblIntroduction.setFont(new Font("Comic Sans MS", Font.BOLD, 50));
 		lblIntroduction.setHorizontalAlignment(SwingConstants.CENTER);
 		lblIntroduction.setBounds(12, 12, 426, 45);
@@ -70,5 +71,9 @@ public class Intro extends JFrame {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		
+		JLabel background = new JLabel(new ImageIcon(VoxDatabase.picsDirectory+"sea.png"));
+		background.setBounds(0, 0, 450, 520);
+		contentPane.add(background);
 	}
 }

@@ -86,9 +86,8 @@ public class Stats extends WindowPattern implements ActionListener {
 		table.setShowGrid(false);
 		table.setShowHorizontalLines(false);
 		table.setShowVerticalLines(false);
-		table.setBackground(new Color(204, 255, 255));
+		table.setBackground(new Color(255, 255, 255));
 		table.setForeground(new Color(51, 0, 255));
-		table.setGridColor(new Color(255, 255, 255));
 		scrollPane.setViewportView(table);
 		scrollPane.getViewport().setBackground(new Color(204, 255, 255));
 		
@@ -107,16 +106,14 @@ public class Stats extends WindowPattern implements ActionListener {
 		
 		JButton btnBackToMain = new JButton("Back to main menu");
 		btnBackToMain.addActionListener(voxModel);
-		btnBackToMain.setBackground(new Color(51, 102, 255));
-		btnBackToMain.setForeground(new Color(204, 255, 255));
+		btnBackToMain.setForeground(new Color(102, 0, 255));
 		btnBackToMain.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
 		btnBackToMain.setBounds(201, 429, 283, 34);
 		panel.add(btnBackToMain);
 		
 		JCheckBox showAll = new JCheckBox("Show all tested words");
 		showAll.addActionListener(this);
-		showAll.setBackground(new Color(204, 255, 255));
-		showAll.setForeground(new Color(51, 102, 255));
+		showAll.setForeground(new Color(255, 255, 255));
 		showAll.setFont(new Font("Comic Sans MS", Font.BOLD, 11));
 		showAll.setBounds(10, 429, 180, 34);
 		panel.add(showAll);
@@ -177,9 +174,8 @@ public class Stats extends WindowPattern implements ActionListener {
 		table.setShowGrid(false);
 		table.setShowHorizontalLines(false);
 		table.setShowVerticalLines(false);
-		table.setBackground(new Color(204, 255, 255));
+		table.setBackground(new Color(255, 255, 255));
 		table.setForeground(new Color(51, 0, 255));
-		table.setGridColor(new Color(255, 255, 255));
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment( SwingConstants.CENTER );
 		TableColumn column = null;
@@ -188,6 +184,6 @@ public class Stats extends WindowPattern implements ActionListener {
 	        column.setCellRenderer( centerRenderer );
 	    }
 		scrollPane.setViewportView(table);
-		scrollPane.getViewport().setBackground(new Color(204, 255, 255));
+		scrollPane.getViewport().setBackground(new Color(255, 255, 255));
 	}
 }

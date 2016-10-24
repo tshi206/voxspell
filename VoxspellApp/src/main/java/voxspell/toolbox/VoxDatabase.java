@@ -37,6 +37,7 @@ public class VoxDatabase {
 	public static String videosDirectory = System.getProperty("user.dir")+"/src/main/java/voxspell/resources/videos/";
 	public static String helpDirectory = System.getProperty("user.dir")+"/src/main/java/voxspell/resources/help/";
 	public static String usrDirectory = System.getProperty("user.dir")+"/src/main/java/voxspell/resources/usrInfo/";
+	public static String picsDirectory = System.getProperty("user.dir")+"/src/main/java/voxspell/resources/pictures/";
 	
 	// names of default categories
 	private static String[] levels = {"Level One","Level Two","Level Three","Level Four","Level Five","Level Six","Level Seven","Level Eight","Level Nine","Level Ten","Level Eleven"};

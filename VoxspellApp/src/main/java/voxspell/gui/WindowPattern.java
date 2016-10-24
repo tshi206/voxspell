@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -11,6 +12,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 
 import voxspell.app.VoxModel;
@@ -53,9 +56,17 @@ public abstract class WindowPattern extends JFrame {
 	protected static VoxModel voxModel = VoxModel.getVoxModel();
 	
 	public WindowPattern() {
+		
+		try {
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
+		
 		setBounds(100, 100, 721, 520);
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
@@ -63,7 +74,7 @@ public abstract class WindowPattern extends JFrame {
 		
 		panel = new JPanel();
 		panel.setBackground(new Color(204, 255, 255));
-		panel.setBounds(0, 0, 718, 519);
+		panel.setBounds(0, 0, 721, 520);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -73,6 +84,10 @@ public abstract class WindowPattern extends JFrame {
 		
 		setResizable(false);
 		addWindowListener(VoxModel.getVoxModel());
+		
+		JLabel background = new JLabel(new ImageIcon(VoxDatabase.picsDirectory+"grass.jpg"));
+		background.setBounds(0, 0, 721, 520);
+		panel.add(background);
 	}
 	
 	/**

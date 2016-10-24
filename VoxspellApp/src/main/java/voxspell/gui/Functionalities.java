@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Scanner;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -43,7 +44,7 @@ public class Functionalities extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblIntroduction = new JLabel("Functionalities");
-		lblIntroduction.setForeground(new Color(102, 0, 255));
+		lblIntroduction.setForeground(new Color(0, 0, 0));
 		lblIntroduction.setFont(new Font("Comic Sans MS", Font.BOLD, 50));
 		lblIntroduction.setHorizontalAlignment(SwingConstants.CENTER);
 		lblIntroduction.setBounds(12, 12, 426, 45);
@@ -69,6 +70,10 @@ public class Functionalities extends JFrame {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		
+		JLabel background = new JLabel(new ImageIcon(VoxDatabase.picsDirectory+"sea.png"));
+		background.setBounds(0, 0, 450, 520);
+		contentPane.add(background);
 	}
 
 }

@@ -63,7 +63,7 @@ public class Scoreboard extends WindowPattern {
 		this.scrollPane = scrollPane;
 		
 		table = new JTable();
-		table.setBackground(new Color(255, 255, 0));
+		table.setBackground(new Color(255, 255, 255));
 		table.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
 		table.setForeground(new Color(102, 0, 255));
 		table.setShowVerticalLines(false);
@@ -73,8 +73,7 @@ public class Scoreboard extends WindowPattern {
 		
 		JButton btnBackToMain = new JButton("Back to main menu");
 		btnBackToMain.addActionListener(voxModel);
-		btnBackToMain.setBackground(new Color(51, 102, 255));
-		btnBackToMain.setForeground(new Color(204, 255, 255));
+		btnBackToMain.setForeground(new Color(102, 0, 255));
 		btnBackToMain.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
 		btnBackToMain.setBounds(201, 429, 283, 34);
 		panel.add(btnBackToMain);
@@ -97,9 +96,8 @@ public class Scoreboard extends WindowPattern {
 		table.setShowGrid(false);
 		table.setShowHorizontalLines(false);
 		table.setShowVerticalLines(false);
-		table.setBackground(new Color(204, 255, 255));
+		table.setBackground(new Color(255, 255, 255));
 		table.setForeground(new Color(51, 0, 255));
-		table.setGridColor(new Color(255, 255, 255));
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 	    centerRenderer.setHorizontalAlignment( SwingConstants.CENTER );
 		TableColumn column = null;
@@ -117,7 +115,7 @@ public class Scoreboard extends WindowPattern {
 	        }
 	    }
 		scrollPane.setViewportView(table);
-		scrollPane.getViewport().setBackground(new Color(204, 255, 255));
+		scrollPane.getViewport().setBackground(new Color(255, 255, 255));
 	}
 	
 }

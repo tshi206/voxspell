@@ -20,6 +20,7 @@ import java.awt.event.WindowListener;
 import java.util.ArrayList;
 
 import javax.swing.JComboBox;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
@@ -109,8 +110,7 @@ public class DeleteCategory extends JFrame implements WindowListener{
 			}
 			
 		});
-		btnDelete.setBackground(new Color(51, 102, 255));
-		btnDelete.setForeground(new Color(204, 255, 255));
+		btnDelete.setForeground(new Color(102, 0, 255));
 		btnDelete.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
 		btnDelete.setBounds(123, 194, 189, 30);
 		contentPane.add(btnDelete);
@@ -123,6 +123,10 @@ public class DeleteCategory extends JFrame implements WindowListener{
 		JLabel lblyouCanOnly = new JLabel("*You can only delete your customized categories.");
 		lblyouCanOnly.setBounds(55, 110, 328, 14);
 		contentPane.add(lblyouCanOnly);
+		
+		JLabel background = new JLabel(new ImageIcon(VoxDatabase.picsDirectory+"sea.png"));
+		background.setBounds(0, 0, 450, 300);
+		contentPane.add(background);
 		
 	}
 

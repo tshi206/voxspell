@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -215,8 +216,7 @@ public class EditImportedFiles extends JFrame implements WindowListener, ActionL
 				}
 			}
 		});
-		btnSubmitAndClose.setBackground(new Color(51, 102, 255));
-		btnSubmitAndClose.setForeground(new Color(204, 255, 255));
+		btnSubmitAndClose.setForeground(new Color(102, 0, 255));
 		btnSubmitAndClose.setFont(new Font("Comic Sans MS", Font.PLAIN, 16));
 		btnSubmitAndClose.setBounds(127, 367, 206, 23);
 		panel.add(btnSubmitAndClose);
@@ -261,6 +261,10 @@ public class EditImportedFiles extends JFrame implements WindowListener, ActionL
 		}else{
 			comboBox.setSelectedIndex(0);
 		}
+		
+		JLabel background = new JLabel(new ImageIcon(VoxDatabase.picsDirectory+"sea.png"));
+		background.setBounds(0, 0, 474, 450);
+		panel.add(background);
 	}
 
 	@Override

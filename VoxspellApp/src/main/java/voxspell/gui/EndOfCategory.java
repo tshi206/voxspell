@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import voxspell.toolbox.Festival;
+import voxspell.toolbox.VoxDatabase;
 
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -14,6 +15,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 
@@ -58,13 +60,13 @@ public class EndOfCategory extends JFrame {
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(204, 255, 255));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(204, 255, 255));
-		panel.setBounds(0, 0, 547, 371);
+		panel.setBounds(0, 0, 553, 400);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -141,13 +143,16 @@ public class EndOfCategory extends JFrame {
 				}
 			}			
 		});
-		btnBack.setBackground(new Color(51, 0, 255));
-		btnBack.setForeground(new Color(204, 255, 255));
+		btnBack.setForeground(new Color(102, 0, 255));
 		btnBack.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
 		btnBack.setBounds(131, 331, 279, 29);
 		panel.add(btnBack);
 		
 		calculateStats();
+		
+		JLabel background = new JLabel(new ImageIcon(VoxDatabase.picsDirectory+"sea.png"));
+		background.setBounds(0, 0, 553, 400);
+		panel.add(background);
 	}
 
 	/**
@@ -158,7 +163,7 @@ public class EndOfCategory extends JFrame {
 		if (wordsCorrect >= 8){
 			Festival.endOfCategorySound("excellent.mp3");
 			result.setText("Excellent!!");
-			result.setForeground(Color.GREEN);
+			result.setForeground(Color.ORANGE);
 			unlockReward(true);
 		}else if (wordsCorrect >= 5){
 			Festival.endOfCategorySound("average.mp3");

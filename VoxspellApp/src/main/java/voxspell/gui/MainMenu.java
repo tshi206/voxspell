@@ -53,8 +53,7 @@ public class MainMenu extends WindowPattern{
 		
 		JButton newGame = new JButton("New Game");
 		newGame.addActionListener(voxModel);
-		newGame.setBackground(new Color(0, 102, 255));
-		newGame.setForeground(new Color(204, 255, 255));
+		newGame.setForeground(new Color(102, 0, 255));
 		newGame.setHorizontalTextPosition(SwingConstants.CENTER);
 		newGame.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
 		newGame.setBounds(88, 176, 136, 100);
@@ -62,8 +61,7 @@ public class MainMenu extends WindowPattern{
 		
 		JButton stats = new JButton("Stats");
 		stats.addActionListener(voxModel);
-		stats.setForeground(new Color(204, 255, 255));
-		stats.setBackground(new Color(0, 102, 255));
+		stats.setForeground(new Color(102, 0, 255));
 		stats.setHorizontalTextPosition(SwingConstants.CENTER);
 		stats.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
 		stats.setBounds(287, 176, 136, 100);
@@ -71,18 +69,16 @@ public class MainMenu extends WindowPattern{
 		
 		JButton scoreboard = new JButton("Scoreboard");
 		scoreboard.addActionListener(voxModel);
-		scoreboard.setBackground(new Color(0, 102, 255));
-		scoreboard.setForeground(new Color(204, 255, 255));
+		scoreboard.setForeground(new Color(102, 0, 255));
 		scoreboard.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
 		scoreboard.setHorizontalTextPosition(SwingConstants.CENTER);
 		scoreboard.setBounds(487, 176, 136, 100);
 		panel.add(scoreboard);
 		
-		JButton review = new JButton("Review Mistakes");
+		JButton review = new JButton("Review");
 		review.addActionListener(voxModel);
-		review.setBackground(new Color(0, 102, 255));
-		review.setForeground(new Color(204, 255, 255));
-		review.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
+		review.setForeground(new Color(102, 0, 255));
+		review.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
 		review.setBounds(88, 316, 136, 100);
 		panel.add(review);
 		
@@ -90,8 +86,7 @@ public class MainMenu extends WindowPattern{
 		settings.addActionListener(voxModel);
 		settings.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
 		settings.setHorizontalTextPosition(SwingConstants.CENTER);
-		settings.setForeground(new Color(204, 255, 255));
-		settings.setBackground(new Color(0, 102, 255));
+		settings.setForeground(new Color(102, 0, 255));
 		settings.setBounds(287, 316, 136, 100);
 		panel.add(settings);
 		
@@ -102,9 +97,8 @@ public class MainMenu extends WindowPattern{
 				System.exit(0);
 			}
 		});
-		quit.setForeground(new Color(204, 255, 255));
+		quit.setForeground(new Color(102, 0, 255));
 		quit.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
-		quit.setBackground(new Color(0, 102, 255));
 		quit.setBounds(487, 316, 136, 100);
 		panel.add(quit);
 		

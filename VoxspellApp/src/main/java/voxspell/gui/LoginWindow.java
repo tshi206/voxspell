@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 
@@ -131,8 +132,7 @@ public class LoginWindow extends JFrame {
 			}
 			
 		});
-		btnLogin.setBackground(new Color(51, 102, 255));
-		btnLogin.setForeground(new Color(204, 255, 255));
+		btnLogin.setForeground(new Color(102, 0, 255));
 		btnLogin.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
 		btnLogin.setBounds(202, 145, 131, 26);
 		contentPane.add(btnLogin);
@@ -177,11 +177,14 @@ public class LoginWindow extends JFrame {
 			}
 			
 		});
-		btnRegister.setBackground(new Color(51, 102, 255));
-		btnRegister.setForeground(new Color(204, 255, 255));
+		btnRegister.setForeground(new Color(102, 0, 255));
 		btnRegister.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
 		btnRegister.setBounds(69, 145, 118, 26);
 		contentPane.add(btnRegister);
+		
+		JLabel background = new JLabel(new ImageIcon(VoxDatabase.picsDirectory+"sea.png"));
+		background.setBounds(0, 0, 400, 221);
+		contentPane.add(background);
 	}
 	
 	private boolean checkIfUsrExists(){

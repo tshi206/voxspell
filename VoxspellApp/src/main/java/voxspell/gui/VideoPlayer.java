@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JProgressBar;
 import javax.swing.Timer;
 
@@ -86,17 +87,15 @@ public class VideoPlayer extends JFrame implements ActionListener, WindowListene
 		panel.add(lblChooseReward);
 
 		JButton btnNewButton = new JButton("Normal One");
-		btnNewButton.setForeground(new Color(204, 255, 255));
+		btnNewButton.setForeground(new Color(102, 0, 255));
 		btnNewButton.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
-		btnNewButton.setBackground(new Color(51, 0, 255));
 		btnNewButton.setBounds(10, 142, 195, 77);
 		panel.add(btnNewButton);
 		jb1 = btnNewButton;
 
 		JButton btnNewButton_1 = new JButton("Scary One");
 		btnNewButton_1.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
-		btnNewButton_1.setBackground(new Color(51, 0, 255));
-		btnNewButton_1.setForeground(new Color(204, 255, 255));
+		btnNewButton_1.setForeground(new Color(102, 0, 255));
 		btnNewButton_1.setBounds(215, 142, 209, 77);
 		panel.add(btnNewButton_1);
 		jb2 = btnNewButton_1;
@@ -104,6 +103,10 @@ public class VideoPlayer extends JFrame implements ActionListener, WindowListene
 		jb1.addActionListener(this);
 		jb2.addActionListener(this);
 		addWindowListener(this);
+		
+		JLabel background = new JLabel(new ImageIcon(VoxDatabase.picsDirectory+"sea.png"));
+		background.setBounds(0, 0, 434, 261);
+		panel.add(background);
 	}
 
 	public static void setAdditionalPath(String s){

@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.swing.SwingConstants;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 /**
@@ -300,6 +301,10 @@ public class Settings extends JFrame implements WindowListener, PropertyChangeLi
 		panel.add(btnBackToMain);
 
 		addWindowListener(this);
+		
+		JLabel background = new JLabel(new ImageIcon(VoxDatabase.picsDirectory+"sea.png"));
+		background.setBounds(0, 0, 450, 300);
+		panel.add(background);
 	}
 
 	

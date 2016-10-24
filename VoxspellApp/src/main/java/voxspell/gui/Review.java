@@ -81,7 +81,7 @@ public class Review extends WindowPattern implements KeyListener{
 		accuracy = lblRateOfCorrectness;
 		
 		JPanel inputPanel = new JPanel();
-		inputPanel.setBackground(new Color(204, 255, 255));
+		inputPanel.setOpaque(false);;
 		inputPanel.setBounds(23, 294, 672, 70);
 		panel.add(inputPanel);
 		inputPanel.setLayout(null);
@@ -97,24 +97,21 @@ public class Review extends WindowPattern implements KeyListener{
 		JButton startandsubmit = new JButton("Start!");
 		startandsubmit.setBounds(555, 0, 117, 70);
 		inputPanel.add(startandsubmit);
-		startandsubmit.setBackground(new Color(51, 102, 255));
-		startandsubmit.setForeground(new Color(204, 255, 255));
+		startandsubmit.setForeground(new Color(102, 0, 255));
 		startandsubmit.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
 		submit = startandsubmit;
 		
 		JButton rehear = new JButton("Rehear");
 		rehear.setBounds(0, 0, 128, 70);
 		inputPanel.add(rehear);
-		rehear.setBackground(new Color(51, 102, 255));
-		rehear.setForeground(new Color(204, 255, 255));
+		rehear.setForeground(new Color(102, 0, 255));
 		rehear.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
 		this.rehear = rehear;
 		
 		JButton btnBackToMain = new JButton("Back to main menu");
 		btnBackToMain.addActionListener(voxModel);
-		btnBackToMain.setForeground(new Color(204, 255, 255));
+		btnBackToMain.setForeground(new Color(102, 0, 255));
 		btnBackToMain.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
-		btnBackToMain.setBackground(new Color(51, 102, 255));
 		btnBackToMain.setBounds(252, 445, 214, 25);
 		panel.add(btnBackToMain);
 		re = btnBackToMain;
@@ -122,11 +119,10 @@ public class Review extends WindowPattern implements KeyListener{
 		JProgressBar progressBar = new JProgressBar();
 		progressBar.setBorderPainted(false);
 		progressBar.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
-		progressBar.setBackground(new Color(204, 255, 255));
 		progressBar.setMaximum(10);
 		progressBar.setString("0");
 		progressBar.setStringPainted(true);
-		progressBar.setForeground(new Color(51, 255, 0));
+		progressBar.setForeground(new Color(102, 0, 255));
 		progressBar.setBounds(163, 376, 403, 28);
 		panel.add(progressBar);
 		this.progressBar = progressBar;
@@ -144,7 +140,7 @@ public class Review extends WindowPattern implements KeyListener{
 		hint = txtrHint;
 		
 		JPanel endOfLevelPanel = new JPanel();
-		endOfLevelPanel.setBackground(new Color(204, 255, 255));
+		endOfLevelPanel.setOpaque(false);;
 		endOfLevelPanel.setBounds(130, 402, 464, 41);
 		panel.add(endOfLevelPanel);
 		endOfLevelPanel.setLayout(null);
@@ -152,8 +148,7 @@ public class Review extends WindowPattern implements KeyListener{
 		
 		JButton btnContinue = new JButton("Continue");
 		btnContinue.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
-		btnContinue.setBackground(new Color(51, 102, 255));
-		btnContinue.setForeground(new Color(204, 255, 255));
+		btnContinue.setForeground(new Color(102, 0, 255));
 		btnContinue.setBounds(163, 12, 139, 25);
 		endOfLevelPanel.add(btnContinue);
 		_continue = btnContinue;

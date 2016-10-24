@@ -20,6 +20,7 @@ import java.io.File;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 
@@ -156,8 +157,7 @@ public class CreateCategory extends JFrame {
 				}
 			}
 		});
-		btnSubmitAndClose.setBackground(new Color(51, 102, 255));
-		btnSubmitAndClose.setForeground(new Color(204, 255, 255));
+		btnSubmitAndClose.setForeground(new Color(102, 0, 255));
 		btnSubmitAndClose.setFont(new Font("Comic Sans MS", Font.PLAIN, 16));
 		btnSubmitAndClose.setBounds(127, 367, 206, 23);
 		panel.add(btnSubmitAndClose);
@@ -171,6 +171,10 @@ public class CreateCategory extends JFrame {
 		textField.setBounds(148, 339, 284, 23);
 		panel.add(textField);
 		textField.setColumns(10);
+	
+		JLabel background = new JLabel(new ImageIcon(VoxDatabase.picsDirectory+"sea.png"));
+		background.setBounds(0, 0, 474, 450);
+		panel.add(background);
 		
 	}
 }

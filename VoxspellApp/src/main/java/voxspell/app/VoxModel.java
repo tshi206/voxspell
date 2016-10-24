@@ -102,7 +102,7 @@ public class VoxModel implements WindowListener, ActionListener{
 				paintFrame(MainMenu.getmainMenuWindow(), VoxModel.From_Main_To_Stats);
 			}else if (source.getText().equals("Scoreboard")){
 				paintFrame(MainMenu.getmainMenuWindow(), VoxModel.From_Main_To_Scoreboard);
-			}else if (source.getText().equals("Review Mistakes")){
+			}else if (source.getText().equals("Review")){
 				paintFrame(MainMenu.getmainMenuWindow(), VoxModel.From_Main_To_Review);
 			}else if (source.getText().equals("Settings")){
 				Settings.getSettingsWindow().setVisible(true);
